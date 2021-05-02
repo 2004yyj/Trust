@@ -8,6 +8,10 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 
 class IntroActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var retrofit: Retrofit
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)

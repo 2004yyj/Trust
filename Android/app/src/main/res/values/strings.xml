@@ -2,4 +2,7 @@
     <string name="app_name">Trust</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="id">아이디</string>
+    <string name="pw">비밀번호</string>
+    <string name="sign_up">회원가입</string>
 </resources>
