@@ -5,8 +5,8 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-import kr.hs.dgsw.trust.activity.IntroActivity
-import kr.hs.dgsw.trust.activity.MainActivity
+import kr.hs.dgsw.trust.ui.activity.IntroActivity
+import kr.hs.dgsw.trust.ui.activity.MainActivity
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.di.module.RetrofitModule
 import javax.inject.Singleton

@@ -10,10 +10,13 @@ class MyDaggerApplication : DaggerApplication() {
     lateinit var daggerComponent: MyComponent
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-
-        daggerComponent = DaggerMyComponent.factory().create(this)
         daggerComponent.inject(this)
 
         return daggerComponent
+    }
+
+    override fun onCreate() {
+        daggerComponent = DaggerMyComponent.factory().create(this)
+        super.onCreate()
     }
 }
