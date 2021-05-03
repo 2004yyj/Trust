@@ -1,4 +1,4 @@
-package kr.hs.dgsw.trust.activity
+package kr.hs.dgsw.trust.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
