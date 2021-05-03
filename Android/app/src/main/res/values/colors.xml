@@ -10,4 +10,8 @@
     <color name="main_color_light">#BEB9FF</color>
     <color name="main_color">#7469FF</color>
     <color name="main_color_dark">#4A43AC</color>
+    <color name="submain_color_light">#F7CA83</color>
+    <color name="submain_color">#E69515</color>
+    <color name="submain_color_dark">#A86D0F</color>
+    <color name="error_color">#EB5959</color>
 </resources>
