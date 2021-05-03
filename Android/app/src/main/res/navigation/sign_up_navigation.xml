@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/sign_up_navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_up_navigation"
     app:startDestination="@id/signUpUserInfoFragment">
-
     <fragment
         android:id="@+id/signUpUserInfoFragment"
-        android:name="kr.hs.dgsw.trust.fragment.SignUpUserInfoFragment"
-        android:label="SignUpUserInfoFragment" >
+        android:name="kr.hs.dgsw.trust.ui.fragment.SignUpUserInfoFragment"
+        android:label="fragment_sign_up_user_info"
+        tools:layout="@layout/fragment_sign_up_user_info" >
         <action
             android:id="@+id/action_signUpUserInfoFragment_to_signUpSuccessFragment"
             app:destination="@id/signUpSuccessFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpSuccessFragment"
-        android:name="kr.hs.dgsw.trust.fragment.SignUpSuccessFragment"
-        android:label="SignUpSuccessFragment" />
+        android:name="kr.hs.dgsw.trust.ui.fragment.SignUpSuccessFragment"
+        android:label="fragment_sign_up_success"
+        tools:layout="@layout/fragment_sign_up_success" />
 </navigation>
