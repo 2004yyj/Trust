@@ -56,8 +56,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="74" />
-                            <option name="y" value="41" />
+                            <option name="x" value="96" />
+                            <option name="y" value="30" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -68,18 +68,9 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-147" />
-                            <option name="y" value="38" />
+                            <option name="x" value="-95" />
+                            <option name="y" value="39" />
                           </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_signUpUserInfoFragment_to_signUpSuccessFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
