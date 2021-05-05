@@ -49,13 +49,13 @@ class LoginFragment : Fragment() {
 
         btnLogin.setOnClickListener {
             //TODO 서버통신으로 아이디 비밀번호 확인
+            viewModel.login()
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
         }
 
         btnSignUp.setOnClickListener {
-            Log.d(TAG, "onViewCreated: call")
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
     }
@@ -68,12 +68,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.idEditText.observe(viewLifecycleOwner) {
+        viewModel.id.observe(viewLifecycleOwner) {
             tilId.error = "아이디를 입력해주세요."
             tilId.isErrorEnabled = it.isEmpty()
         }
 
-        viewModel.pwEditText.observe(viewLifecycleOwner) {
+        viewModel.pw.observe(viewLifecycleOwner) {
             tilPw.error = "비밀번호를 입력해주세요."
             tilPw.isErrorEnabled = it.isEmpty()
         }

@@ -48,7 +48,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_id_login"
-                    android:text="@={vm.idEditText}"
+                    android:text="@={vm.id}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -64,7 +64,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_pw_login"
-                    android:text="@={vm.pwEditText}"
+                    android:text="@={vm.pw}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="자동 로그인" />
+                android:text="@string/autoLogin" />
 
         </LinearLayout>
 
@@ -85,15 +85,15 @@
             android:layout_height="wrap_content"
             android:stateListAnimator="@null"
             style="@style/BoldButton"
-            android:text="로그인"
-            android:layout_marginBottom="100dp"
+            android:text="@string/login"
+            android:layout_marginBottom="65dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
             android:id="@+id/signUp_linear_login"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="?selectableItemBackground"
-                android:text="@string/sign_up" />
+                android:text="@string/signUp" />
 
         </LinearLayout>
 
