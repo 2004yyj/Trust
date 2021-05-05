@@ -4,13 +4,15 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class LoginViewModel : ViewModel() {
+class SignUpViewModel : ViewModel() {
 
     val id = MutableLiveData<String>()
+    val name = MutableLiveData<String>()
     val pw = MutableLiveData<String>()
+    val pwChk = MutableLiveData<String>()
 
-    fun login() {
-        //TODO 서버 측에서 아이디 비밀번호 확인 후 로그인 처리
+    fun signUp() {
+        //TODO 서버 측에서 아이디 비밀번호 확인 후 회원가입 처리
     }
 
 }
