@@ -7,7 +7,6 @@
     <fragment
         android:id="@+id/signUpUserInfoFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.SignUpUserInfoFragment"
-        android:label="fragment_sign_up_user_info"
         tools:layout="@layout/fragment_sign_up_user_info" >
         <action
             android:id="@+id/action_signUpUserInfoFragment_to_signUpSuccessFragment"
@@ -16,6 +15,5 @@
     <fragment
         android:id="@+id/signUpSuccessFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.SignUpSuccessFragment"
-        android:label="fragment_sign_up_success"
         tools:layout="@layout/fragment_sign_up_success" />
 </navigation>
