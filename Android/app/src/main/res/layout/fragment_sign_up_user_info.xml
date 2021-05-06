@@ -10,98 +10,120 @@
             type="SignUpViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="20dp"
-        tools:context=".ui.fragment.SignUpUserInfoFragment">
+        tools:context=".ui.fragment.SignUpUserInfoFragment"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/info_linear_signUp"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_signUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/btn_signUp_signUp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_id_signUp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/id">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_id_signUp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={vm.id}"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_name_signUp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_name_signUp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={vm.name}" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_pw_signUp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:hint="@string/pw">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_pw_signUp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={vm.pw}" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_pwChk_signUp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/pwChk">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_pwChk_signUp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={vm.pwChk}"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_signUp_signUp"
-            style="@style/BoldButton"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="65dp"
-            android:stateListAnimator="@null"
-            android:text="@string/signUp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="70dp"
+                android:paddingBottom="65dp"
+                android:clipToPadding="false">
+
+                <LinearLayout
+                    android:id="@+id/info_linear_signUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="70dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_signUp_signUp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_id_signUp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/id">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_id_signUp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={vm.id}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_name_signUp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_name_signUp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={vm.name}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_pw_signUp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:hint="@string/pw">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_pw_signUp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={vm.pw}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_pwChk_signUp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/pwChk">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_pwChk_signUp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={vm.pwChk}" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_signUp_signUp"
+                    style="@style/BoldButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stateListAnimator="@null"
+                    android:text="@string/signUp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
 </layout>

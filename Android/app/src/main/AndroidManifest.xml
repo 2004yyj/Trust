@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:name=".di.application.MyDaggerApplication"
         android:theme="@style/Theme.Trust">
-        <activity android:name=".ui.activity.IntroActivity">
+        <activity android:name=".ui.activity.IntroActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
