@@ -10,11 +10,19 @@
         android:name="kr.hs.dgsw.trust.ui.fragment.LoginFragment"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_loginFragment_to_signUpUserInfoFragment"
+            app:destination="@id/signUpUserInfoFragment" />
     </fragment>
     <fragment
-        android:id="@+id/signUpFragment"
-        android:name="kr.hs.dgsw.trust.ui.fragment.SignUpFragment"
-        tools:layout="@layout/fragment_sign_up" />
+        android:id="@+id/signUpSuccessFragment"
+        android:name="kr.hs.dgsw.trust.ui.fragment.SignUpSuccessFragment"
+        tools:layout="@layout/fragment_sign_up_success" />
+    <fragment
+        android:id="@+id/signUpUserInfoFragment"
+        android:name="kr.hs.dgsw.trust.ui.fragment.SignUpUserInfoFragment"
+        tools:layout="@layout/fragment_sign_up_user_info" >
+        <action
+            android:id="@+id/action_signUpUserInfoFragment_to_signUpSuccessFragment"
+            app:destination="@id/signUpSuccessFragment" />
+    </fragment>
 </navigation>

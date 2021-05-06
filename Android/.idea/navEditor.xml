@@ -17,25 +17,28 @@
                             <option name="y" value="37" />
                           </Point>
                         </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_loginFragment_to_signUpFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="signUpFragment">
+                  <entry key="signUpSuccessFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="77" />
-                            <option name="y" value="37" />
+                            <option name="x" value="276" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="signUpUserInfoFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="47" />
+                            <option name="y" value="17" />
                           </Point>
                         </option>
                       </LayoutPositions>
