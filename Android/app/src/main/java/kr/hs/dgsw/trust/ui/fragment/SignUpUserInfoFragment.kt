@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentSignUpUserInfoBinding
 import kr.hs.dgsw.trust.viewmodel.fragment.SignUpViewModel
@@ -19,6 +21,8 @@ class SignUpUserInfoFragment : Fragment() {
     private lateinit var viewModel : SignUpViewModel
 
     private lateinit var binding : FragmentSignUpUserInfoBinding
+
+    private lateinit var toolbar: Toolbar
 
     private val navController: NavController by lazy {
         findNavController()
@@ -41,6 +45,10 @@ class SignUpUserInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+
+        NavigationUI.setupWithNavController(toolbar, navController)
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_close_24)
+
         btnSignUp.setOnClickListener {
             viewModel.signUp()
             navController.navigate(R.id.action_signUpUserInfoFragment_to_signUpSuccessFragment)
@@ -49,5 +57,6 @@ class SignUpUserInfoFragment : Fragment() {
 
     private fun init() {
         btnSignUp = binding.btnSignUpSignUp
+        toolbar = binding.toolbarSignUp
     }
 }
