@@ -15,7 +15,13 @@ import kr.hs.dgsw.trust.di.module.ServiceModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, RetrofitModule::class])
+@Component(modules = [
+    AndroidInjectionModule::class,
+    RetrofitModule::class,
+    RepositoryModule::class,
+    RemoteModule::class,
+    ServiceModule::class
+])
 interface MyComponent : AndroidInjector<MyDaggerApplication> {
 
     fun inject(mainActivity: MainActivity)
