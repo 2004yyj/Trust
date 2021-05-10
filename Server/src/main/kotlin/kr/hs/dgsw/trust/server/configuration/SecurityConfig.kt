@@ -26,7 +26,7 @@ class SecurityConfig(): WebSecurityConfigurerAdapter() {
 
     override fun configure(web: WebSecurity?) {
         super.configure(web)
-        web?.ignoring()?.antMatchers("/css/**", "/js/**", "/img/**", "/lib/*8")
+        web?.ignoring()?.antMatchers("/css/**", "/js/**", "/img/**", "/lib/*8", "/static/**")
     }
 
 }
