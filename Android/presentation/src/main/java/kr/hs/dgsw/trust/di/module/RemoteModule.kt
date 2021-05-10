@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.di.module
 
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import kr.hs.dgsw.data.network.remote.AccountRemote
@@ -8,8 +9,8 @@ import javax.inject.Singleton
 
 @Module
 class RemoteModule {
-    @Singleton
     @Provides
-    fun provideAccountRemote(accountService: AccountService) : AccountRemote =
-        AccountRemote(accountService)
+    @Singleton
+    fun provideAccountRemote(accountService: AccountService, gson: Gson) : AccountRemote =
+        AccountRemote(accountService, gson)
 }

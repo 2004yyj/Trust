@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="50dp"
-                app:layout_constraintBottom_toTopOf="@+id/btn_login_login"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -56,7 +56,7 @@
                         android:id="@+id/et_id_login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.id}" />
+                        android:text="@={vm.username}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,23 +72,44 @@
                         android:id="@+id/et_pw_login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.pw}" />
+                        android:inputType="textPassword"
+                        android:text="@={vm.password}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_login_login"
-                style="@style/BoldButton"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="65dp"
-                android:stateListAnimator="@null"
-                android:text="@string/login"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    android:id="@+id/btn_login_login"
+                    style="@style/BoldButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stateListAnimator="@null"
+                    android:text="@string/login"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressBar_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:trackCornerRadius="1dp"
+                    android:layout_marginBottom="5.6dp"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/signUp_linear_login"

@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.di.module
 
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import kr.hs.dgsw.data.network.service.AccountService
@@ -11,11 +12,16 @@ import javax.inject.Singleton
 
 @Module
 class RetrofitModule {
+
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .baseUrl("http://10.80.163.88:8080")
+    fun gson() = Gson()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
+        .baseUrl("http://10.0.2.2:8080")
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 }

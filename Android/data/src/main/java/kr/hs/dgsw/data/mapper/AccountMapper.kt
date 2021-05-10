@@ -6,13 +6,15 @@ import kr.hs.dgsw.domain.entity.Account
 fun AccountResponse.toEntity(): Account {
     return Account(
         this.name,
-        this.username
+        this.username,
+        this.profileImage
     )
 }
 
 fun Account.toResponse(): AccountResponse {
     return AccountResponse(
         this.name,
-        this.username
+        this.username,
+        this.profileImage
     )
 }
