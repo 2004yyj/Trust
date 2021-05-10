@@ -14,4 +14,5 @@
     <color name="submain_color">#E69515</color>
     <color name="submain_color_dark">#A86D0F</color>
     <color name="error_color">#EB5959</color>
+    <color name="grey">#DFDFDF</color>
 </resources>
