@@ -9,4 +9,5 @@ class Account {
     @Id
     var username: String? = null
     var password: String? = null
+    var profileImage: String? = null
 }

@@ -1,21 +1,34 @@
 package kr.hs.dgsw.trust.server.controller
 
+import kr.hs.dgsw.trust.server.configuration.FileUploadProperties
 import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
+import kr.hs.dgsw.trust.server.service.FileService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.ResourceLoader
 import org.springframework.http.HttpStatus
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+import javax.servlet.ServletContext
+import kotlin.collections.HashMap
 
 @RestController
 @RequestMapping("/account")
-class AccountController(private val accountRepository: AccountRepository,
-                        private val passwordEncoder : PasswordEncoder
-                        ) {
+class AccountController(
+    private val accountRepository: AccountRepository,
+    private val passwordEncoder : PasswordEncoder,
+    ) {
 
+    @Autowired
+    private lateinit var fileService: FileService
 
     @PostMapping("/login")
     fun login(username: String, password: String) : HashMap<String, Any?> {
@@ -66,7 +79,11 @@ class AccountController(private val accountRepository: AccountRepository,
     }
 
     @PostMapping("/signUp")
-    fun signUp(name: String, username: String, password: String) : HashMap<String, Any?> {
+    fun signUp(name: String,
+               username: String,
+               password: String,
+               profileImage: MultipartFile,
+    ) : HashMap<String, Any?> {
         val account = Account()
         account.name = name
         account.username = username
@@ -74,8 +91,17 @@ class AccountController(private val accountRepository: AccountRepository,
 
         return if (isAccountInfoNotNull(account)) {
             if (isNotIdExist(account)) {
+                val filePath = if (!profileImage.originalFilename.isNullOrEmpty()) {
+                    val file = fileService.saveFile(profileImage)
+                    "/image/$file"
+                } else {
+                    "/image/defaultUserProfile.png"
+                }
+
+                account.profileImage = filePath
+
                 accountRepository.save(account)
-                account.password = ""
+
                 JsonResponse().returnResponse("200", "회원가입에 성공하였습니다.", account)
             } else {
                 throw UnauthenticatedException("중복된 아이디가 있습니다.")
