@@ -12,6 +12,7 @@ import kr.hs.dgsw.trust.di.module.RemoteModule
 import kr.hs.dgsw.trust.di.module.RepositoryModule
 import kr.hs.dgsw.trust.di.module.RetrofitModule
 import kr.hs.dgsw.trust.di.module.ServiceModule
+import kr.hs.dgsw.trust.ui.fragment.LoginFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -26,6 +27,7 @@ interface MyComponent : AndroidInjector<MyDaggerApplication> {
 
     fun inject(mainActivity: MainActivity)
     fun inject(introActivity: IntroActivity)
+    fun inject(loginFragment: LoginFragment)
 
     @Component.Factory
     interface Factory {
