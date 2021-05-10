@@ -41,6 +41,9 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
 
+    //tedPermission
+    implementation 'gun0912.ted:tedpermission:2.2.3'
+
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
