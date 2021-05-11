@@ -9,5 +9,6 @@ class Account {
     @Id
     var username: String? = null
     var password: String? = null
+    @Column(name = "profile_image")
     var profileImage: String? = null
 }

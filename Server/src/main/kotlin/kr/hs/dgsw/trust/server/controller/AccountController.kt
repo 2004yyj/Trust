@@ -1,6 +1,5 @@
 package kr.hs.dgsw.trust.server.controller
 
-import kr.hs.dgsw.trust.server.configuration.FileUploadProperties
 import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
@@ -8,17 +7,10 @@ import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.service.FileService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.io.ResourceLoader
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import java.io.File
-import java.io.FileOutputStream
-import java.util.*
-import javax.servlet.ServletContext
-import kotlin.collections.HashMap
 
 @RestController
 @RequestMapping("/account")
@@ -63,15 +55,6 @@ class AccountController(
         }
     }
 
-    fun isNotIdExist(account: Account) : Boolean {
-        return try {
-            accountRepository.findById(account.username!!).get()
-            false
-        } catch (e: Exception) {
-            true
-        }
-    }
-
     fun isIdAndPwNotNull(account: Account) : Boolean {
         val username : String? = account.username
         val password : String? = account.password
@@ -82,8 +65,9 @@ class AccountController(
     fun signUp(name: String,
                username: String,
                password: String,
-               profileImage: MultipartFile,
+               profileImage: MultipartFile?,
     ) : HashMap<String, Any?> {
+
         val account = Account()
         account.name = name
         account.username = username
@@ -91,7 +75,7 @@ class AccountController(
 
         return if (isAccountInfoNotNull(account)) {
             if (isNotIdExist(account)) {
-                val filePath = if (!profileImage.originalFilename.isNullOrEmpty()) {
+                val filePath = if (profileImage != null) {
                     val file = fileService.saveFile(profileImage)
                     "/image/$file"
                 } else {
@@ -101,7 +85,6 @@ class AccountController(
                 account.profileImage = filePath
 
                 accountRepository.save(account)
-
                 JsonResponse().returnResponse("200", "회원가입에 성공하였습니다.", account)
             } else {
                 throw UnauthenticatedException("중복된 아이디가 있습니다.")
@@ -116,6 +99,15 @@ class AccountController(
         val username: String? = account.username
         val password: String? = account.password
         return !(name.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty())
+    }
+
+    fun isNotIdExist(account: Account) : Boolean {
+        return try {
+            accountRepository.findById(account.username!!).get()
+            false
+        } catch (e: Exception) {
+            true
+        }
     }
 
     @ExceptionHandler(value = [BadRequestException::class])
