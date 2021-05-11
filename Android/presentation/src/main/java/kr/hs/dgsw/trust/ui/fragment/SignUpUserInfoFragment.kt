@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.textfield.TextInputLayout
 import kr.hs.dgsw.domain.usecase.account.PostSignUpUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentSignUpUserInfoBinding
@@ -40,9 +41,15 @@ class SignUpUserInfoFragment : Fragment() {
     lateinit var postSignUpUseCase: PostSignUpUseCase
 
     private lateinit var toolbar: Toolbar
-    private lateinit var btnProfileImageAdd: ImageButton
     private lateinit var ivProfileImage: ImageView
+    private lateinit var btnProfileImageAdd: ImageButton
     private lateinit var btnSignUp : Button
+    private lateinit var tilUsername: TextInputLayout
+    private lateinit var tilName: TextInputLayout
+    private lateinit var tilPassword: TextInputLayout
+    private lateinit var tilPasswordChk: TextInputLayout
+
+
     private lateinit var multipartBody: MultipartBody.Part
 
     private val navController: NavController by lazy {
@@ -114,6 +121,34 @@ class SignUpUserInfoFragment : Fragment() {
             val action = SignUpUserInfoFragmentDirections.actionSignUpUserInfoFragmentToSignUpSuccessFragment()
             navController.navigate(action)
         }
+
+        viewModel.username.observe(viewLifecycleOwner) {
+            tilUsername.error = "필수 항목입니다."
+            tilUsername.isErrorEnabled = it.isEmpty()
+        }
+
+        viewModel.name.observe(viewLifecycleOwner) {
+            tilName.error = "필수 항목입니다."
+            tilName.isErrorEnabled = it.isEmpty()
+        }
+
+        viewModel.password.observe(viewLifecycleOwner) {
+            tilPassword.error = "필수 항목입니다."
+            tilPassword.isErrorEnabled = it.isEmpty()
+        }
+
+        viewModel.passwordChk.observe(viewLifecycleOwner) {
+            val pw = tilPassword.editText?.text.toString()
+            tilPasswordChk.apply {
+                if (it.isEmpty()) {
+                    error = "필수 항목입니다."
+                    isErrorEnabled = it.isEmpty()
+                } else {
+                    error = "비밀번호가 일치하지 않습니다."
+                    isErrorEnabled = (pw != it)
+                }
+            }
+        }
     }
 
     private fun init() {
@@ -121,6 +156,10 @@ class SignUpUserInfoFragment : Fragment() {
         btnProfileImageAdd = binding.btnProfileImageAddSignUp
         ivProfileImage = binding.ivProfileImageSignUp
         toolbar = binding.toolbarSignUp
+        tilUsername = binding.tilUsernameSignUp
+        tilName = binding.tilNameSignUp
+        tilPassword = binding.tilPwSignUp
+        tilPasswordChk = binding.tilPwChkSignUp
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             navController.navigateUp()

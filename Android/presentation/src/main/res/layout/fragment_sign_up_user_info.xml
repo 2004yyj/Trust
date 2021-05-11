@@ -86,7 +86,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til_id_signUp"
+                        android:id="@+id/til_username_sign_up"
                         android:layout_marginTop="25dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                         android:hint="@string/id">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_id_signUp"
+                            android:id="@+id/et_username_signUp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@={vm.username}" />
@@ -123,12 +123,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:hint="@string/pw">
+                        android:hint="@string/pw"
+                        app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_pw_signUp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="textPassword"
                             android:text="@={vm.password}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -139,12 +141,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:hint="@string/pwChk">
+                        android:hint="@string/pwChk"
+                        app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_pwChk_signUp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:inputType="textPassword"
                             android:text="@={vm.passwordChk}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
