@@ -31,6 +31,7 @@ class AccountController(
         return if (isIdAndPwNotNull(account)) {
             if (isIdAndPwExist(account)) {
                 account.name = getName(account)
+                account.profileImage = getProfileImage(account)
                 account.password = ""
                 JsonResponse().returnResponse("200", "로그인에 성공하였습니다.", account)
             } else {
@@ -42,15 +43,21 @@ class AccountController(
     }
 
     fun getName(account: Account) : String {
-        val account = accountRepository.findById(account.username!!).orElseThrow()
-        return account.name!!
+        val foundAccount = accountRepository.findById(account.username!!).orElseThrow()
+        return foundAccount.name!!
+    }
+
+    fun getProfileImage(account: Account) : String {
+        val foundAccount = accountRepository.findById(account.username!!).orElseThrow()
+        return foundAccount.profileImage!!
     }
 
     fun isIdAndPwExist(account: Account) : Boolean {
-        return try {
+        val isPresent = accountRepository.findById(account.username!!).isPresent
+        return if (isPresent) {
             val foundAccount = accountRepository.findById(account.username!!).get()
             passwordEncoder.matches(account.password!!, foundAccount.password)
-        } catch (e: Exception) {
+        } else {
             false
         }
     }
@@ -102,12 +109,7 @@ class AccountController(
     }
 
     fun isNotIdExist(account: Account) : Boolean {
-        return try {
-            accountRepository.findById(account.username!!).get()
-            false
-        } catch (e: Exception) {
-            true
-        }
+        return accountRepository.findById(account.username!!).isEmpty
     }
 
     @ExceptionHandler(value = [BadRequestException::class])

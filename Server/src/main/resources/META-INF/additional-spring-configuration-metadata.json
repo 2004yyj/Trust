@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "file.upload.location",
-      "type": "java.lang.String",
-      "description": "Description for file.upload.location."
-  }
-] }
