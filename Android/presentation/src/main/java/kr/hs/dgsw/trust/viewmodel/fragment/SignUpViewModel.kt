@@ -1,18 +1,47 @@
 package kr.hs.dgsw.trust.viewmodel.fragment
 
-import androidx.databinding.ObservableField
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import kr.hs.dgsw.domain.usecase.account.PostSignUpUseCase
+import okhttp3.MultipartBody
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(private val postSignUpUseCase: PostSignUpUseCase) : ViewModel() {
 
-    val id = MutableLiveData<String>()
+    val username = MutableLiveData<String>()
     val name = MutableLiveData<String>()
-    val pw = MutableLiveData<String>()
-    val pwChk = MutableLiveData<String>()
+    val password = MutableLiveData<String>()
+    val passwordChk = MutableLiveData<String>()
 
-    fun signUp() {
-        //TODO 서버 측에서 아이디 비밀번호 확인 후 회원가입 처리
+    private val compositeDisposable = CompositeDisposable()
+
+    private val _isSuccess = MutableLiveData<Boolean>()
+    val isSuccess = _isSuccess
+
+    private val _isFailure = MutableLiveData<String>()
+    val isFailure = _isFailure
+
+    fun signUp(profileImage: MultipartBody.Part?) {
+        postSignUpUseCase.postSignUp(name.value!!, username.value!!, password.value!!, profileImage)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                _isSuccess.value = true
+            }, {
+                _isFailure.value = it.message
+            })
+            .apply {
+                compositeDisposable.add(this)
+            }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 
 }
