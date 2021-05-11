@@ -1,11 +1,12 @@
 package kr.hs.dgsw.trust.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import kr.hs.dgsw.trust.R
@@ -33,6 +34,10 @@ class SignUpSuccessFragment : Fragment() {
         signUp.setOnClickListener {
             navigateToLogin()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            navigateToLogin()
+        }
     }
 
     private fun init(view: View) {
@@ -40,6 +45,6 @@ class SignUpSuccessFragment : Fragment() {
     }
 
     private fun navigateToLogin() {
-        navController.navigate(R.id.action_signUpSuccessFragment_to_loginFragment)
+        navController.navigateUp()
     }
 }

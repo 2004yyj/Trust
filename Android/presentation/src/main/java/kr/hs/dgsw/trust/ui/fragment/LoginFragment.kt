@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.PermissionChecker.PERMISSION_DENIED
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.gun0912.tedpermission.PermissionListener
@@ -43,9 +43,12 @@ class LoginFragment : Fragment() {
     private lateinit var tilPw : TextInputLayout
     private lateinit var btnLogin : Button
     private lateinit var btnSignUp : Button
-    private lateinit var progressBar : ProgressBar
 
     private lateinit var permissionListener : PermissionListener
+
+    private val navController : NavController by lazy {
+        findNavController()
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -71,21 +74,18 @@ class LoginFragment : Fragment() {
         btnLogin.setOnClickListener {
             viewModel.apply {
                 if (!username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()) {
-                    viewModel.login()
-                    progressBar.animate()
+                    login()
                     return@setOnClickListener
                 }
             }
-
 
             Toast.makeText(context, "아이디 또는 비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
         }
 
         btnSignUp.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_signUpUserInfoFragment)
+            val action = LoginFragmentDirections.actionLoginFragmentToSignUpUserInfoFragment()
+            navController.navigate(action)
         }
-
-
     }
 
     private fun tedPermission() {
@@ -116,7 +116,6 @@ class LoginFragment : Fragment() {
         tilPw = binding.tilPwLogin
         btnLogin = binding.btnLoginLogin
         btnSignUp = binding.btnSignUpLogin
-        progressBar = binding.progressBarLogin
     }
 
     private fun observe() {

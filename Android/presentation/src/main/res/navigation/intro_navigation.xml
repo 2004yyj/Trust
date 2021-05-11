@@ -11,6 +11,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_signUpUserInfoFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/signUpUserInfoFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
@@ -23,7 +25,13 @@
         tools:layout="@layout/fragment_sign_up_success" >
         <action
             android:id="@+id/action_signUpSuccessFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/signUpSuccessFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/signUpUserInfoFragment"
@@ -31,6 +39,12 @@
         tools:layout="@layout/fragment_sign_up_user_info" >
         <action
             android:id="@+id/action_signUpUserInfoFragment_to_signUpSuccessFragment"
-            app:destination="@id/signUpSuccessFragment" />
+            app:destination="@id/signUpSuccessFragment"
+            app:popUpTo="@id/signUpUserInfoFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
 </navigation>

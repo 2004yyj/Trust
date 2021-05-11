@@ -121,6 +121,10 @@ class SignUpUserInfoFragment : Fragment() {
         btnProfileImageAdd = binding.btnProfileImageAddSignUp
         ivProfileImage = binding.ivProfileImageSignUp
         toolbar = binding.toolbarSignUp
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            navController.navigateUp()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
