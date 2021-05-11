@@ -16,9 +16,9 @@ interface AccountService {
 
     @Multipart
     @POST("/account/signUp")
-    fun postSignUp(@Part("name") name: String,
-                   @Part("username") username: String,
-                   @Part("password") password: String,
+    fun postSignUp(@Part("name") name: RequestBody,
+                   @Part("username") username: RequestBody,
+                   @Part("password") password: RequestBody,
                    @Part profileImage: MultipartBody.Part?
     ) : Single<Response<kr.hs.dgsw.data.util.Response<AccountResponse>>>
 }
