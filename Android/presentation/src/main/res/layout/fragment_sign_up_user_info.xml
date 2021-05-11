@@ -97,7 +97,7 @@
                             android:id="@+id/et_id_signUp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={vm.id}" />
+                            android:text="@={vm.username}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +129,7 @@
                             android:id="@+id/et_pw_signUp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={vm.pw}" />
+                            android:text="@={vm.password}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,7 +145,7 @@
                             android:id="@+id/et_pwChk_signUp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@={vm.pwChk}" />
+                            android:text="@={vm.passwordChk}" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
