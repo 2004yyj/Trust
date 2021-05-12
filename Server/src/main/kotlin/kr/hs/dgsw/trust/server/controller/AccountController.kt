@@ -32,7 +32,6 @@ class AccountController(
             if (isIdAndPwExist(account)) {
                 account.name = getName(account)
                 account.profileImage = getProfileImage(account)
-                account.password = ""
                 JsonResponse().returnResponse("200", "로그인에 성공하였습니다.", account)
             } else {
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")

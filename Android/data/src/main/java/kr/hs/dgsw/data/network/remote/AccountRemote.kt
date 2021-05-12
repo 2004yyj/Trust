@@ -29,7 +29,6 @@ class AccountRemote @Inject constructor(
     fun postSignUp(name: String, username: String, password: String, profileImage: MultipartBody.Part?): Single<AccountResponse> {
 
         val textType = "text/plain".toMediaType()
-
         val name = name.toRequestBody(textType)
         val username = username.toRequestBody(textType)
         val password = password.toRequestBody(textType)
