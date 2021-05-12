@@ -11,4 +11,8 @@
     <string name="login">로그인</string>
     <string name="autoLogin">자동 로그인</string>
     <string name="profileimage">profileImage</string>
+    <string name="home">홈</string>
+    <string name="board">게시판</string>
+    <string name="chat">채팅</string>
+    <string name="userInfo">내 정보</string>
 </resources>
