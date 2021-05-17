@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="true">
-        <bitmap android:src="@drawable/ic_like_enabled"/>
-    </item>
+    <item android:state_checked="true"
+        android:drawable="@drawable/ic_like_enabled"/>
 
-    <item android:state_enabled="false">
-        <bitmap android:src="@drawable/ic_like"/>
-    </item>
+    <item android:state_checked="false"
+        android:drawable="@drawable/ic_like"/>
 </selector>
