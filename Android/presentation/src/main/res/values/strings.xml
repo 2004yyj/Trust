@@ -16,4 +16,7 @@
     <string name="chat">채팅</string>
     <string name="userInfo">내 정보</string>
     <string name="profile_image">프로필 사진</string>
+    <string name="like">좋아요</string>
+    <string name="comment">댓글 달기</string>
+    <string name="chatting">채팅 하기</string>
 </resources>

@@ -1,64 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="20dp"
-    android:layout_margin="10dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:clipToPadding="false">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="20dp"
+        android:layout_margin="10dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="40dp"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="15dp"
+            android:clipToPadding="false">
 
-            <ImageView
-                android:id="@+id/iv_profileImage_post"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@color/grey"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/profile_image" />
+                app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/iv_profileImage_post"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@color/grey"
+                    android:contentDescription="@string/profile_image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toEndOf="@+id/cardView_post"
-            app:layout_constraintTop_toTopOf="parent">
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/tv_name_post"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="사용자명"
-                android:textSize="17sp"/>
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@+id/cardView_post"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_name_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="사용자명"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_created_at_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="10분 전"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_created_at_post"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_content_post"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                tools:text="10분 전"
-                android:textSize="12sp"/>
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toTopOf="@id/view2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView_post"
+                tools:text="내용내용내용내용내용내용내용내용내용내용내용내용내용" />
 
-        </LinearLayout>
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey"
+                android:layout_marginVertical="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_content_post" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view2">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <CheckBox
+                    android:id="@+id/chk_like_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:button="@drawable/btn_like"
+                    android:buttonTint="@color/black"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/like"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/view3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.cardview.widget.CardView>
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_comment_post"
+                    app:layout_constraintStart_toEndOf="@id/chk_like_post"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_comment_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="?selectableItemBackground"
+                    android:drawableStart="@drawable/ic_comment"
+                    android:drawablePadding="10dp"
+                    android:text="@string/comment"
+                    android:textAlignment="textStart"
+                    app:layout_constraintTop_toBottomOf="@id/view3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/view4"
+                    app:layout_constraintStart_toEndOf="@id/view3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_comment_post"
+                    app:layout_constraintStart_toEndOf="@id/btn_chatting_post"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_chatting_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="?selectableItemBackground"
+                    android:drawableStart="@drawable/ic_chat"
+                    android:drawablePadding="10dp"
+                    android:text="@string/chatting"
+                    android:textAlignment="textStart"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/view4"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
