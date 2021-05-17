@@ -10,10 +10,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.trust.R
+import kr.hs.dgsw.trust.adapter.PostAdapter
 
 class HomeFragment : Fragment() {
 
+    private lateinit var recyclerAdapter: PostAdapter
+    private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
 
     private val navController: NavController by lazy {
@@ -32,6 +38,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toolbar = view.findViewById(R.id.toolbar_home)
+        recyclerView = view.findViewById(R.id.rv_post_home)
+        recyclerAdapter = PostAdapter()
 
         val appbarConfiguration = AppBarConfiguration(
             setOf(
@@ -42,5 +50,19 @@ class HomeFragment : Fragment() {
             ), null
         )
         NavigationUI.setupWithNavController(toolbar, navController, appbarConfiguration)
+
+        recyclerView.adapter = recyclerAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        recyclerAdapter.submitList(
+            listOf(
+                Post(1),
+                Post(2),
+                Post(3),
+                Post(4),
+                Post(5),
+                Post(6),
+            )
+        )
     }
 }
