@@ -33,6 +33,7 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.18")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("mysql:mysql-connector-java")
+    implementation("com.google.code.gson:gson:2.8.6")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
