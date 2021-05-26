@@ -12,3 +12,11 @@ class Account {
     @Column(name = "profile_image")
     var profileImage: String? = null
 }
+
+fun Account.toHashMap(): HashMap<String, Any?> {
+    val hashMap = HashMap<String, Any?>()
+    hashMap["name"] = name
+    hashMap["username"] = username
+    hashMap["profileImage"] = profileImage
+    return hashMap
+}

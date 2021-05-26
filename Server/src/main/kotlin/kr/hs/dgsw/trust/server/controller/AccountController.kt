@@ -1,6 +1,7 @@
 package kr.hs.dgsw.trust.server.controller
 
 import kr.hs.dgsw.trust.server.data.entity.Account
+import kr.hs.dgsw.trust.server.data.entity.toHashMap
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
@@ -32,7 +33,7 @@ class AccountController(
             if (isIdAndPwExist(account)) {
                 account.name = getName(account)
                 account.profileImage = getProfileImage(account)
-                JsonResponse().returnResponse("200", "로그인에 성공하였습니다.", account)
+                JsonResponse().returnResponse("200", "로그인에 성공하였습니다.", account.toHashMap())
             } else {
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
             }
@@ -91,7 +92,7 @@ class AccountController(
                 account.profileImage = filePath
 
                 accountRepository.save(account)
-                JsonResponse().returnResponse("200", "회원가입에 성공하였습니다.", account)
+                JsonResponse().returnResponse("200", "회원가입에 성공하였습니다.", account.toHashMap())
             } else {
                 throw UnauthenticatedException("중복된 아이디가 있습니다.")
             }
