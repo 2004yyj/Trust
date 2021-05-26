@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kr.hs.dgsw.domain.entity.Account
 import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.adapter.PostAdapter
@@ -56,13 +57,16 @@ class HomeFragment : Fragment() {
 
         recyclerAdapter.submitList(
             listOf(
-                Post(1),
-                Post(2),
-                Post(3),
-                Post(4),
-                Post(5),
-                Post(6),
+                    Post(
+                            1,
+                            Account("asdfas", "asdfsafda", "ASdfasd"),
+                            System.currentTimeMillis(),
+                            "adsfasdf")
             )
         )
+
+        recyclerAdapter.setOnClickCommentPost {
+            CommentFragment.newInstance(it).showNow(requireFragmentManager(), "")
+        }
     }
 }
