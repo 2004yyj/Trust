@@ -23,8 +23,8 @@ import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentLoginBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.activity.MainActivity
-import kr.hs.dgsw.trust.viewmodel.factory.LoginViewModelFactory
-import kr.hs.dgsw.trust.viewmodel.fragment.LoginViewModel
+import kr.hs.dgsw.trust.ui.viewmodel.factory.LoginViewModelFactory
+import kr.hs.dgsw.trust.ui.viewmodel.fragment.LoginViewModel
 import javax.inject.Inject
 
 class LoginFragment : Fragment() {

@@ -26,8 +26,8 @@ import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentSignUpUserInfoBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.function.asMultipart
-import kr.hs.dgsw.trust.viewmodel.factory.SignUpViewModelFactory
-import kr.hs.dgsw.trust.viewmodel.fragment.SignUpViewModel
+import kr.hs.dgsw.trust.ui.viewmodel.factory.SignUpViewModelFactory
+import kr.hs.dgsw.trust.ui.viewmodel.fragment.SignUpViewModel
 import okhttp3.MultipartBody
 import javax.inject.Inject
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="kr.hs.dgsw.trust.viewmodel.fragment.LoginViewModel"/>
+        <import type="kr.hs.dgsw.trust.ui.viewmodel.fragment.LoginViewModel"/>
         <variable
             name="vm"
             type="LoginViewModel" />
