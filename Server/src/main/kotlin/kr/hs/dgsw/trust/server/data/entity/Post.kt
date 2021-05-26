@@ -9,6 +9,7 @@ class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int? = null
     var username: String? = null
+    @Column(name = "created_at")
     var createdAt: Timestamp? = null
     var content: String? = null
 }
