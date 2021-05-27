@@ -1,9 +1,7 @@
 package kr.hs.dgsw.trust.ui.fragment
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +11,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -49,8 +49,9 @@ class SignUpUserInfoFragment : Fragment() {
     private lateinit var tilPassword: TextInputLayout
     private lateinit var tilPasswordChk: TextInputLayout
 
-
     private lateinit var multipartBody: MultipartBody.Part
+
+    private lateinit var activityResultLauncher: ActivityResultLauncher<String>
 
     private val navController: NavController by lazy {
         findNavController()
@@ -105,10 +106,7 @@ class SignUpUserInfoFragment : Fragment() {
         }
 
         btnProfileImageAdd.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(intent, 1)
+            activityResultLauncher.launch("image/*")
         }
     }
 
@@ -161,24 +159,17 @@ class SignUpUserInfoFragment : Fragment() {
         tilPassword = binding.tilPwSignUp
         tilPasswordChk = binding.tilPwChkSignUp
 
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            if (it != null) {
+                val inputStream = requireActivity().contentResolver.openInputStream(it)
+                val image = BitmapFactory.decodeStream(inputStream)
+                multipartBody = it.asMultipart(requireActivity().contentResolver)!!
+                ivProfileImage.setImageBitmap(image)
+            }
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             navController.navigateUp()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            val uri : Uri? = Uri.parse(intent?.dataString)
-
-            if (uri != null) {
-                val inputStream = requireActivity().contentResolver.openInputStream(uri)
-                val image = BitmapFactory.decodeStream(inputStream)
-                multipartBody = uri.asMultipart(requireActivity().contentResolver)!!
-                ivProfileImage.setImageBitmap(image)
-                inputStream?.close()
-            }
         }
     }
 
