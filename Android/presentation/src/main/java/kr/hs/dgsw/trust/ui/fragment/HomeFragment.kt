@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
         )
 
         recyclerAdapter.setOnClickCommentPost {
-            CommentFragment.newInstance(it).showNow(requireFragmentManager(), "")
+            CommentFragment.newInstance(it).showNow(requireActivity().supportFragmentManager, "")
         }
     }
 }
