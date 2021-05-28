@@ -31,8 +31,9 @@ class AccountController(
 
         return if (isIdAndPwNotNull(account)) {
             if (isIdAndPwExist(account)) {
-                account.name = getName(account)
-                account.profileImage = getProfileImage(account)
+                val foundAccount = getAccount(account)
+                account.name = foundAccount.name
+                account.profileImage = foundAccount.profileImage
                 JsonResponse().returnResponse("200", "로그인에 성공하였습니다.", account.toHashMap())
             } else {
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
@@ -42,14 +43,8 @@ class AccountController(
         }
     }
 
-    fun getName(account: Account) : String {
-        val foundAccount = accountRepository.findById(account.username!!).orElseThrow()
-        return foundAccount.name!!
-    }
-
-    fun getProfileImage(account: Account) : String {
-        val foundAccount = accountRepository.findById(account.username!!).orElseThrow()
-        return foundAccount.profileImage!!
+    fun getAccount(account: Account): Account {
+        return accountRepository.findById(account.username!!).orElseThrow()
     }
 
     fun isIdAndPwExist(account: Account) : Boolean {
