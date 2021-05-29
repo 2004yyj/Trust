@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile
 class AccountController(
     private val accountRepository: AccountRepository,
     private val passwordEncoder : PasswordEncoder,
-    ) {
+) {
 
     @Autowired
     private lateinit var fileService: FileService
@@ -83,7 +83,6 @@ class AccountController(
                 } else {
                     "/image/defaultUserProfile.png"
                 }
-
                 account.profileImage = filePath
 
                 accountRepository.save(account)
