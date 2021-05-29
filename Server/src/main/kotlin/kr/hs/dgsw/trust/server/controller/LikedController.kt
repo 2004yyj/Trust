@@ -31,7 +31,7 @@ class LikedController(
         return jsonList
     }
 
-    @GetMapping("/liked/{postId}/save")
+    @PostMapping("/liked/{postId}/save")
     fun saveLiked(@PathVariable postId: Int, username: String, password: String): HashMap<String, Any?> {
         val liked = Liked()
         try {
@@ -56,16 +56,16 @@ class LikedController(
         )
     }
 
-    @GetMapping("/liked/{id}/delete")
-    fun deleteLiked(@PathVariable id: Int, username: String, password: String): HashMap<String, Any?> {
+    @DeleteMapping("/liked/{likedId}/delete")
+    fun deleteLiked(@PathVariable likedId: Int, username: String, password: String): HashMap<String, Any?> {
         return try {
-            val liked = likedRepository.findById(id).orElseThrow()
+            val liked = likedRepository.findById(likedId).orElseThrow()
             val account = accountRepository.findById(username).orElseThrow()
 
             val accountMatch = username == liked.username
 
             if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
-                likedRepository.deleteById(id)
+                likedRepository.deleteById(likedId)
                 JsonResponse().returnResponse(
                     "200",
                     "글을 성공적으로 삭제하였습니다.",

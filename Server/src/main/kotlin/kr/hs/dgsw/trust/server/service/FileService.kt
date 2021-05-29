@@ -55,4 +55,10 @@ class FileService(fileUploadProperties: FileUploadProperties) {
             throw FileNotFoundException("파일을 찾을 수 없습니다.")
         }
     }
+
+    fun isFileExist(fileName: String): Boolean {
+        val file = location.resolve(fileName).normalize()
+        val resource = UrlResource(file.toUri())
+        return resource.exists() || resource.isReadable
+    }
 }

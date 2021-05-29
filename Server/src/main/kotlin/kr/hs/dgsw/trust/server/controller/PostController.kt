@@ -96,7 +96,7 @@ class PostController(
     }
 
     @PutMapping("/post/{postId}/update")
-    fun updatePost(@PathVariable postId: Int, username: String, password: String, content: String): HashMap<String, Any?> {
+    fun updatePost(@PathVariable postId: Int, username: String, password: String, content: String?): HashMap<String, Any?> {
         return if (postRepository.existsById(postId)) {
             try {
                 val post = postRepository.findById(postId).orElseThrow()
@@ -109,7 +109,7 @@ class PostController(
                         username == post.username
 
                 if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
-                    post.content = content
+                    post.content = if (!content.isNullOrEmpty()) content else post.content
                     postRepository.save(post)
 
                     JsonResponse().returnResponse(
