@@ -15,7 +15,7 @@ import java.nio.file.Paths
 import javax.servlet.http.HttpServletResponse
 
 @RestController
-class FileController() {
+class FileController {
 
     @Autowired
     private lateinit var fileService: FileService
