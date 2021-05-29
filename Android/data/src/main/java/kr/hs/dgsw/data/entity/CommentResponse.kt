@@ -1,7 +1,11 @@
 package kr.hs.dgsw.data.entity
 
 data class CommentResponse(
-        val postId: Int,
-        val account: AccountResponse,
-        val content: String,
+    val id: Int,
+    val postId: Int,
+    val createdAt: Long,
+    val isAnonymous: Boolean,
+    val content: String,
+    val imageList: String,
+    val account: AccountResponse
 )
