@@ -12,6 +12,8 @@ class Post {
     @Column(name = "created_at")
     var createdAt: Timestamp? = null
     var content: String? = null
+    var imageList: String? = null
+    var isAnonymous: Boolean? = null
 }
 
 fun Post.toHashMap(): HashMap<String, Any?> {
@@ -20,5 +22,7 @@ fun Post.toHashMap(): HashMap<String, Any?> {
     hashMap["username"] = username
     hashMap["createdAt"] = createdAt?.time
     hashMap["content"] = content
+    hashMap["imageList"] = imageList
+    hashMap["isAnonymous"] = isAnonymous
     return hashMap
 }

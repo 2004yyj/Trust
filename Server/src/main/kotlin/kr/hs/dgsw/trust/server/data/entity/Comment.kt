@@ -8,6 +8,7 @@ import javax.persistence.Id
 
 @Entity(name = "comment")
 class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int? = null
@@ -15,6 +16,8 @@ class Comment {
     var username: String? = null
     var createdAt: Timestamp? = null
     var content: String? = null
+    var imageList : String? = null
+    var isAnonymous: Boolean? = null
 }
 
 fun Comment.toHashMap(): HashMap<String, Any?> {
@@ -24,5 +27,7 @@ fun Comment.toHashMap(): HashMap<String, Any?> {
     hashMap["username"] = username
     hashMap["createdAt"] = createdAt?.time
     hashMap["content"] = content
+    hashMap["imageList"] = imageList
+    hashMap["isAnonymous"] = isAnonymous
     return hashMap
 }
