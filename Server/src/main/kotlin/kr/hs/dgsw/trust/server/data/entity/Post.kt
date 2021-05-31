@@ -22,7 +22,7 @@ fun Post.toJsonObject(): JSONObject {
     val jsonObject = JSONObject()
     val jsonArray = JSONArray(imageList)
     jsonObject.put("id", id)
-    jsonObject.put("createdAt", createdAt)
+    jsonObject.put("createdAt", createdAt?.time)
     jsonObject.put("content", content)
     jsonObject.put("imageList", jsonArray)
     jsonObject.put("isAnonymous", isAnonymous)
