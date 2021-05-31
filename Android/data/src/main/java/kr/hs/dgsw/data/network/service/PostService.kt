@@ -12,11 +12,11 @@ interface PostService {
     @GET("/post")
     fun getAllPost() : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
 
-    @GET("/post/{postId}")
-    fun getPost(@Path("postId") postId: Int) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+    @GET("/post")
+    fun getPost(@Query("postId") postId: Int) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
 
-    @GET("/post/{username}")
-    fun getAllPostByUsername(@Path("username") username: String) : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
+    @GET("/post")
+    fun getAllPostByUsername(@Query("username") username: String) : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
 
     @Multipart
     @POST("/post/save")
