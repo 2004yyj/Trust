@@ -1,25 +1,24 @@
-package kr.hs.dgsw.trust.adapter
+package kr.hs.dgsw.trust.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import kr.hs.dgsw.data.entity.PostResponse
 import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.trust.R
-import kr.hs.dgsw.trust.adapter.viewholder.PostViewHolder
+import kr.hs.dgsw.trust.ui.adapter.viewholder.PostViewHolder
 
-class PostAdapter() : ListAdapter<Post, PostViewHolder>(diffUtil) {
+class PostAdapter : ListAdapter<Post, PostViewHolder>(diffUtil) {
 
-    interface OnClickCommentPost {
+    interface OnClickCommentListener {
         fun onClick(postId: Int)
     }
 
-    private lateinit var onClickCommentPost: OnClickCommentPost
+    private lateinit var onClickCommentListener: OnClickCommentListener
 
-    fun setOnClickCommentPost(listener: (Int) -> Unit) {
-        onClickCommentPost = object : OnClickCommentPost {
+    fun setOnClickCommentListener(listener: (Int) -> Unit) {
+        onClickCommentListener = object : OnClickCommentListener {
             override fun onClick(postId: Int) {
                 listener(postId)
             }
@@ -29,11 +28,11 @@ class PostAdapter() : ListAdapter<Post, PostViewHolder>(diffUtil) {
     companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Post>() {
             override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem == newItem
+                return false
             }
 
             override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem == newItem
+                return false
             }
 
         }
@@ -45,7 +44,7 @@ class PostAdapter() : ListAdapter<Post, PostViewHolder>(diffUtil) {
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(currentList[position], onClickCommentPost)
+        holder.bind(getItem(position), onClickCommentListener)
     }
 
 

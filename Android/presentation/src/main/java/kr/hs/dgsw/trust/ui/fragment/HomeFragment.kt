@@ -4,24 +4,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kr.hs.dgsw.domain.entity.Account
-import kr.hs.dgsw.domain.entity.Post
+import kr.hs.dgsw.domain.usecase.post.GetPostUseCase
 import kr.hs.dgsw.trust.R
-import kr.hs.dgsw.trust.adapter.PostAdapter
+import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
+import kr.hs.dgsw.trust.di.application.MyDaggerApplication
+import kr.hs.dgsw.trust.ui.adapter.PostAdapter
+import kr.hs.dgsw.trust.ui.viewmodel.factory.PostViewModelFactory
+import kr.hs.dgsw.trust.ui.viewmodel.fragment.PostViewModel
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
-    private lateinit var recyclerAdapter: PostAdapter
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var toolbar: Toolbar
+    @Inject
+    lateinit var getPostCase: GetPostUseCase
+
+    private lateinit var viewModel: PostViewModel
+    private lateinit var binding: FragmentHomeBinding
+    private val recyclerAdapter: PostAdapter by lazy { PostAdapter() }
+    private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
+
+    private val toolbar: Toolbar by lazy { binding.toolbarHome }
 
     private val navController: NavController by lazy {
         findNavController()
@@ -30,17 +43,28 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+
+        val application = requireActivity().application
+        (application as MyDaggerApplication).daggerComponent.inject(this)
+
+        viewModel = ViewModelProvider(this, PostViewModelFactory(getPostCase))[PostViewModel::class.java]
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding.vm = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar = view.findViewById(R.id.toolbar_home)
-        recyclerView = view.findViewById(R.id.rv_post_home)
-        recyclerAdapter = PostAdapter()
+        init()
+        observe()
+
+        viewModel.getAllPost()
+
+        viewModel.isFailure.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
 
         val appbarConfiguration = AppBarConfiguration(
             setOf(
@@ -51,22 +75,24 @@ class HomeFragment : Fragment() {
             ), null
         )
         NavigationUI.setupWithNavController(toolbar, navController, appbarConfiguration)
+    }
 
+    private fun init() {
         recyclerView.adapter = recyclerAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-        recyclerAdapter.submitList(
-            listOf(
-                    Post(
-                            1,
-                            Account("asdfas", "asdfsafda", "ASdfasd"),
-                            System.currentTimeMillis(),
-                            "adsfasdf")
-            )
-        )
-
-        recyclerAdapter.setOnClickCommentPost {
-            CommentFragment.newInstance(it).showNow(requireActivity().supportFragmentManager, "")
+        recyclerAdapter.setOnClickCommentListener {
+            commentDialogOpen(it)
         }
+    }
+
+    private fun observe() {
+        viewModel.postList.observe(viewLifecycleOwner) {
+            recyclerAdapter.submitList(it)
+        }
+    }
+
+    private fun commentDialogOpen(postId: Int) {
+        val fm = requireActivity().supportFragmentManager
+        CommentFragment.newInstance(postId).showNow(fm, "comment")
     }
 }

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="kr.hs.dgsw.domain.entity.Post"/>
+        <variable
+            name="post"
+            type="Post" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -53,6 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="사용자명"
+                    android:text="@{post.account.name}"
                     android:textSize="17sp" />
 
                 <TextView
@@ -60,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="10분 전"
+                    bind:setTime="@{post.createdAt}"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -73,7 +79,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView_post"
-                tools:text="내용내용내용내용내용내용내용내용내용내용내용내용내용" />
+                tools:text="내용내용내용내용내용내용내용내용내용내용내용내용내용"
+                android:text="@{post.content}" />
 
             <View
                 android:id="@+id/view2"
