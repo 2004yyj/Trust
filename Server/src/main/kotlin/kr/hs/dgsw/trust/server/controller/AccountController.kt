@@ -4,6 +4,7 @@ import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
+import kr.hs.dgsw.trust.server.exception.ExistsException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.service.FileService
@@ -95,7 +96,7 @@ class AccountController(
                     account.toJsonObject()
                 ).returnJsonObject()
             } else {
-                throw UnauthenticatedException("중복된 아이디가 있습니다.")
+                throw ExistsException("중복된 아이디가 있습니다.")
             }
         } else {
             throw BadRequestException("잘못된 값이 있습니다.")
@@ -123,5 +124,11 @@ class AccountController(
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     fun handler(error: UnauthenticatedException): String {
         return JsonResponse("401", error.message.toString(), null).returnJsonObject()
+    }
+
+    @ExceptionHandler(value = [ExistsException::class])
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun handler(error: ExistsException): String {
+        return JsonResponse("409", error.message.toString(), null).returnJsonObject()
     }
 }

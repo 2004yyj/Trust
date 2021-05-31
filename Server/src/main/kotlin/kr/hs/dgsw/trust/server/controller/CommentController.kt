@@ -31,8 +31,8 @@ class CommentController(
     @Autowired
     private lateinit var fileService: FileService
 
-    @GetMapping("/comment/{postId}")
-    fun getCommentList(@PathVariable postId: Int): String {
+    @GetMapping("/comment")
+    fun getCommentList(postId: Int): String {
         val list = commentRepository.findByPostId(postId)
         val jsonList = JSONArray()
         list.forEach { comment ->
@@ -46,9 +46,9 @@ class CommentController(
         ).returnJsonObject()
     }
 
-    @PostMapping("/comment/{postId}/save")
+    @PostMapping("/comment/save")
     fun saveComment(
-        @PathVariable postId: Int,
+        postId: Int,
         username: String,
         password: String,
         content: String,
@@ -95,114 +95,127 @@ class CommentController(
         ).returnJsonObject()
     }
 
-    @PutMapping("/comment/{commentId}/update")
+    @PutMapping("/comment/update")
     fun updateComment(
-        @PathVariable commentId: Int,
+        commentId: Int,
         username: String,
         password: String,
         content: String,
         deleteFileList: Array<String>?,
         updateFileList: ArrayList<MultipartFile>?
     ): String {
-        return if (commentRepository.existsById(commentId)) {
+
+        val comment =
             try {
-                val comment = commentRepository.findById(commentId).orElseThrow()
-                val account = accountRepository.findById(username).orElseThrow()
+                commentRepository.findById(commentId).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw NotFoundException("댓글을 찾을 수 없습니다.")
+            }
+        val account =
+            try {
+                accountRepository.findById(username).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            }
 
-                val accountMatch =
-                    if (comment.isAnonymous == true)
-                        passwordEncoder.matches(username, comment.username)
-                    else
-                        username == comment.username
+        return if (commentRepository.existsById(commentId)) {
+            val accountMatch =
+                if (comment.isAnonymous == true)
+                    passwordEncoder.matches(username, comment.username)
+                else
+                    username == comment.username
 
-                if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
-                    comment.content = content
+            if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+                comment.content = content
 
-                    val imageJsonArray = JSONArray(comment.imageList)
+                val imageJsonArray = JSONArray(comment.imageList)
 
-                    val pathList = ArrayList<String>()
+                val pathList = ArrayList<String>()
 
-                    var i = 0
-                    while (i < imageJsonArray.length()) {
-                        pathList.add(imageJsonArray[i] as String)
-                        i++
-                    }
-
-                    deleteFileList?.forEach {
-                        if (fileService.isFileExist(it)) {
-                            fileService.deleteFileByName(it)
-                            pathList.remove(it)
-                        }
-                    }
-
-                    updateFileList?.forEach {
-                        if (!it.originalFilename.isNullOrEmpty()) {
-                            val fileName = fileService.saveFile(it)
-                            pathList.add(fileName)
-                        }
-                    }
-
-                    commentRepository.save(comment)
-
-                    JsonResponse(
-                        "200",
-                        "댓글을 성공적으로 업데이트 하였습니다.",
-                        getCommentToObject(comment)
-                    ).returnJsonObject()
-                } else {
-                    throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+                var i = 0
+                while (i < imageJsonArray.length()) {
+                    pathList.add(imageJsonArray[i] as String)
+                    i++
                 }
-            } catch (e: BadRequestException) {
-                throw BadRequestException("오류가 발생했습니다.")
+
+                deleteFileList?.forEach {
+                    if (fileService.isFileExist(it)) {
+                        fileService.deleteFileByName(it)
+                        pathList.remove(it)
+                    }
+                }
+
+                updateFileList?.forEach {
+                    if (!it.originalFilename.isNullOrEmpty()) {
+                        val fileName = fileService.saveFile(it)
+                        pathList.add(fileName)
+                    }
+                }
+
+                commentRepository.save(comment)
+
+                JsonResponse(
+                    "200",
+                    "댓글을 성공적으로 업데이트 하였습니다.",
+                    getCommentToObject(comment)
+                ).returnJsonObject()
+            } else {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
         } else {
             throw NotFoundException("댓글을 찾을 수 없습니다.")
         }
     }
 
-    @DeleteMapping("/comment/{commentId}/delete")
-    fun deleteComment(@PathVariable commentId: Int, username: String, password: String): String {
-        return if (commentRepository.existsById(commentId)) {
+    @DeleteMapping("/comment/delete")
+    fun deleteComment(commentId: Int, username: String, password: String): String {
+
+        val comment =
             try {
-                val comment = commentRepository.findById(commentId).orElseThrow()
-                val account = accountRepository.findById(username).orElseThrow()
+                commentRepository.findById(commentId).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw NotFoundException("댓글을 찾을 수 없습니다.")
+            }
+        val account =
+            try {
+                accountRepository.findById(username).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            }
 
-                val accountMatch =
-                    if (comment.isAnonymous == true)
-                        passwordEncoder.matches(username, comment.username)
-                    else
-                        username == comment.username
+        return if (commentRepository.existsById(commentId)) {
+            val accountMatch =
+                if (comment.isAnonymous == true)
+                    passwordEncoder.matches(username, comment.username)
+                else
+                    username == comment.username
 
-                if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+            if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
 
-                    val imageJsonArray = JSONArray(comment.imageList)
+                val imageJsonArray = JSONArray(comment.imageList)
 
-                    val pathList = ArrayList<String>()
+                val pathList = ArrayList<String>()
 
-                    var i = 0
-                    while (i < imageJsonArray.length()) {
-                        pathList.add(imageJsonArray[i] as String)
-                        i++
-                    }
-
-                    pathList.forEach {
-                        fileService.deleteFileByName(it)
-                    }
-
-                    comment.imageList = JSONArray(pathList).toString()
-
-                    commentRepository.deleteById(commentId)
-                    JsonResponse(
-                        "200",
-                        "댓글을 성공적으로 삭제하였습니다.",
-                        getCommentToObject(comment)
-                    ).returnJsonObject()
-                } else {
-                    throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+                var i = 0
+                while (i < imageJsonArray.length()) {
+                    pathList.add(imageJsonArray[i] as String)
+                    i++
                 }
 
-            } catch (e: BadRequestException) {
-                throw BadRequestException("오류가 발생했습니다.")
+                pathList.forEach {
+                    fileService.deleteFileByName(it)
+                }
+
+                comment.imageList = JSONArray(pathList).toString()
+
+                commentRepository.deleteById(commentId)
+                JsonResponse(
+                    "200",
+                    "댓글을 성공적으로 삭제하였습니다.",
+                    getCommentToObject(comment)
+                ).returnJsonObject()
+            } else {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
         } else {
             throw NotFoundException("댓글을 찾을 수 없습니다.")
@@ -235,10 +248,10 @@ class CommentController(
         }
     }
 
-    @ExceptionHandler(value = [BadRequestException::class])
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handler(error: BadRequestException): String {
-        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
+    @ExceptionHandler(value = [UnauthenticatedException::class])
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun handler(error: UnauthenticatedException): String {
+        return JsonResponse("401", error.message.toString(), null).returnJsonObject()
     }
 
     @ExceptionHandler(value = [NotFoundException::class])

@@ -47,13 +47,13 @@ class PostController(
         ).returnJsonObject()
     }
 
-    @GetMapping("/post/{username}")
-    fun getUserPostList(@PathVariable username: String): String {
+    @GetMapping(path= ["/post"], params= ["username"])
+    fun getUserPostList(username: String): String {
         val list = postRepository.findByUsername(username)
-        val jsonList = ArrayList<JSONObject>()
+        val jsonList = JSONArray()
 
         list.forEach { post ->
-            jsonList.add(getPostToObject(post))
+            jsonList.put(getPostToObject(post))
         }
 
         return JsonResponse(
@@ -61,6 +61,22 @@ class PostController(
             "글을 성공적으로 가져왔습니다.",
             jsonList
         ).returnJsonObject()
+    }
+
+    @GetMapping(path= ["/post"], params= ["postId"])
+    fun getPost(postId: Int): String {
+        return try {
+            val post = postRepository.findById(postId).orElseThrow()
+
+            JsonResponse(
+                "200",
+                "글을 성공적으로 삭제 하였습니다.",
+                getPostToObject(post)
+            ).returnJsonObject()
+
+        } catch (e: NotFoundException) {
+            throw NotFoundException("글을 찾을 수 없습니다.")
+        }
     }
 
     @PostMapping("/post/save")
@@ -107,132 +123,135 @@ class PostController(
         ).returnJsonObject()
     }
 
-    @PutMapping("/post/{postId}/update")
+    @PutMapping("/post/update")
     fun updatePost(
-        @PathVariable postId: Int,
+        postId: Int,
         username: String,
         password: String,
         content: String?,
         deleteFileList: Array<String>?,
         updateFileList: ArrayList<MultipartFile>?
     ): String {
-        return if (postRepository.existsById(postId)) {
+        val post =
             try {
-                val post = postRepository.findById(postId).orElseThrow()
-                val account = accountRepository.findById(username).orElseThrow()
-
-                val accountMatch =
-                    if (post.isAnonymous == true)
-                        passwordEncoder.matches(username, post.username)
-                    else
-                        username == post.username
-
-                if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
-                    post.content = if (!content.isNullOrEmpty()) content else post.content
-
-                    val imageJsonArray = JSONArray(post.imageList)
-
-                    val pathList = ArrayList<String>()
-
-                    var i = 0
-                    while (i < imageJsonArray.length()) {
-                        pathList.add(imageJsonArray[i] as String)
-                        i++
-                    }
-
-                    deleteFileList?.forEach {
-                        if (fileService.isFileExist(it)) {
-                            fileService.deleteFileByName(it)
-                            pathList.remove(it)
-                        }
-                    }
-
-                    updateFileList?.forEach {
-                        if (!it.originalFilename.isNullOrEmpty()) {
-                            val fileName = fileService.saveFile(it)
-                            pathList.add(fileName)
-                        }
-                    }
-
-                    post.imageList = JSONArray(pathList).toString()
-
-                    postRepository.save(post)
-
-                    JsonResponse(
-                        "200",
-                        "글을 성공적으로 업데이트 하였습니다.",
-                        getPostToObject(post)
-                    ).returnJsonObject()
-                } else {
-                    throw UnauthenticatedException("계정을 찾을 수 없습니다.")
-                }
-            } catch (e: BadRequestException) {
-                throw BadRequestException("오류가 발생했습니다.")
+                postRepository.findById(postId).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw NotFoundException("글을 찾을 수 없습니다.")
             }
-        } else {
-            throw NotFoundException("글을 찾을 수 없습니다.")
-        }
-    }
-
-    @DeleteMapping("/post/{postId}/delete")
-    fun deletePost(@PathVariable postId: Int, username: String, password: String): String {
-        return if (postRepository.existsById(postId)) {
+        val account =
             try {
-                val post = postRepository.findById(postId).orElseThrow()
-                val account = accountRepository.findById(username).orElseThrow()
+                accountRepository.findById(username).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            }
 
-                val accountMatch =
-                    if (post.isAnonymous == true)
-                        passwordEncoder.matches(username, post.username)
-                    else
-                        username == post.username
+        return if (postRepository.existsById(postId)) {
 
-                if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
-                    postRepository.deleteById(postId)
-                    likedRepository.deleteAllByPostId(postId)
-                    commentRepository.deleteAllByPostId(postId)
+            val accountMatch =
+                if (post.isAnonymous == true)
+                    passwordEncoder.matches(username, post.username)
+                else
+                    username == post.username
 
-                    val imageJsonArray = JSONArray(post.imageList)
+            if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+                post.content = if (!content.isNullOrEmpty()) content else post.content
 
-                    val pathList = ArrayList<String>()
+                val imageJsonArray = JSONArray(post.imageList)
 
-                    var i = 0
-                    while (i < imageJsonArray.length()) {
-                        pathList.add(imageJsonArray[i] as String)
-                        i++
-                    }
+                val pathList = ArrayList<String>()
 
-                    pathList.forEach {
+                var i = 0
+                while (i < imageJsonArray.length()) {
+                    pathList.add(imageJsonArray[i] as String)
+                    i++
+                }
+
+                deleteFileList?.forEach {
+                    if (fileService.isFileExist(it)) {
                         fileService.deleteFileByName(it)
+                        pathList.remove(it)
                     }
-
-                    post.imageList = JSONArray(pathList).toString()
-
-                    postRepository.delete(post)
-
-                    JsonResponse(
-                        "200",
-                        "글을 성공적으로 삭제 하였습니다.",
-                        getPostToObject(post)
-                    ).returnJsonObject()
-
-                } else {
-                    throw UnauthenticatedException("계정을 찾을 수 없습니다.")
                 }
-            } catch (e: BadRequestException) {
-                throw BadRequestException("오류가 발생했습니다.")
+
+                updateFileList?.forEach {
+                    if (!it.originalFilename.isNullOrEmpty()) {
+                        val fileName = fileService.saveFile(it)
+                        pathList.add(fileName)
+                    }
+                }
+
+                post.imageList = JSONArray(pathList).toString()
+
+                postRepository.save(post)
+
+                JsonResponse(
+                    "200",
+                    "글을 성공적으로 업데이트 하였습니다.",
+                    getPostToObject(post)
+                ).returnJsonObject()
+            } else {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
         } else {
             throw NotFoundException("글을 찾을 수 없습니다.")
         }
     }
 
-    @GetMapping("/post/{postId}")
-    fun getPost(@PathVariable postId: Int): JSONObject {
-        return try {
-            val post = postRepository.findById(postId).orElseThrow()
-            getPostToObject(post)
-        } catch (e: NotFoundException) {
+    @DeleteMapping("/post/delete")
+    fun deletePost(postId: Int, username: String, password: String): String {
+        val post =
+            try {
+                postRepository.findById(postId).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw NotFoundException("글을 찾을 수 없습니다.")
+            }
+        val account =
+            try {
+                accountRepository.findById(username).orElseThrow()
+            } catch (e: NoSuchElementException) {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            }
+
+        return if (postRepository.existsById(postId)) {
+            val accountMatch =
+                if (post.isAnonymous == true)
+                    passwordEncoder.matches(username, post.username)
+                else
+                    username == post.username
+
+            if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+                postRepository.deleteById(postId)
+                likedRepository.deleteAllByPostId(postId)
+                commentRepository.deleteAllByPostId(postId)
+
+                val imageJsonArray = JSONArray(post.imageList)
+
+                val pathList = ArrayList<String>()
+
+                var i = 0
+                while (i < imageJsonArray.length()) {
+                    pathList.add(imageJsonArray[i] as String)
+                    i++
+                }
+
+                pathList.forEach {
+                    fileService.deleteFileByName(it)
+                }
+
+                post.imageList = JSONArray(pathList).toString()
+
+                postRepository.delete(post)
+
+                JsonResponse(
+                    "200",
+                    "글을 성공적으로 삭제 하였습니다.",
+                    getPostToObject(post)
+                ).returnJsonObject()
+
+            } else {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            }
+        } else {
             throw NotFoundException("글을 찾을 수 없습니다.")
         }
     }
@@ -263,10 +282,10 @@ class PostController(
         }
     }
 
-    @ExceptionHandler(value = [BadRequestException::class])
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handler(error: BadRequestException): String {
-        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
+    @ExceptionHandler(value = [UnauthenticatedException::class])
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    fun handler(error: UnauthenticatedException): String {
+        return JsonResponse("401", error.message.toString(), null).returnJsonObject()
     }
 
     @ExceptionHandler(value = [NotFoundException::class])
