@@ -30,6 +30,7 @@ interface MyComponent : AndroidInjector<MyDaggerApplication> {
     fun inject(mainActivity: MainActivity)
     fun inject(introActivity: IntroActivity)
     fun inject(loginFragment: LoginFragment)
+    fun inject(homeFragment: HomeFragment)
     fun inject(signUpUserInfoFragment: SignUpUserInfoFragment)
 
     @Component.Factory
