@@ -1,7 +1,6 @@
 package kr.hs.dgsw.data.network.service
 
 import io.reactivex.Single
-import kr.hs.dgsw.data.entity.AccountResponse
 import kr.hs.dgsw.data.entity.PostResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -13,22 +12,38 @@ interface PostService {
     @GET("/post")
     fun getAllPost() : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
 
+    @GET("/post/{postId}")
+    fun getPost(@Path("postId") postId: Int) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+
+    @GET("/post/{username}")
+    fun getAllPostByUsername(@Path("username") username: String) : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
+
     @Multipart
     @POST("/post/save")
-    fun postPost(@Part("username") username: RequestBody,
-                  @Part("password") password: RequestBody,
-                  @Part("content") content: RequestBody,
-                  @Part("isAnonymous") isAnonymoust: RequestBody,
-                  @Part imageList: List<MultipartBody.Part>?
+    fun postPost(
+            @Part("username") username: RequestBody,
+            @Part("password") password: RequestBody,
+            @Part("isAnonymous") isAnonymous: RequestBody,
+            @Part("content") content: RequestBody,
+            @Part imageList: List<MultipartBody.Part>?
     ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
 
     @Multipart
     @PUT("/post/{postId}/update")
-    fun putPost(@Path("postId") postId: Int,
-                 @Part("username") username: RequestBody,
-                 @Part("password") password: RequestBody,
-                 @Part("content") content: RequestBody?,
-                 @Part("isAnonymous") isAnonymoust: RequestBody?,
-                 @Part imageList: List<MultipartBody.Part>?
+    fun updatePost(
+            @Path("postId") postId: Int,
+            @Part("username") username: RequestBody,
+            @Part("password") password: RequestBody,
+            @Part("isAnonymous") isAnonymous: RequestBody?,
+            @Part("content") content: RequestBody?,
+            @Part("deleteFileList") deleteFileList: List<String>?,
+            @Part updateImageList: List<MultipartBody.Part>?
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+
+    @DELETE("/post/{postId}/delete")
+    fun deletePost(
+            @Path("postId") postId: Int,
+            @Query("username") username: String,
+            @Query("password") password: String,
     ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
 }
