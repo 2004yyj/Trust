@@ -7,4 +7,5 @@ import java.util.*
 
 interface LikedRepository : JpaRepository<Liked, Int?> {
     fun findByPostId(postId: Int) : List<Liked>
+    fun deleteAllByPostId(postId: Int)
 }

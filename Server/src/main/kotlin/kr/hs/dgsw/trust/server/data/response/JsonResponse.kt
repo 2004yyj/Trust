@@ -1,13 +1,17 @@
 package kr.hs.dgsw.trust.server.data.response
 
-class JsonResponse {
-    fun returnResponse(status: String, message: String, data: Any?) : HashMap<String, Any?> {
-        val response = HashMap<String, Any?>()
+import org.springframework.boot.configurationprocessor.json.JSONObject
 
-        response["status"] = status
-        response["message"] = message
-        response["data"] = data
-
-        return response
+class JsonResponse<T>(
+    private val status: String,
+    private val message: String,
+    private val data: T?
+) {
+    fun returnJsonObject() : String {
+        val jsonObject = JSONObject()
+        jsonObject.put("status", status)
+        jsonObject.put("message", message)
+        jsonObject.put("data", data)
+        return jsonObject.toString()
     }
 }

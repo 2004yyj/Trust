@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CommentRepository : JpaRepository<Comment, Int?> {
     fun findByPostId(postId: Int) : List<Comment>
+    fun deleteAllByPostId(postId: Int)
 }

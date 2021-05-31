@@ -3,12 +3,14 @@ package kr.hs.dgsw.trust.server.controller
 import javassist.NotFoundException
 import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.entity.Liked
-import kr.hs.dgsw.trust.server.data.entity.toHashMap
+import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.repository.LikedRepository
+import org.springframework.boot.configurationprocessor.json.JSONArray
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
@@ -21,18 +23,22 @@ class LikedController(
     private val passwordEncoder: PasswordEncoder
 ) {
     @GetMapping("/liked/{postId}")
-    fun likedList(@PathVariable postId: Int): ArrayList<HashMap<String, Any?>> {
+    fun likedList(@PathVariable postId: Int): String {
         val list = likedRepository.findByPostId(postId)
-        val jsonList = ArrayList<HashMap<String, Any?>>()
+        val jsonList = JSONArray()
         list.forEach { liked ->
-            jsonList.add(getLikedToHashMap(liked))
+            jsonList.put(getLikedToObject(liked))
         }
 
-        return jsonList
+        return JsonResponse(
+            "200",
+            "좋아요를 성공적으로 가져왔습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @PostMapping("/liked/{postId}/save")
-    fun saveLiked(@PathVariable postId: Int, username: String, password: String): HashMap<String, Any?> {
+    fun saveLiked(@PathVariable postId: Int, username: String, password: String): String {
         val liked = Liked()
         try {
             val account = accountRepository.findById(username).orElseThrow()
@@ -49,15 +55,16 @@ class LikedController(
             throw BadRequestException("오류가 발생했습니다.")
         }
 
-        return JsonResponse().returnResponse(
+        return JsonResponse(
             "200",
             "좋아요를 성공적으로 추가하였습니다.",
-            getLikedToHashMap(liked)
-        )
+            getLikedToObject(liked)
+        ).returnJsonObject()
+
     }
 
     @DeleteMapping("/liked/{likedId}/delete")
-    fun deleteLiked(@PathVariable likedId: Int, username: String, password: String): HashMap<String, Any?> {
+    fun deleteLiked(@PathVariable likedId: Int, username: String, password: String): JsonResponse<JSONObject> {
         return try {
             val liked = likedRepository.findById(likedId).orElseThrow()
             val account = accountRepository.findById(username).orElseThrow()
@@ -66,11 +73,11 @@ class LikedController(
 
             if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
                 likedRepository.deleteById(likedId)
-                JsonResponse().returnResponse(
-                    "200",
-                    "글을 성공적으로 삭제하였습니다.",
-                    getLikedToHashMap(liked)
+                JsonResponse("200",
+                    "좋아요를 성공적으로 삭제하였습니다.",
+                    getLikedToObject(liked)
                 )
+
             } else {
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
@@ -79,11 +86,10 @@ class LikedController(
         }
     }
 
-    fun getLikedToHashMap(liked: Liked): HashMap<String, Any?> {
-        val postMap = liked.toHashMap()
-        postMap["account"] = findAccount(liked.username!!).toHashMap()
-        postMap.remove("username")
-        return postMap
+    fun getLikedToObject(liked: Liked): JSONObject {
+        val likedObject = liked.toJsonObject()
+        likedObject.put("account", findAccount(liked.username!!).toJsonObject())
+        return likedObject
     }
 
     fun findAccount(username: String): Account {
@@ -108,13 +114,13 @@ class LikedController(
 
     @ExceptionHandler(value = [BadRequestException::class])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handler(error: BadRequestException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("400", error.message.toString(), null)
+    fun handler(error: BadRequestException): String {
+        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
     }
 
     @ExceptionHandler(value = [NotFoundException::class])
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handler(error: NotFoundException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("404", error.message.toString(), null)
+    fun handler(error: NotFoundException): String {
+        return JsonResponse("404", error.message.toString(), null).returnJsonObject()
     }
 }

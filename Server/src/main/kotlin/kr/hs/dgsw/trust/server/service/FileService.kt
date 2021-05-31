@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.server.service
 
+import javassist.NotFoundException
 import kr.hs.dgsw.trust.server.configuration.FileUploadProperties
 import org.springframework.core.io.Resource
 import org.springframework.core.io.UrlResource
@@ -26,6 +27,16 @@ class FileService(fileUploadProperties: FileUploadProperties) {
         } catch (e : IOException) {
             e.printStackTrace()
         }
+    }
+
+    fun deleteFileByName(fileName: String) : String {
+        val location = location.resolve(fileName).normalize()
+        try {
+            Files.delete(location)
+        } catch (e : IOException) {
+            throw FileNotFoundException("파일을 찾을 수 없습니다.")
+        }
+        return fileName
     }
 
     fun saveFile(multipartFile: MultipartFile) : String {

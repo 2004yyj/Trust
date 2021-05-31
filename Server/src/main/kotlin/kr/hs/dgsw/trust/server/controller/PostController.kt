@@ -6,19 +6,24 @@ import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
+import kr.hs.dgsw.trust.server.repository.CommentRepository
+import kr.hs.dgsw.trust.server.repository.LikedRepository
 import kr.hs.dgsw.trust.server.repository.PostRepository
 import kr.hs.dgsw.trust.server.service.FileService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.configurationprocessor.json.JSONArray
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.sql.Timestamp
 
-
 @RestController
 class PostController(
     private val postRepository: PostRepository,
+    private val commentRepository: CommentRepository,
+    private val likedRepository: LikedRepository,
     private val accountRepository: AccountRepository,
     private val passwordEncoder : PasswordEncoder
 ) {
@@ -27,27 +32,35 @@ class PostController(
     private lateinit var fileService: FileService
 
     @GetMapping("/post")
-    fun getPostList(): ArrayList<HashMap<String, Any?>> {
+    fun getPostList(): String {
         val list = postRepository.findAll()
-        val jsonList = ArrayList<HashMap<String, Any?>>()
+        val jsonList = JSONArray()
 
         list.forEach { post ->
-            jsonList.add(getPostToHashMap(post))
+            jsonList.put(getPostToObject(post))
         }
 
-        return jsonList
+        return JsonResponse(
+            "200",
+            "글을 성공적으로 가져왔습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @GetMapping("/post/{username}")
-    fun getUserPostList(@PathVariable username: String): ArrayList<HashMap<String, Any?>> {
+    fun getUserPostList(@PathVariable username: String): String {
         val list = postRepository.findByUsername(username)
-        val jsonList = ArrayList<HashMap<String, Any?>>()
+        val jsonList = ArrayList<JSONObject>()
 
         list.forEach { post ->
-            jsonList.add(getPostToHashMap(post))
+            jsonList.add(getPostToObject(post))
         }
 
-        return jsonList
+        return JsonResponse(
+            "200",
+            "글을 성공적으로 가져왔습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @PostMapping("/post/save")
@@ -56,8 +69,8 @@ class PostController(
         password: String,
         content: String,
         isAnonymous: Boolean,
-        imageList: List<MultipartFile>?
-    ): HashMap<String, Any?> {
+        imageList: ArrayList<MultipartFile>?
+    ): String {
         val post = Post()
         try {
             val account = accountRepository.findById(username).orElseThrow()
@@ -76,10 +89,9 @@ class PostController(
                 post.content = content
                 imageList?.forEach {
                     val file = fileService.saveFile(it)
-                    val filePath = "/image/$file"
-                    pathList.add(filePath)
+                    pathList.add(file)
                 }
-                post.imageList = pathList.toString()
+                post.imageList = JSONArray(pathList).toString()
                 postRepository.save(post)
             } else {
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
@@ -88,15 +100,22 @@ class PostController(
             throw BadRequestException("오류가 발생했습니다.")
         }
 
-        return JsonResponse().returnResponse(
+        return JsonResponse(
             "200",
             "글을 성공적으로 추가하였습니다.",
-            getPostToHashMap(post)
-        )
+            getPostToObject(post)
+        ).returnJsonObject()
     }
 
     @PutMapping("/post/{postId}/update")
-    fun updatePost(@PathVariable postId: Int, username: String, password: String, content: String?): HashMap<String, Any?> {
+    fun updatePost(
+        @PathVariable postId: Int,
+        username: String,
+        password: String,
+        content: String?,
+        deleteFileList: Array<String>?,
+        updateFileList: ArrayList<MultipartFile>?
+    ): String {
         return if (postRepository.existsById(postId)) {
             try {
                 val post = postRepository.findById(postId).orElseThrow()
@@ -110,13 +129,40 @@ class PostController(
 
                 if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
                     post.content = if (!content.isNullOrEmpty()) content else post.content
+
+                    val imageJsonArray = JSONArray(post.imageList)
+
+                    val pathList = ArrayList<String>()
+
+                    var i = 0
+                    while (i < imageJsonArray.length()) {
+                        pathList.add(imageJsonArray[i] as String)
+                        i++
+                    }
+
+                    deleteFileList?.forEach {
+                        if (fileService.isFileExist(it)) {
+                            fileService.deleteFileByName(it)
+                            pathList.remove(it)
+                        }
+                    }
+
+                    updateFileList?.forEach {
+                        if (!it.originalFilename.isNullOrEmpty()) {
+                            val fileName = fileService.saveFile(it)
+                            pathList.add(fileName)
+                        }
+                    }
+
+                    post.imageList = JSONArray(pathList).toString()
+
                     postRepository.save(post)
 
-                    JsonResponse().returnResponse(
+                    JsonResponse(
                         "200",
                         "글을 성공적으로 업데이트 하였습니다.",
-                        getPostToHashMap(post)
-                    )
+                        getPostToObject(post)
+                    ).returnJsonObject()
                 } else {
                     throw UnauthenticatedException("계정을 찾을 수 없습니다.")
                 }
@@ -129,7 +175,7 @@ class PostController(
     }
 
     @DeleteMapping("/post/{postId}/delete")
-    fun deletePost(@PathVariable postId: Int, username: String, password: String): HashMap<String, Any?> {
+    fun deletePost(@PathVariable postId: Int, username: String, password: String): String {
         return if (postRepository.existsById(postId)) {
             try {
                 val post = postRepository.findById(postId).orElseThrow()
@@ -143,11 +189,33 @@ class PostController(
 
                 if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
                     postRepository.deleteById(postId)
-                    JsonResponse().returnResponse(
+                    likedRepository.deleteAllByPostId(postId)
+                    commentRepository.deleteAllByPostId(postId)
+
+                    val imageJsonArray = JSONArray(post.imageList)
+
+                    val pathList = ArrayList<String>()
+
+                    var i = 0
+                    while (i < imageJsonArray.length()) {
+                        pathList.add(imageJsonArray[i] as String)
+                        i++
+                    }
+
+                    pathList.forEach {
+                        fileService.deleteFileByName(it)
+                    }
+
+                    post.imageList = JSONArray(pathList).toString()
+
+                    postRepository.delete(post)
+
+                    JsonResponse(
                         "200",
-                        "글을 성공적으로 삭제하였습니다.",
-                        getPostToHashMap(post)
-                    )
+                        "글을 성공적으로 삭제 하였습니다.",
+                        getPostToObject(post)
+                    ).returnJsonObject()
+
                 } else {
                     throw UnauthenticatedException("계정을 찾을 수 없습니다.")
                 }
@@ -160,19 +228,19 @@ class PostController(
     }
 
     @GetMapping("/post/{postId}")
-    fun getPost(@PathVariable postId: Int): Post {
+    fun getPost(@PathVariable postId: Int): JSONObject {
         return try {
-            postRepository.findById(postId).orElseThrow()
+            val post = postRepository.findById(postId).orElseThrow()
+            getPostToObject(post)
         } catch (e: NotFoundException) {
             throw NotFoundException("글을 찾을 수 없습니다.")
         }
     }
 
-    fun getPostToHashMap(post: Post): HashMap<String, Any?> {
-        val postMap = post.toHashMap()
-        postMap["account"] = findAccount(post.username!!, post.isAnonymous!!).toHashMap()
-        postMap.remove("username")
-        return postMap
+    fun getPostToObject(post: Post): JSONObject {
+        val postObject = post.toJsonObject()
+        postObject.put("account", findAccount(post.username!!, post.isAnonymous!!).toJsonObject())
+        return postObject
     }
 
     fun findAccount(username: String, isAnonymous: Boolean): Account {
@@ -197,13 +265,13 @@ class PostController(
 
     @ExceptionHandler(value = [BadRequestException::class])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handler(error: BadRequestException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("400", error.message.toString(), null)
+    fun handler(error: BadRequestException): String {
+        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
     }
 
     @ExceptionHandler(value = [NotFoundException::class])
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handler(error: NotFoundException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("404", error.message.toString(), null)
+    fun handler(error: NotFoundException): String {
+        return JsonResponse("404", error.message.toString(), null).returnJsonObject()
     }
 }

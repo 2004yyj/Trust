@@ -2,7 +2,6 @@ package kr.hs.dgsw.trust.server.controller
 
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.service.FileService
-import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpHeaders
@@ -34,10 +33,16 @@ class FileController {
         return ResponseEntity<Resource>(resource, header, HttpStatus.OK)
     }
 
+    @DeleteMapping("/image/delete")
+    fun imageDelete(path: String) : String {
+        fileService.deleteFileByName(path)
+        return JsonResponse("200", "이미지 삭제 완료", path).returnJsonObject()
+    }
+
     @ExceptionHandler(value = [FileNotFoundException::class])
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handler(error: FileNotFoundException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("404", error.message.toString(), null)
+    fun handler(error: FileNotFoundException): String {
+        return JsonResponse("404", error.message.toString(), null).returnJsonObject()
     }
 
 }

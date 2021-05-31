@@ -1,7 +1,7 @@
 package kr.hs.dgsw.trust.server.controller
 
 import kr.hs.dgsw.trust.server.data.entity.Account
-import kr.hs.dgsw.trust.server.data.entity.toHashMap
+import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
@@ -24,7 +24,7 @@ class AccountController(
     private lateinit var fileService: FileService
 
     @PostMapping("/login")
-    fun login(username: String, password: String) : HashMap<String, Any?> {
+    fun login(username: String, password: String) : String {
         val account = Account()
         account.username = username
         account.password = password
@@ -34,7 +34,11 @@ class AccountController(
                 val foundAccount = getAccount(account)
                 account.name = foundAccount.name
                 account.profileImage = foundAccount.profileImage
-                JsonResponse().returnResponse("200", "로그인에 성공하였습니다.", account.toHashMap())
+                JsonResponse(
+                    "200",
+                    "로그인에 성공하였습니다.",
+                    account.toJsonObject()
+                ).returnJsonObject()
             } else {
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
             }
@@ -68,7 +72,7 @@ class AccountController(
                username: String,
                password: String,
                profileImage: MultipartFile?,
-    ) : HashMap<String, Any?> {
+    ) : String {
 
         val account = Account()
         account.name = name
@@ -78,15 +82,18 @@ class AccountController(
         return if (isAccountInfoNotNull(account)) {
             if (isNotIdExist(account)) {
                 val filePath = if (profileImage != null) {
-                    val file = fileService.saveFile(profileImage)
-                    "/image/$file"
+                    fileService.saveFile(profileImage)
                 } else {
-                    "/image/defaultUserProfile.png"
+                    "defaultUserProfile.png"
                 }
                 account.profileImage = filePath
 
                 accountRepository.save(account)
-                JsonResponse().returnResponse("200", "회원가입에 성공하였습니다.", account.toHashMap())
+                JsonResponse(
+                    "200",
+                    "회원가입에 성공하였습니다.",
+                    account.toJsonObject()
+                ).returnJsonObject()
             } else {
                 throw UnauthenticatedException("중복된 아이디가 있습니다.")
             }
@@ -108,13 +115,13 @@ class AccountController(
 
     @ExceptionHandler(value = [BadRequestException::class])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handler(error: BadRequestException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("400", error.message.toString(), null)
+    fun handler(error: BadRequestException): String {
+        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
     }
 
     @ExceptionHandler(value = [UnauthenticatedException::class])
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    fun handler(error: UnauthenticatedException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("401", error.message.toString(), null)
+    fun handler(error: UnauthenticatedException): String {
+        return JsonResponse("401", error.message.toString(), null).returnJsonObject()
     }
 }

@@ -3,14 +3,17 @@ package kr.hs.dgsw.trust.server.controller
 import javassist.NotFoundException
 import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.entity.Comment
-import kr.hs.dgsw.trust.server.data.entity.toHashMap
+import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.repository.CommentRepository
+import kr.hs.dgsw.trust.server.repository.PostRepository
 import kr.hs.dgsw.trust.server.service.FileService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.configurationprocessor.json.JSONArray
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
@@ -20,6 +23,7 @@ import java.sql.Timestamp
 @RestController
 class CommentController(
     private val commentRepository: CommentRepository,
+    private val postRepository: PostRepository,
     private val accountRepository: AccountRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
@@ -28,14 +32,18 @@ class CommentController(
     private lateinit var fileService: FileService
 
     @GetMapping("/comment/{postId}")
-    fun getCommentList(@PathVariable postId: Int): ArrayList<HashMap<String, Any?>> {
+    fun getCommentList(@PathVariable postId: Int): String {
         val list = commentRepository.findByPostId(postId)
-        val jsonList = ArrayList<HashMap<String, Any?>>()
+        val jsonList = JSONArray()
         list.forEach { comment ->
-            jsonList.add(getCommentToHashMap(comment))
+            jsonList.put(getCommentToObject(comment))
         }
 
-        return jsonList
+        return JsonResponse(
+            "200",
+            "댓글을 성공적으로 가져왔습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @PostMapping("/comment/{postId}/save")
@@ -46,46 +54,56 @@ class CommentController(
         content: String,
         isAnonymous: Boolean,
         imageList: List<MultipartFile>?
-    ): HashMap<String, Any?> {
+    ): String {
         val comment = Comment()
-        try {
-            val account = accountRepository.findById(username).orElseThrow()
-            val pathList = ArrayList<String>()
+        if (postRepository.existsById(postId)) {
+            try {
+                val account = accountRepository.findById(username).orElseThrow()
+                val pathList = ArrayList<String>()
 
-            if (username == account.username && passwordEncoder.matches(password, account.password)) {
-                comment.postId = postId
-                comment.username =
-                    if (!isAnonymous) {
-                        username
-                    } else {
-                        passwordEncoder.encode(username)
+                if (username == account.username && passwordEncoder.matches(password, account.password)) {
+                    comment.postId = postId
+                    comment.username =
+                        if (!isAnonymous) {
+                            username
+                        } else {
+                            passwordEncoder.encode(username)
+                        }
+                    comment.isAnonymous = isAnonymous
+                    comment.createdAt = Timestamp(System.currentTimeMillis())
+                    comment.content = content
+                    imageList?.forEach {
+                        val file = fileService.saveFile(it)
+                        pathList.add(file)
                     }
-                comment.isAnonymous = isAnonymous
-                comment.createdAt = Timestamp(System.currentTimeMillis())
-                comment.content = content
-                imageList?.forEach {
-                    val file = fileService.saveFile(it)
-                    val filePath = "/image/$file"
-                    pathList.add(filePath)
+                    comment.imageList = JSONArray(pathList).toString()
+                    commentRepository.save(comment)
+                } else {
+                    throw UnauthenticatedException("계정을 찾을 수 없습니다.")
                 }
-                comment.imageList = pathList.toString()
-                commentRepository.save(comment)
-            } else {
-                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            } catch (e: BadRequestException) {
+                throw BadRequestException("오류가 발생했습니다.")
             }
-        } catch (e: BadRequestException) {
-            throw BadRequestException("오류가 발생했습니다.")
+        } else {
+            throw NotFoundException("글을 찾을 수 없습니다.")
         }
 
-        return JsonResponse().returnResponse(
+        return JsonResponse(
             "200",
             "댓글을 성공적으로 추가하였습니다.",
-            getCommentToHashMap(comment)
-        )
+            getCommentToObject(comment)
+        ).returnJsonObject()
     }
 
     @PutMapping("/comment/{commentId}/update")
-    fun updateComment(@PathVariable commentId: Int, username: String, password: String, content: String): HashMap<String, Any?> {
+    fun updateComment(
+        @PathVariable commentId: Int,
+        username: String,
+        password: String,
+        content: String,
+        deleteFileList: Array<String>?,
+        updateFileList: ArrayList<MultipartFile>?
+    ): String {
         return if (commentRepository.existsById(commentId)) {
             try {
                 val comment = commentRepository.findById(commentId).orElseThrow()
@@ -99,13 +117,38 @@ class CommentController(
 
                 if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
                     comment.content = content
+
+                    val imageJsonArray = JSONArray(comment.imageList)
+
+                    val pathList = ArrayList<String>()
+
+                    var i = 0
+                    while (i < imageJsonArray.length()) {
+                        pathList.add(imageJsonArray[i] as String)
+                        i++
+                    }
+
+                    deleteFileList?.forEach {
+                        if (fileService.isFileExist(it)) {
+                            fileService.deleteFileByName(it)
+                            pathList.remove(it)
+                        }
+                    }
+
+                    updateFileList?.forEach {
+                        if (!it.originalFilename.isNullOrEmpty()) {
+                            val fileName = fileService.saveFile(it)
+                            pathList.add(fileName)
+                        }
+                    }
+
                     commentRepository.save(comment)
 
-                    JsonResponse().returnResponse(
+                    JsonResponse(
                         "200",
                         "댓글을 성공적으로 업데이트 하였습니다.",
-                        getCommentToHashMap(comment)
-                    )
+                        getCommentToObject(comment)
+                    ).returnJsonObject()
                 } else {
                     throw UnauthenticatedException("계정을 찾을 수 없습니다.")
                 }
@@ -118,7 +161,7 @@ class CommentController(
     }
 
     @DeleteMapping("/comment/{commentId}/delete")
-    fun deleteComment(@PathVariable commentId: Int, username: String, password: String): HashMap<String, Any?> {
+    fun deleteComment(@PathVariable commentId: Int, username: String, password: String): String {
         return if (commentRepository.existsById(commentId)) {
             try {
                 val comment = commentRepository.findById(commentId).orElseThrow()
@@ -131,12 +174,29 @@ class CommentController(
                         username == comment.username
 
                 if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+
+                    val imageJsonArray = JSONArray(comment.imageList)
+
+                    val pathList = ArrayList<String>()
+
+                    var i = 0
+                    while (i < imageJsonArray.length()) {
+                        pathList.add(imageJsonArray[i] as String)
+                        i++
+                    }
+
+                    pathList.forEach {
+                        fileService.deleteFileByName(it)
+                    }
+
+                    comment.imageList = JSONArray(pathList).toString()
+
                     commentRepository.deleteById(commentId)
-                    JsonResponse().returnResponse(
+                    JsonResponse(
                         "200",
                         "댓글을 성공적으로 삭제하였습니다.",
-                        getCommentToHashMap(comment)
-                    )
+                        getCommentToObject(comment)
+                    ).returnJsonObject()
                 } else {
                     throw UnauthenticatedException("계정을 찾을 수 없습니다.")
                 }
@@ -149,11 +209,10 @@ class CommentController(
         }
     }
 
-    fun getCommentToHashMap(comment: Comment): HashMap<String, Any?> {
-        val postMap = comment.toHashMap()
-        postMap["account"] = findAccount(comment.username!!, comment.isAnonymous!!).toHashMap()
-        postMap.remove("username")
-        return postMap
+    fun getCommentToObject(comment: Comment): JSONObject {
+        val commentObject = comment.toJsonObject()
+        commentObject.put("accoount", findAccount(comment.username!!, comment.isAnonymous!!).toJsonObject())
+        return commentObject
     }
 
     fun findAccount(username: String, isAnonymous: Boolean): Account {
@@ -178,13 +237,13 @@ class CommentController(
 
     @ExceptionHandler(value = [BadRequestException::class])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handler(error: BadRequestException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("400", error.message.toString(), null)
+    fun handler(error: BadRequestException): String {
+        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
     }
 
     @ExceptionHandler(value = [NotFoundException::class])
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handler(error: NotFoundException): HashMap<String, Any?> {
-        return JsonResponse().returnResponse("404", error.message.toString(), null)
+    fun handler(error: NotFoundException): String {
+        return JsonResponse("404", error.message.toString(), null).returnJsonObject()
     }
 }
