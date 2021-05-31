@@ -1,5 +1,6 @@
 package kr.hs.dgsw.data.network.remote
 
+import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.Single
 import kr.hs.dgsw.data.entity.AccountResponse
@@ -27,13 +28,12 @@ class AccountRemote @Inject constructor(
     }
 
     fun postSignUp(name: String, username: String, password: String, profileImage: MultipartBody.Part?): Single<AccountResponse> {
-
         val textType = "text/plain".toMediaType()
-        val name = name.toRequestBody(textType)
-        val username = username.toRequestBody(textType)
-        val password = password.toRequestBody(textType)
+        val nameBody = name.toRequestBody(textType)
+        val usernameBody = username.toRequestBody(textType)
+        val passwordBody = password.toRequestBody(textType)
 
-        return accountService.postSignUp(name, username, password, profileImage).map {
+        return accountService.postSignUp(nameBody, usernameBody, passwordBody, profileImage).map {
             if (it.isSuccessful) {
                 it.body()!!.data
             } else {

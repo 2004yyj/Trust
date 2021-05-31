@@ -5,6 +5,6 @@ data class Post(
         val createdAt: Long,
         val isAnonymous: Boolean,
         val content: String,
-        val imageList: String,
+        val imageList: List<String>,
         val account: Account
 )
