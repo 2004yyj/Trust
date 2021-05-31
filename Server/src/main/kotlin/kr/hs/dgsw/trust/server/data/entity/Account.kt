@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.server.data.entity
 
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import javax.persistence.*
 
 @Entity(name = "account")
@@ -13,10 +14,10 @@ class Account {
     var profileImage: String? = null
 }
 
-fun Account.toHashMap(): HashMap<String, Any?> {
-    val hashMap = HashMap<String, Any?>()
-    hashMap["name"] = name
-    hashMap["username"] = username
-    hashMap["profileImage"] = profileImage
-    return hashMap
+fun Account.toJsonObject(): JSONObject {
+    val jsonObject = JSONObject()
+    jsonObject.put("name", name)
+    jsonObject.put("username", username)
+    jsonObject.put("profileImage", profileImage)
+    return jsonObject
 }

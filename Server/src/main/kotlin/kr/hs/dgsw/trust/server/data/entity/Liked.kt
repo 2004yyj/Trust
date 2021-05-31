@@ -1,5 +1,7 @@
 package kr.hs.dgsw.trust.server.data.entity
 
+import org.springframework.boot.configurationprocessor.json.JSONArray
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import java.sql.Timestamp
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -16,11 +18,11 @@ class Liked {
     var createdAt: Timestamp? = null
 }
 
-fun Liked.toHashMap(): HashMap<String, Any?> {
-    val hashMap = HashMap<String, Any?>()
-    hashMap["id"] = id
-    hashMap["postId"] = postId
-    hashMap["username"] = username
-    hashMap["createdAt"] = createdAt?.time
-    return hashMap
+fun Liked.toJsonObject(): JSONObject {
+    val jsonObject = JSONObject()
+    jsonObject.put("id", id)
+    jsonObject.put("postId", postId)
+    jsonObject.put("username", username)
+    jsonObject.put("createdAt", createdAt?.time)
+    return jsonObject
 }

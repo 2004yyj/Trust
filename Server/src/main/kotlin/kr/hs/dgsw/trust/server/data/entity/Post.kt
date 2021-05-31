@@ -1,5 +1,7 @@
 package kr.hs.dgsw.trust.server.data.entity
 
+import org.springframework.boot.configurationprocessor.json.JSONArray
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import java.sql.Timestamp
 import javax.persistence.*
 
@@ -16,13 +18,13 @@ class Post {
     var isAnonymous: Boolean? = null
 }
 
-fun Post.toHashMap(): HashMap<String, Any?> {
-    val hashMap = HashMap<String, Any?>()
-    hashMap["id"] = id
-    hashMap["username"] = username
-    hashMap["createdAt"] = createdAt?.time
-    hashMap["content"] = content
-    hashMap["imageList"] = imageList
-    hashMap["isAnonymous"] = isAnonymous
-    return hashMap
+fun Post.toJsonObject(): JSONObject {
+    val jsonObject = JSONObject()
+    val jsonArray = JSONArray(imageList)
+    jsonObject.put("id", id)
+    jsonObject.put("createdAt", createdAt)
+    jsonObject.put("content", content)
+    jsonObject.put("imageList", jsonArray)
+    jsonObject.put("isAnonymous", isAnonymous)
+    return jsonObject
 }
