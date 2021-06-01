@@ -15,7 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kr.hs.dgsw.domain.usecase.post.GetPostUseCase
+import kr.hs.dgsw.domain.usecase.post.GetAllPostUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
     @Inject
-    lateinit var getPostCase: GetPostUseCase
+    lateinit var getAllPostUseCase: GetAllPostUseCase
 
     private lateinit var viewModel: PostViewModel
     private lateinit var binding: FragmentHomeBinding
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
         val application = requireActivity().application
         (application as MyDaggerApplication).daggerComponent.inject(this)
 
-        viewModel = ViewModelProvider(this, PostViewModelFactory(getPostCase))[PostViewModel::class.java]
+        viewModel = ViewModelProvider(this, PostViewModelFactory(getAllPostUseCase))[PostViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.vm = viewModel
         return binding.root
@@ -80,7 +80,7 @@ class HomeFragment : Fragment() {
     private fun init() {
         recyclerView.adapter = recyclerAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerAdapter.setOnClickCommentListener {
+        recyclerAdapter.onClick.observe(viewLifecycleOwner) {
             commentDialogOpen(it)
         }
     }

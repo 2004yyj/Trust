@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kr.hs.dgsw.domain.request.LoginRequest
 import kr.hs.dgsw.domain.usecase.account.PostLoginUseCase
 
 class LoginViewModel(private val postLoginUseCase: PostLoginUseCase) : ViewModel() {
@@ -24,7 +25,9 @@ class LoginViewModel(private val postLoginUseCase: PostLoginUseCase) : ViewModel
     val password = MutableLiveData<String>()
 
     fun login() {
-        postLoginUseCase.postLogin(username.value!!, password.value!!)
+        val loginRequest = LoginRequest(username.value!!, password.value!!)
+
+        postLoginUseCase.buildUseCaseObservable(PostLoginUseCase.Params(loginRequest))
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe ({
