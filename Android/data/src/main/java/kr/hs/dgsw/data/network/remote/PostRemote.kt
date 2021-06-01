@@ -1,15 +1,11 @@
 package kr.hs.dgsw.data.network.remote
 
-import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.Single
-import kr.hs.dgsw.data.entity.AccountResponse
+import kr.hs.dgsw.data.base.BaseRemote
 import kr.hs.dgsw.data.entity.PostResponse
-import kr.hs.dgsw.data.mapper.toEntity
-import kr.hs.dgsw.data.network.service.AccountService
 import kr.hs.dgsw.data.network.service.PostService
 import kr.hs.dgsw.data.util.Response
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,41 +13,19 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 class PostRemote @Inject constructor(
-        private val postService: PostService,
-        private val gson: Gson
-) {
+        override val service: PostService,
+) : BaseRemote<PostService>() {
 
     fun getAllPost(): Single<List<PostResponse>> {
-        return postService.getAllPost().map {
-            if (it.isSuccessful) {
-                it.body()!!.data
-            } else {
-                val errorBody = gson.fromJson(it.errorBody()!!.charStream(), Response::class.java)
-                throw Throwable(errorBody.message)
-            }
-        }
+        return service.getAllPost().map(getResponse())
     }
 
     fun getPost(postId: Int): Single<PostResponse> {
-        return postService.getPost(postId).map {
-            if (it.isSuccessful) {
-                it.body()!!.data
-            } else {
-                val errorBody = gson.fromJson(it.errorBody()!!.charStream(), Response::class.java)
-                throw Throwable(errorBody.message)
-            }
-        }
+        return service.getPost(postId).map(getResponse())
     }
 
     fun getAllPostByUsername(username: String): Single<List<PostResponse>> {
-        return postService.getAllPostByUsername(username).map {
-            if (it.isSuccessful) {
-                it.body()!!.data
-            } else {
-                val errorBody = gson.fromJson(it.errorBody()!!.charStream(), Response::class.java)
-                throw Throwable(errorBody.message)
-            }
-        }
+        return service.getAllPostByUsername(username).map(getResponse())
     }
 
     fun postPost(
@@ -67,14 +41,7 @@ class PostRemote @Inject constructor(
         val contentBody = content.toRequestBody(textType)
         val isAnonymousBody = isAnonymous.toString().toRequestBody()
 
-        return postService.postPost(usernameBody, passwordBody, isAnonymousBody, contentBody, imageList).map {
-            if (it.isSuccessful) {
-                it.body()!!.data
-            } else {
-                val errorBody = gson.fromJson(it.errorBody()!!.charStream(), Response::class.java)
-                throw Throwable(errorBody.message)
-            }
-        }
+        return service.postPost(usernameBody, passwordBody, isAnonymousBody, contentBody, imageList).map(getResponse())
     }
 
     fun updatePost(
@@ -92,14 +59,7 @@ class PostRemote @Inject constructor(
         val contentBody: RequestBody? = content?.toRequestBody(textType)
         val isAnonymousBody = isAnonymous.toString().toRequestBody()
 
-        return postService.updatePost(postId, usernameBody, passwordBody, isAnonymousBody, contentBody, deleteFileList, updateFileList).map {
-            if (it.isSuccessful) {
-                it.body()!!.data
-            } else {
-                val errorBody = gson.fromJson(it.errorBody()!!.charStream(), Response::class.java)
-                throw Throwable(errorBody.message)
-            }
-        }
+        return service.updatePost(postId, usernameBody, passwordBody, isAnonymousBody, contentBody, deleteFileList, updateFileList).map(getResponse())
     }
 
     fun deletePost(
@@ -108,14 +68,7 @@ class PostRemote @Inject constructor(
             password: String,
     ): Single<PostResponse> {
 
-        return postService.deletePost(postId, username, password).map {
-            if (it.isSuccessful) {
-                it.body()!!.data
-            } else {
-                val errorBody = gson.fromJson(it.errorBody()!!.charStream(), Response::class.java)
-                throw Throwable(errorBody.message)
-            }
-        }
+        return service.deletePost(postId, username, password).map(getResponse())
     }
 
 }

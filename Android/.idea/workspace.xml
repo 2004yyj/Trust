@@ -28,36 +28,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f6703fe2-bf8e-4d30-85ee-7cfaa4284fbd" name="Default Changelist" comment="[Update] 프래그먼트 전환시 Animation 추가">
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/base/BaseUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/base/ParamsUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/request/LoginRequest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/request/SignUpRequest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/GetAllPostByUsernameUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/GetAllPostUseCase.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/adapter/ItemPostViewModel.kt" afterDir="false" />
+    <list default="true" id="f6703fe2-bf8e-4d30-85ee-7cfaa4284fbd" name="Default Changelist" comment="[Update] UseCase 변수명 변경">
+      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/base/BaseDataSource.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/base/BaseRemote.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/LikedRemote.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/AccountDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/AccountDataSource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/PostDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/PostDataSource.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/AccountRemote.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/AccountRemote.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/repository/AccountRepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/repository/AccountRepositoryImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/repository/AccountRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/repository/AccountRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/account/PostLoginUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/account/PostLoginUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/account/PostSignUpUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/account/PostSignUpUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/DeletePostUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/DeletePostUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/GetPostUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/GetPostUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/PostPostUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/PostPostUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/UpdatePostUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/UpdatePostUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/UseCaseModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/UseCaseModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/PostRemote.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/PostRemote.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/service/LikedService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/service/LikedService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RemoteModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RemoteModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/viewholder/PostViewHolder.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/CommentFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/CommentFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/PostViewModelFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/PostViewModelFactory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/LoginViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/LoginViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/PostViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/PostViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/SignUpViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/SignUpViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/AccountController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/AccountController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/LikedController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/LikedController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/PostController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/PostController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/repository/LikedRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/repository/LikedRepository.kt" afterDir="false" />
@@ -121,9 +104,9 @@
         <option value="valueResourceFile" />
         <option value="resourceFile" />
         <option value="Kotlin Object" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -173,11 +156,11 @@
       <recent name="kr.hs.dgsw.data.entity.accountreponse" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="kr.hs.dgsw.data.network.remote" />
       <recent name="kr.hs.dgsw.domain.request" />
       <recent name="kr.hs.dgsw.domain.usecase.post" />
       <recent name="kr.hs.dgsw.domain.base" />
       <recent name="kr.hs.dgsw.trust.ui.viewmodel.factory" />
-      <recent name="kr.hs.dgsw.trust.ui.viewmodel.fragment" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/mapper" />
@@ -263,34 +246,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619958988621</updated>
-    </task>
-    <task id="LOCAL-00042" summary="[Update] 프로필 이미지 기능 추가">
-      <created>1620625881600</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1620625881600</updated>
-    </task>
-    <task id="LOCAL-00043" summary="[Update] OkHttp, Navigation SafeArgs 의존성 추가">
-      <created>1620713919896</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1620713919896</updated>
-    </task>
-    <task id="LOCAL-00044" summary="[Update] Spring 이미지 파일 업로드 API 구현">
-      <created>1620714034443</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1620714034443</updated>
-    </task>
-    <task id="LOCAL-00045" summary="[Renamed] SignIn -&gt; SignUp 이름 변경">
-      <created>1620714369382</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1620714369382</updated>
     </task>
     <task id="LOCAL-00046" summary="[Update] 회원가입 기능(프로필 이미지, 정보 전송 기능) 구현">
       <created>1620714693603</created>
@@ -607,7 +562,35 @@
       <option name="project" value="LOCAL" />
       <updated>1622448458271</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="[Update] 쿼리 추가">
+      <created>1622530970640</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1622530970641</updated>
+    </task>
+    <task id="LOCAL-00092" summary="[Update] BaseUseCase/ParamsUseCase 추가">
+      <created>1622531057436</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1622531057436</updated>
+    </task>
+    <task id="LOCAL-00093" summary="[Update] ItemPostViewModel.kt 추가">
+      <created>1622531083204</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1622531083204</updated>
+    </task>
+    <task id="LOCAL-00094" summary="[Update] UseCase 변수명 변경">
+      <created>1622531111613</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1622531111613</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -623,10 +606,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[Modify] PostController.kt -&gt; BoardController.kt" />
-    <MESSAGE value="[Update] 로그인 api 수정" />
-    <MESSAGE value="[Fixed]" />
-    <MESSAGE value="[Update] 좋아요, 댓글 Response, Entity 추가" />
     <MESSAGE value="[Update] 로그인 회원가입 뷰모델" />
     <MESSAGE value="[Update] 댓글창 프래그먼트 다이얼로그 추가" />
     <MESSAGE value="[Move] 화면 이동" />
@@ -648,7 +627,11 @@
     <MESSAGE value="[Update] Post 서비스 Request Url 수정" />
     <MESSAGE value="[Update] PostViewModel 글 가져오기 함수 추가" />
     <MESSAGE value="[Update] HomeFragment Post 리사이클러뷰 완성" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Update] HomeFragment Post 리사이클러뷰 완성" />
+    <MESSAGE value="[Update] 쿼리 추가" />
+    <MESSAGE value="[Update] BaseUseCase/ParamsUseCase 추가" />
+    <MESSAGE value="[Update] ItemPostViewModel.kt 추가" />
+    <MESSAGE value="[Update] UseCase 변수명 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Update] UseCase 변수명 변경" />
   </component>
   <component name="WindowStateProjectService">
     <state x="421" y="273" key="#PSD" timestamp="1620620699062">
@@ -660,14 +643,14 @@
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="549" y="348" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1792.1037@0.25.1792.1037" timestamp="1620354982072" />
-    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser" timestamp="1622530087282">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser" timestamp="1622534451017">
+      <screen x="0" y="25" width="1792" height="1035" />
     </state>
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/-54.-1055.1920.1055/0.25.1792.1038@0.25.1792.1038" timestamp="1621220394447" />
     <state x="675" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1620637961832" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1033@0.25.1792.1033" timestamp="1621988547060" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622431030134" />
-    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1035@0.25.1792.1035" timestamp="1620192102472" />
+    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1035@0.25.1792.1035" timestamp="1622534451017" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1036@0.25.1792.1036" timestamp="1622530087282" />
     <state x="413" y="470" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1622441821423">
       <screen x="0" y="25" width="1792" height="1034" />
@@ -707,11 +690,12 @@
     <state x="100" y="125" width="1592" height="835" key="AVDManager/0.25.1792.1036@0.25.1792.1036" timestamp="1622514239766" />
     <state x="99" y="108" width="1592" height="904" key="AVDManager/0.25.1792.1037@0.25.1792.1037" timestamp="1620448820136" />
     <state x="100" y="125" width="1592" height="837" key="AVDManager/0.25.1792.1038@0.25.1792.1038" timestamp="1620006046046" />
-    <state x="484" y="302" key="AndroidCreateResourceFileDialog" timestamp="1621163492389">
-      <screen x="0" y="25" width="1792" height="1037" />
+    <state x="484" y="301" key="AndroidCreateResourceFileDialog" timestamp="1622535841842">
+      <screen x="0" y="25" width="1792" height="1035" />
     </state>
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/-54.-1055.1920.1055/0.25.1792.1040@0.25.1792.1040" timestamp="1620800711288" />
     <state x="484" y="299" key="AndroidCreateResourceFileDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620622572207" />
+    <state x="484" y="301" key="AndroidCreateResourceFileDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1622535841842" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1621162194083" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1621163492389" />
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/0.25.1792.1040@0.25.1792.1040" timestamp="1620897483165" />
@@ -797,13 +781,13 @@
       <screen x="0" y="25" width="1792" height="1034" />
     </state>
     <state x="746" y="460" key="VCS.ChangelistChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622014546664" />
-    <state x="496" y="279" key="Vcs.Push.Dialog.v2" timestamp="1622448469051">
-      <screen x="0" y="25" width="1792" height="1034" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1622531116088">
+      <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state x="496" y="276" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1620641812333" />
     <state x="496" y="279" key="Vcs.Push.Dialog.v2/0.25.1792.1034@0.25.1792.1034" timestamp="1622448469051" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1035@0.25.1792.1035" timestamp="1622095887146" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1620085430213" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1622531116088" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1037@0.25.1792.1037" timestamp="1621163634379" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1038@0.25.1792.1038" timestamp="1620803344206" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1040@0.25.1792.1040" timestamp="1620901375987" />

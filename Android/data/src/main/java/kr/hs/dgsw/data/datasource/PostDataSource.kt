@@ -1,17 +1,20 @@
 package kr.hs.dgsw.data.datasource
 
-import android.util.Log
 import io.reactivex.Single
+import kr.hs.dgsw.data.base.BaseDataSource
 import kr.hs.dgsw.data.mapper.toEntity
 import kr.hs.dgsw.data.network.remote.PostRemote
 import kr.hs.dgsw.domain.entity.Post
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
-class PostDataSource @Inject constructor(private val postRemote: PostRemote) {
+class PostDataSource @Inject constructor(
+        override val remote: PostRemote,
+        override val cache: Any
+): BaseDataSource<PostRemote, Any>() {
 
     fun getAllPost() : Single<List<Post>> {
-        return postRemote.getAllPost().map { postResponseList ->
+        return remote.getAllPost().map { postResponseList ->
             val postList = ArrayList<Post>()
             postResponseList.forEach {
                 postList.add(it.toEntity())
@@ -21,7 +24,7 @@ class PostDataSource @Inject constructor(private val postRemote: PostRemote) {
     }
 
     fun getAllPostByUsername(username: String) : Single<List<Post>> {
-        return postRemote.getAllPostByUsername(username).map { postResponseList ->
+        return remote.getAllPostByUsername(username).map { postResponseList ->
             val postList = ArrayList<Post>()
             postResponseList.forEach {
                 postList.add(it.toEntity())
@@ -31,7 +34,7 @@ class PostDataSource @Inject constructor(private val postRemote: PostRemote) {
     }
 
     fun getPost(postId: Int) : Single<Post> {
-        return postRemote.getPost(postId).map { it.toEntity() }
+        return remote.getPost(postId).map { it.toEntity() }
     }
 
     fun postPost(
@@ -41,7 +44,7 @@ class PostDataSource @Inject constructor(private val postRemote: PostRemote) {
             content: String,
             imageList: List<MultipartBody.Part>?
     ) : Single<Post> {
-        return postRemote.postPost(username, password, isAnonymous, content, imageList).map { it.toEntity() }
+        return remote.postPost(username, password, isAnonymous, content, imageList).map { it.toEntity() }
     }
 
     fun updatePost(
@@ -53,7 +56,7 @@ class PostDataSource @Inject constructor(private val postRemote: PostRemote) {
             deleteFileList: List<String>?,
             updateFileList: List<MultipartBody.Part>?
     ) : Single<Post> {
-        return postRemote.updatePost(postId, username, password, isAnonymous, content, deleteFileList, updateFileList).map { it.toEntity() }
+        return remote.updatePost(postId, username, password, isAnonymous, content, deleteFileList, updateFileList).map { it.toEntity() }
     }
 
     fun deletePost(
@@ -61,7 +64,7 @@ class PostDataSource @Inject constructor(private val postRemote: PostRemote) {
             username: String,
             password: String
     ) : Single<Post> {
-        return postRemote.deletePost(postId, username, password).map { it.toEntity() }
+        return remote.deletePost(postId, username, password).map { it.toEntity() }
     }
 
 }

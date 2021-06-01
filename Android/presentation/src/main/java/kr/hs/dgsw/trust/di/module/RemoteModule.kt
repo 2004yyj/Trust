@@ -13,12 +13,12 @@ import javax.inject.Singleton
 class RemoteModule {
     @Provides
     @Singleton
-    fun provideAccountRemote(accountService: AccountService, gson: Gson) : AccountRemote =
-        AccountRemote(accountService, gson)
+    fun provideAccountRemote(accountService: AccountService) : AccountRemote =
+        AccountRemote(accountService)
 
 
     @Provides
     @Singleton
-    fun providePostRemote(postService: PostService, gson: Gson) : PostRemote =
-            PostRemote(postService, gson)
+    fun providePostRemote(postService: PostService) : PostRemote =
+            PostRemote(postService)
 }
