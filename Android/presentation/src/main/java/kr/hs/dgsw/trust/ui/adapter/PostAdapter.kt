@@ -3,24 +3,37 @@ package kr.hs.dgsw.trust.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.trust.R
-import kr.hs.dgsw.trust.ui.adapter.viewholder.PostViewHolder
+import kr.hs.dgsw.trust.databinding.ItemPostBinding
+import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
 
-class PostAdapter : ListAdapter<Post, PostViewHolder>(diffUtil) {
+class PostAdapter : ListAdapter<Post, PostAdapter.PostViewHolder>(diffUtil) {
 
-    interface OnClickCommentListener {
-        fun onClick(postId: Int)
-    }
+    val onClick = MutableLiveData<Int>()
 
-    private lateinit var onClickCommentListener: OnClickCommentListener
+    inner class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun setOnClickCommentListener(listener: (Int) -> Unit) {
-        onClickCommentListener = object : OnClickCommentListener {
-            override fun onClick(postId: Int) {
-                listener(postId)
+        private val viewModel = ItemPostViewModel()
+
+        fun bind(post: Post) {
+
+            with(viewModel) {
+                id.value = post.id
+                name.value = post.account.name
+                content.value = post.content
+                createdAt.value = post.createdAt
+                profileImagePath.value = post.account.profileImage
+
+            }
+
+            binding.vm = viewModel
+            binding.btnCommentPost.setOnClickListener {
+                onClick.postValue(post.id)
             }
         }
     }
@@ -44,7 +57,7 @@ class PostAdapter : ListAdapter<Post, PostViewHolder>(diffUtil) {
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(getItem(position), onClickCommentListener)
+        holder.bind(getItem(position))
     }
 
 

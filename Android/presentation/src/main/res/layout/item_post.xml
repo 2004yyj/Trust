@@ -5,10 +5,10 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-        <import type="kr.hs.dgsw.domain.entity.Post"/>
+        <import type="kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel"/>
         <variable
-            name="post"
-            type="Post" />
+            name="vm"
+            type="ItemPostViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="사용자명"
-                    android:text="@{post.account.name}"
+                    android:text="@{vm.name}"
                     android:textSize="17sp" />
 
                 <TextView
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="10분 전"
-                    bind:setTime="@{post.createdAt}"
+                    bind:setTime="@{vm.createdAt}"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -74,20 +74,21 @@
                 android:id="@+id/tv_content_post"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintBottom_toTopOf="@id/view2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView_post"
                 tools:text="내용내용내용내용내용내용내용내용내용내용내용내용내용"
-                android:text="@{post.content}" />
+                android:text="@{vm.content}" />
 
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/grey"
-                android:layout_marginVertical="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -104,12 +105,12 @@
                 app:layout_constraintTop_toBottomOf="@id/view2">
 
 
-                <CheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/chk_like_post"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="24dp"
+                    android:checked="@={vm.isChecked}"
                     android:button="@drawable/btn_like"
-                    android:buttonTint="@color/black"
                     android:paddingHorizontal="5dp"
                     android:text="@string/like"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -130,7 +131,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_comment_post"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="24dp"
                     android:background="?selectableItemBackground"
                     android:drawableStart="@drawable/ic_comment"
                     android:drawablePadding="10dp"
@@ -145,7 +146,7 @@
                 <View
                     android:id="@+id/view4"
                     android:layout_width="1dp"
-                    android:layout_height="25dp"
+                    android:layout_height="24dp"
                     android:background="@color/grey"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_comment_post"
@@ -155,7 +156,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_chatting_post"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="25dp"
                     android:background="?selectableItemBackground"
                     android:drawableStart="@drawable/ic_chat"
                     android:drawablePadding="10dp"
@@ -163,8 +164,10 @@
                     android:textAlignment="textStart"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.542"
                     app:layout_constraintStart_toEndOf="@id/view4"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
