@@ -7,15 +7,25 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class UpdatePostUseCase @Inject constructor(private val repository: PostRepository) {
-    fun updatePost(
-            postId: Int,
-            username: String,
-            password: String,
-            content: String?,
-            isAnonymous: Boolean?,
-            deleteFileList: List<String>,
-            updateFileList: List<MultipartBody.Part>?
-    ): Single<Post> {
-        return repository.updatePost(postId, username, password, isAnonymous, content, deleteFileList, updateFileList)
+    fun updatePost(params: Params): Single<Post> {
+        return repository.updatePost(
+                params.postId,
+                params.username,
+                params.password,
+                params.isAnonymous,
+                params.content,
+                params.deleteFileList,
+                params.updateFileList
+        )
     }
+
+    data class Params(
+            val postId: Int,
+            val username: String,
+            val password: String,
+            val content: String?,
+            val isAnonymous: Boolean?,
+            val deleteFileList: List<String>,
+            val updateFileList: List<MultipartBody.Part>?
+    )
 }

@@ -6,10 +6,7 @@ import kr.hs.dgsw.domain.repository.AccountRepository
 import kr.hs.dgsw.domain.repository.PostRepository
 import kr.hs.dgsw.domain.usecase.account.PostLoginUseCase
 import kr.hs.dgsw.domain.usecase.account.PostSignUpUseCase
-import kr.hs.dgsw.domain.usecase.post.DeletePostUseCase
-import kr.hs.dgsw.domain.usecase.post.GetPostUseCase
-import kr.hs.dgsw.domain.usecase.post.PostPostUseCase
-import kr.hs.dgsw.domain.usecase.post.UpdatePostUseCase
+import kr.hs.dgsw.domain.usecase.post.*
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +20,17 @@ class UseCaseModule {
     @Singleton
     fun provideSignUpUseCase(repository: AccountRepository) =
             PostSignUpUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetAllPostUseCase(repository: PostRepository) =
+            GetAllPostUseCase(repository)
+
+    @Provides
+    @Singleton
+    fun provideGetAllPostByUsernameUseCase(repository: PostRepository) =
+            GetAllPostByUsernameUseCase(repository)
+
 
     @Provides
     @Singleton

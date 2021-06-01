@@ -6,6 +6,8 @@ import io.reactivex.Single
 import kr.hs.dgsw.data.entity.AccountResponse
 import kr.hs.dgsw.data.network.service.AccountService
 import kr.hs.dgsw.data.util.Response
+import kr.hs.dgsw.domain.request.LoginRequest
+import kr.hs.dgsw.domain.request.SignUpRequest
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -16,8 +18,8 @@ class AccountRemote @Inject constructor(
         private val gson: Gson
 ) {
 
-    fun postLogin(username: String, password: String): Single<AccountResponse> {
-        return accountService.postLogin(username, password).map {
+    fun postLogin(loginRequest: LoginRequest): Single<AccountResponse> {
+        return accountService.postLogin(loginRequest.username, loginRequest.password).map {
             if (it.isSuccessful) {
                 it.body()!!.data
             } else {
@@ -27,13 +29,13 @@ class AccountRemote @Inject constructor(
         }
     }
 
-    fun postSignUp(name: String, username: String, password: String, profileImage: MultipartBody.Part?): Single<AccountResponse> {
+    fun postSignUp(signUpRequest: SignUpRequest): Single<AccountResponse> {
         val textType = "text/plain".toMediaType()
-        val nameBody = name.toRequestBody(textType)
-        val usernameBody = username.toRequestBody(textType)
-        val passwordBody = password.toRequestBody(textType)
+        val nameBody = signUpRequest.name.toRequestBody(textType)
+        val usernameBody = signUpRequest.username.toRequestBody(textType)
+        val passwordBody = signUpRequest.password.toRequestBody(textType)
 
-        return accountService.postSignUp(nameBody, usernameBody, passwordBody, profileImage).map {
+        return accountService.postSignUp(nameBody, usernameBody, passwordBody, signUpRequest.profileImage).map {
             if (it.isSuccessful) {
                 it.body()!!.data
             } else {
