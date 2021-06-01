@@ -44,7 +44,7 @@ class AccountController(
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
             }
         } else {
-            throw BadRequestException("잘못된 값이 있습니다.")
+            throw NullPointerException("빈칸이 없는지 확인해 주세요.")
         }
     }
 
@@ -99,7 +99,7 @@ class AccountController(
                 throw ExistsException("중복된 아이디가 있습니다.")
             }
         } else {
-            throw BadRequestException("잘못된 값이 있습니다.")
+            throw NullPointerException("빈칸이 없는지 확인해 주세요.")
         }
     }
 
@@ -130,5 +130,11 @@ class AccountController(
     @ResponseStatus(HttpStatus.CONFLICT)
     fun handler(error: ExistsException): String {
         return JsonResponse("409", error.message.toString(), null).returnJsonObject()
+    }
+
+    @ExceptionHandler(value = [NullPointerException::class])
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handler(error: NullPointerException): String {
+        return JsonResponse("400", error.message.toString(), null).returnJsonObject()
     }
 }

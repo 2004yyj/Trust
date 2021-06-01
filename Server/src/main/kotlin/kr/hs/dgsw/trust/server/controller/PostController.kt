@@ -259,7 +259,24 @@ class PostController(
     fun getPostToObject(post: Post): JSONObject {
         val postObject = post.toJsonObject()
         postObject.put("account", findAccount(post.username!!, post.isAnonymous!!).toJsonObject())
+
+        val likedList = findLikedList(post.id!!)
+        val likedObject = JSONArray()
+        likedList.forEach {
+            likedObject.put(it)
+        }
+        postObject.put("likedList", likedList)
+        postObject.put("likedSize", likedList.size)
+
         return postObject
+    }
+
+    fun findLikedList(postId: Int): List<Liked> {
+        return try {
+            likedRepository.findAllByPostId(postId).orElseThrow()
+        } catch (e: NoSuchElementException) {
+            throw NotFoundException("글을 찾을 수 없습니다.")
+        }
     }
 
     fun findAccount(username: String, isAnonymous: Boolean): Account {

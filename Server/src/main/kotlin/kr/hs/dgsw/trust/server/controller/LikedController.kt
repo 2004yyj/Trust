@@ -25,7 +25,7 @@ class LikedController(
 ) {
     @GetMapping("/liked")
     fun likedList(postId: Int): String {
-        val list = likedRepository.findAllByPostId(postId)
+        val list = likedRepository.findAllByPostId(postId).orElseThrow()
         val jsonList = JSONArray()
         list.forEach { liked ->
             jsonList.put(getLikedToObject(liked))
