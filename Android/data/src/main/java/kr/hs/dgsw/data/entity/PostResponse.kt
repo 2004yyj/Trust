@@ -7,4 +7,6 @@ data class PostResponse(
     val content: String,
     val imageList: List<String>,
     val account: AccountResponse,
+    val likedList: List<String>,
+    val likedSize: Int
 )

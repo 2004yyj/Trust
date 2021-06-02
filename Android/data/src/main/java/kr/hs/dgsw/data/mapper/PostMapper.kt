@@ -11,7 +11,9 @@ fun PostResponse.toEntity(): Post {
             this.isAnonymous,
             this.content,
             this.imageList,
-            this.account.toEntity()
+            this.account.toEntity(),
+            this.likedList,
+            this.likedSize
     )
 }
 
@@ -22,6 +24,8 @@ fun Post.toResponse(): PostResponse {
             this.isAnonymous,
             this.content,
             this.imageList,
-            this.account.toResponse()
+            this.account.toResponse(),
+            this.likedList,
+            this.likedSize
     )
 }
