@@ -5,7 +5,6 @@ import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.entity.Liked
 import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
-import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.ExistsException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
@@ -42,17 +41,21 @@ class LikedController(
     fun saveLiked(postId: Int, username: String, password: String): String {
         val liked = Liked()
         try {
+
             val account = accountRepository.findById(username).orElseThrow()
 
             if (username == account.username && passwordEncoder.matches(password, account.password)) {
-                if (likedRepository.existsByUsernameAndPostId(username, postId)) {
+
+                try {
+                    likedRepository.findByPostIdAndUsername(postId, username).orElseThrow()
+                    throw ExistsException("좋아요가 이미 존재합니다.")
+                } catch (e: NoSuchElementException) {
                     liked.postId = postId
                     liked.username = username
                     liked.createdAt = Timestamp(System.currentTimeMillis())
                     likedRepository.save(liked)
-                } else {
-                    throw ExistsException("이미 좋아요를 눌렀습니다.")
                 }
+
             } else {
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
@@ -69,11 +72,11 @@ class LikedController(
     }
 
     @DeleteMapping("/liked/delete")
-    fun deleteLiked(likedId: Int, username: String, password: String): String {
+    fun deleteLiked(postId: Int, username: String, password: String): String {
 
         val liked =
             try {
-                likedRepository.findById(likedId).orElseThrow()
+                likedRepository.findByPostIdAndUsername(postId, username).orElseThrow()
             } catch (e: NoSuchElementException) {
                 throw NotFoundException("좋아요가 존재하지 않습니다.")
             }
@@ -88,7 +91,7 @@ class LikedController(
         val accountMatch = username == liked.username
 
         return if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
-            likedRepository.deleteById(likedId)
+            likedRepository.deleteByPostIdAndUsername(postId, username)
             JsonResponse("200",
                 "좋아요를 성공적으로 삭제하였습니다.",
                 getLikedToObject(liked)

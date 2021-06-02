@@ -263,10 +263,10 @@ class PostController(
         val likedList = findLikedList(post.id!!)
         val likedObject = JSONArray()
         likedList.forEach {
-            likedObject.put(it)
+            likedObject.put(it.username)
         }
-        postObject.put("likedList", likedList)
-        postObject.put("likedSize", likedList.size)
+        postObject.put("likedList", likedObject)
+        postObject.put("likedSize", likedObject.length())
 
         return postObject
     }
