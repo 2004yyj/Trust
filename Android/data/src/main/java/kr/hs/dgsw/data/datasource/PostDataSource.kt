@@ -2,6 +2,7 @@ package kr.hs.dgsw.data.datasource
 
 import io.reactivex.Single
 import kr.hs.dgsw.data.base.BaseDataSource
+import kr.hs.dgsw.data.base.NoCacheDataSource
 import kr.hs.dgsw.data.mapper.toEntity
 import kr.hs.dgsw.data.network.remote.PostRemote
 import kr.hs.dgsw.domain.entity.Post
@@ -10,8 +11,7 @@ import javax.inject.Inject
 
 class PostDataSource @Inject constructor(
         override val remote: PostRemote,
-        override val cache: Any
-): BaseDataSource<PostRemote, Any>() {
+): NoCacheDataSource<PostRemote>() {
 
     fun getAllPost() : Single<List<Post>> {
         return remote.getAllPost().map { postResponseList ->
