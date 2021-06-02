@@ -157,7 +157,7 @@
 
                 <Button
                     android:id="@+id/btn_signUp_signUp"
-                    style="@style/BoldButton"
+                    style="@style/BigButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:stateListAnimator="@null"

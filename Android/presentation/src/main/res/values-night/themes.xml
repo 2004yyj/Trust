@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="BoldButton" parent="TextAppearance.AppCompat.Widget.Button">
+    <style name="BigButton" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:padding">15dp</item>
     </style>
 

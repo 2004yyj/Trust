@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: PostViewModel
     private lateinit var binding: FragmentHomeBinding
-    private val recyclerAdapter: PostAdapter by lazy { PostAdapter() }
+    private val recyclerAdapter: PostAdapter by lazy { PostAdapter(viewLifecycleOwner) }
     private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
 
     private val toolbar: Toolbar by lazy { binding.toolbarHome }

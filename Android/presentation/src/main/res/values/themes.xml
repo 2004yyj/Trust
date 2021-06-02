@@ -15,8 +15,14 @@
         <item name="colorError">@color/error_color</item>
     </style>
 
-    <style name="BoldButton" parent="TextAppearance.AppCompat.Widget.Button">
+    <style name="BigButton" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:padding">15dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SmallButton" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -24,5 +30,10 @@
     <style name="NoPaddingButton" parent="TextAppearance.AppCompat.Widget.Button">
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
+    </style>
+
+    <style name="BoldTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

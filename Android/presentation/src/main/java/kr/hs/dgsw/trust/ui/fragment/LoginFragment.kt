@@ -21,6 +21,7 @@ import com.gun0912.tedpermission.TedPermission
 import kr.hs.dgsw.domain.usecase.account.PostLoginUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentLoginBinding
+import kr.hs.dgsw.trust.databinding.LayoutButtonBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.activity.MainActivity
 import kr.hs.dgsw.trust.ui.viewmodel.factory.LoginViewModelFactory
@@ -39,10 +40,11 @@ class LoginFragment : Fragment() {
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding : FragmentLoginBinding
 
-    private lateinit var tilId : TextInputLayout
-    private lateinit var tilPw : TextInputLayout
-    private lateinit var btnLogin : Button
+    private lateinit var btnLogin : LayoutButtonBinding
     private lateinit var btnSignUp : Button
+
+    private lateinit var tilId: TextInputLayout
+    private lateinit var tilPw: TextInputLayout
 
     private lateinit var permissionListener : PermissionListener
 
@@ -70,17 +72,6 @@ class LoginFragment : Fragment() {
         init()
         tedPermission()
         observe()
-
-        btnLogin.setOnClickListener {
-            viewModel.apply {
-                if (!username.value.isNullOrEmpty() && !password.value.isNullOrEmpty()) {
-                    login()
-                    return@setOnClickListener
-                }
-            }
-
-            Toast.makeText(context, "아이디 또는 비밀번호를 입력해 주세요.", Toast.LENGTH_SHORT).show()
-        }
 
         btnSignUp.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToSignUpUserInfoFragment()
@@ -119,6 +110,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun observe() {
+
         viewModel.username.observe(viewLifecycleOwner) {
             tilId.error = "아이디를 입력해주세요."
             tilId.isErrorEnabled = it.isEmpty()
@@ -136,7 +128,7 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.isFailure.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it?:"", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, it?:"오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
