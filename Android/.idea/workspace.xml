@@ -25,37 +25,40 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6703fe2-bf8e-4d30-85ee-7cfaa4284fbd" name="Default Changelist" comment="[Update] BaseRemote, BaseDataSource 추가">
-      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/base/NoCacheDataSource.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/LikedRemote.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/layout_button.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/LikedDataSource.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/repository/LikedRepositoryImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/repository/LikedRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/request/DetailedRequest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/liked/DeleteLikedUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/liked/GetAllLikedUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/liked/PostLikedUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/ItemPostViewModelFactory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/drawable/dialog_comment_background.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/xml/fragment_comment_scene.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/AccountDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/AccountDataSource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/PostDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/datasource/PostDataSource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/entity/PostResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/entity/PostResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/mapper/PostMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/mapper/PostMapper.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/service/LikedService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/service/LikedService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/entity/Post.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/entity/Post.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/UpdatePostUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/post/UpdatePostUseCase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/component/MyComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/component/MyComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RemoteModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RemoteModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/ServiceModule.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/DataSourceModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/DataSourceModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RepositoryModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RepositoryModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/UseCaseModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/UseCaseModule.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/activity/IntroActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/activity/IntroActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/CommentFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/CommentFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/LoginFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/binding/HomeBindingAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/binding/BindingUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/adapter/ItemPostViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/adapter/ItemPostViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/LoginViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/LoginViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_sign_up_success.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_sign_up_success.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_sign_up_user_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_sign_up_user_info.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_comment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_comment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_home.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,12 +117,12 @@
         <option value="Kotlin File" />
         <option value="navigationResourceFile" />
         <option value="valueResourceFile" />
-        <option value="resourceFile" />
         <option value="Kotlin Object" />
         <option value="Kotlin Data Class" />
+        <option value="layoutResourceFile" />
+        <option value="resourceFile" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
-        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -173,11 +176,11 @@
       <recent name="$PROJECT_DIR$/app/src/main/java/kr/hs/dgsw/trust/ui/fragment" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="kr.hs.dgsw.domain.request" />
+      <recent name="kr.hs.dgsw.trust.ui.viewmodel.factory" />
+      <recent name="kr.hs.dgsw.domain.usecase.liked" />
       <recent name="kr.hs.dgsw.data.base" />
       <recent name="kr.hs.dgsw.data.network.remote" />
-      <recent name="kr.hs.dgsw.domain.request" />
-      <recent name="kr.hs.dgsw.domain.usecase.post" />
-      <recent name="kr.hs.dgsw.domain.base" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="kr.hs.dgsw.trust.ui.viewmodel.adapter" />
@@ -259,34 +262,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619958988621</updated>
-    </task>
-    <task id="LOCAL-00048" summary="[Fixed] Navigation 화면 전환 오류 수정">
-      <created>1620714764091</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1620714764091</updated>
-    </task>
-    <task id="LOCAL-00049" summary="[Update] password 토글버튼, 비밀번호 확인 기능 추가">
-      <created>1620723349648</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1620723349648</updated>
-    </task>
-    <task id="LOCAL-00050" summary="[Update] content type 넣어서 json 타입 지정">
-      <created>1620723368644</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1620723368645</updated>
-    </task>
-    <task id="LOCAL-00051" summary="[Update] API 회원가입/로그인 시 계정 확인 방식 수정">
-      <created>1620723444207</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1620723444207</updated>
     </task>
     <task id="LOCAL-00052" summary="[Modified] 코드 수정">
       <created>1620803230096</created>
@@ -603,7 +578,35 @@
       <option name="project" value="LOCAL" />
       <updated>1622593011906</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="[Update] 프로젝트 구조 수정">
+      <created>1622599571085</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1622599571086</updated>
+    </task>
+    <task id="LOCAL-00098" summary="[Update] 버튼 include 형식으로 변경">
+      <created>1622599713595</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1622599713595</updated>
+    </task>
+    <task id="LOCAL-00099" summary="[Update] Post Entity/Response 좋아요 리스트 필드 추가">
+      <created>1622599757529</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1622599757530</updated>
+    </task>
+    <task id="LOCAL-00100" summary="[Update] 사용자 정보를 담고 있는 Preference 추가">
+      <created>1622687095248</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1622687095250</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -611,7 +614,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -619,10 +634,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[Move] 화면 이동" />
-    <MESSAGE value="[Move] 파일 이동" />
-    <MESSAGE value="[Move] Post 리사이클러뷰 어댑터 추가" />
-    <MESSAGE value="[Update] SignUpUserInfoFragment.kt onActivityResult -&gt; activityResultLauncher" />
     <MESSAGE value="[Fixed] fragment_anim -&gt; nav_default_anim Navigation Animation 수정" />
     <MESSAGE value="[Fixed] &lt;Deprecated&gt; fragmentManager -&gt; supportFragmentManager" />
     <MESSAGE value="[Fixed] Gradle Update" />
@@ -644,7 +655,11 @@
     <MESSAGE value="[Update] UseCase 변수명 변경" />
     <MESSAGE value="[Update] BaseRemote, BaseDataSource 추가" />
     <MESSAGE value="[Update] 예외처리" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Update] 예외처리" />
+    <MESSAGE value="[Update] 프로젝트 구조 수정" />
+    <MESSAGE value="[Update] 버튼 include 형식으로 변경" />
+    <MESSAGE value="[Update] Post Entity/Response 좋아요 리스트 필드 추가" />
+    <MESSAGE value="[Update] 사용자 정보를 담고 있는 Preference 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Update] 사용자 정보를 담고 있는 Preference 추가" />
   </component>
   <component name="WindowStateProjectService">
     <state x="421" y="273" key="#PSD" timestamp="1620620699062">
@@ -656,13 +671,13 @@
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="549" y="348" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1792.1037@0.25.1792.1037" timestamp="1620354982072" />
-    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser" timestamp="1622534451017">
-      <screen x="0" y="25" width="1792" height="1035" />
+    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser" timestamp="1622608438821">
+      <screen x="0" y="25" width="1792" height="1034" />
     </state>
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/-54.-1055.1920.1055/0.25.1792.1038@0.25.1792.1038" timestamp="1621220394447" />
     <state x="675" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1620637961832" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1033@0.25.1792.1033" timestamp="1621988547060" />
-    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622431030134" />
+    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622608438821" />
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1035@0.25.1792.1035" timestamp="1622534451017" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1036@0.25.1792.1036" timestamp="1622530087282" />
     <state x="413" y="470" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1622441821423">
@@ -673,12 +688,13 @@
     <state x="413" y="470" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622441821423" />
     <state x="413" y="472" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1620354027002" />
     <state x="413" y="472" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1620000053452" />
-    <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1622525531658">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1622686448140">
+      <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622445109930" />
     <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1621768997306" />
-    <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1622525531658" />
+    <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1622685083404" />
+    <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1622686448140" />
     <state x="2395" y="-468" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620715407414" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1622553174284">
       <screen x="0" y="25" width="1792" height="1034" />
@@ -703,11 +719,12 @@
     <state x="100" y="125" width="1592" height="835" key="AVDManager/0.25.1792.1036@0.25.1792.1036" timestamp="1622514239766" />
     <state x="99" y="108" width="1592" height="904" key="AVDManager/0.25.1792.1037@0.25.1792.1037" timestamp="1620448820136" />
     <state x="100" y="125" width="1592" height="837" key="AVDManager/0.25.1792.1038@0.25.1792.1038" timestamp="1620006046046" />
-    <state x="484" y="301" key="AndroidCreateResourceFileDialog" timestamp="1622545743700">
-      <screen x="0" y="25" width="1792" height="1035" />
+    <state x="271" y="294" key="AndroidCreateResourceFileDialog" timestamp="1622602040924">
+      <screen x="0" y="25" width="1792" height="1034" />
     </state>
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/-54.-1055.1920.1055/0.25.1792.1040@0.25.1792.1040" timestamp="1620800711288" />
     <state x="484" y="299" key="AndroidCreateResourceFileDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620622572207" />
+    <state x="271" y="294" key="AndroidCreateResourceFileDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622602040924" />
     <state x="484" y="301" key="AndroidCreateResourceFileDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1622545743700" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1621162194083" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1621163492389" />
@@ -722,53 +739,57 @@
     <state x="718" y="325" key="AndroidCreateXmlResourceDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1621208988857" />
     <state x="718" y="325" key="AndroidCreateXmlResourceDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1620002458626" />
     <state x="718" y="326" key="AndroidCreateXmlResourceDialog/0.25.1792.1040@0.25.1792.1040" timestamp="1620898682699" />
-    <state width="1748" height="279" key="GridCell.Tab.0.bottom" timestamp="1622527639794">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state x="665" y="292" key="AndroidProcessChooserDialog" timestamp="1622602334568">
+      <screen x="0" y="25" width="1792" height="1034" />
+    </state>
+    <state x="665" y="292" key="AndroidProcessChooserDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622602334568" />
+    <state width="1748" height="240" key="GridCell.Tab.0.bottom" timestamp="1622687172454">
+      <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521328" />
-    <state width="1748" height="279" key="GridCell.Tab.0.bottom/0.25.1792.1034@0.25.1792.1034" timestamp="1622447560295" />
+    <state width="1748" height="198" key="GridCell.Tab.0.bottom/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539638" />
     <state width="1748" height="327" key="GridCell.Tab.0.bottom/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600459" />
     <state width="1748" height="279" key="GridCell.Tab.0.bottom/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639794" />
-    <state width="1748" height="293" key="GridCell.Tab.0.bottom/0.25.1792.1037@0.25.1792.1037" timestamp="1620630653092" />
+    <state width="1748" height="240" key="GridCell.Tab.0.bottom/0.25.1792.1037@0.25.1792.1037" timestamp="1622687172454" />
     <state width="1748" height="239" key="GridCell.Tab.0.bottom/0.25.1792.1038@0.25.1792.1038" timestamp="1620021942336" />
     <state width="1748" height="540" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815721" />
     <state width="1876" height="287" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059331" />
     <state width="1748" height="327" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
     <state width="1876" height="17" key="GridCell.Tab.0.bottom/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154737" />
-    <state width="1748" height="279" key="GridCell.Tab.0.center" timestamp="1622527639793">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state width="1748" height="240" key="GridCell.Tab.0.center" timestamp="1622687172453">
+      <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521327" />
-    <state width="1748" height="279" key="GridCell.Tab.0.center/0.25.1792.1034@0.25.1792.1034" timestamp="1622447560294" />
+    <state width="1748" height="198" key="GridCell.Tab.0.center/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539637" />
     <state width="1748" height="327" key="GridCell.Tab.0.center/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600458" />
     <state width="1748" height="279" key="GridCell.Tab.0.center/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639793" />
-    <state width="1748" height="293" key="GridCell.Tab.0.center/0.25.1792.1037@0.25.1792.1037" timestamp="1620630653092" />
+    <state width="1748" height="240" key="GridCell.Tab.0.center/0.25.1792.1037@0.25.1792.1037" timestamp="1622687172453" />
     <state width="1748" height="239" key="GridCell.Tab.0.center/0.25.1792.1038@0.25.1792.1038" timestamp="1620021942335" />
     <state width="1748" height="540" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815721" />
     <state width="1876" height="287" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
     <state width="1876" height="17" key="GridCell.Tab.0.center/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154736" />
-    <state width="1748" height="279" key="GridCell.Tab.0.left" timestamp="1622527639793">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state width="1748" height="240" key="GridCell.Tab.0.left" timestamp="1622687172452">
+      <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521326" />
-    <state width="1748" height="279" key="GridCell.Tab.0.left/0.25.1792.1034@0.25.1792.1034" timestamp="1622447560294" />
+    <state width="1748" height="198" key="GridCell.Tab.0.left/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539635" />
     <state width="1748" height="327" key="GridCell.Tab.0.left/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600458" />
     <state width="1748" height="279" key="GridCell.Tab.0.left/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639793" />
-    <state width="1748" height="293" key="GridCell.Tab.0.left/0.25.1792.1037@0.25.1792.1037" timestamp="1620630653091" />
+    <state width="1748" height="240" key="GridCell.Tab.0.left/0.25.1792.1037@0.25.1792.1037" timestamp="1622687172452" />
     <state width="1748" height="239" key="GridCell.Tab.0.left/0.25.1792.1038@0.25.1792.1038" timestamp="1620021942334" />
     <state width="1748" height="540" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815720" />
     <state width="1876" height="287" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532788" />
     <state width="1876" height="17" key="GridCell.Tab.0.left/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154735" />
-    <state width="1748" height="279" key="GridCell.Tab.0.right" timestamp="1622527639793">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state width="1748" height="240" key="GridCell.Tab.0.right" timestamp="1622687172454">
+      <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521327" />
-    <state width="1748" height="279" key="GridCell.Tab.0.right/0.25.1792.1034@0.25.1792.1034" timestamp="1622447560295" />
+    <state width="1748" height="198" key="GridCell.Tab.0.right/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539637" />
     <state width="1748" height="327" key="GridCell.Tab.0.right/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600459" />
     <state width="1748" height="279" key="GridCell.Tab.0.right/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639793" />
-    <state width="1748" height="293" key="GridCell.Tab.0.right/0.25.1792.1037@0.25.1792.1037" timestamp="1620630653092" />
+    <state width="1748" height="240" key="GridCell.Tab.0.right/0.25.1792.1037@0.25.1792.1037" timestamp="1622687172454" />
     <state width="1748" height="239" key="GridCell.Tab.0.right/0.25.1792.1038@0.25.1792.1038" timestamp="1620021942335" />
     <state width="1748" height="540" key="GridCell.Tab.0.right/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815721" />
     <state width="1876" height="287" key="GridCell.Tab.0.right/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
@@ -798,11 +819,11 @@
       <screen x="0" y="25" width="1792" height="1034" />
     </state>
     <state x="746" y="460" key="VCS.ChangelistChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622014546664" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1622537093042">
-      <screen x="0" y="25" width="1792" height="1035" />
+    <state x="496" y="279" key="Vcs.Push.Dialog.v2" timestamp="1622601725488">
+      <screen x="0" y="25" width="1792" height="1034" />
     </state>
     <state x="496" y="276" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1620641812333" />
-    <state x="496" y="279" key="Vcs.Push.Dialog.v2/0.25.1792.1034@0.25.1792.1034" timestamp="1622448469051" />
+    <state x="496" y="279" key="Vcs.Push.Dialog.v2/0.25.1792.1034@0.25.1792.1034" timestamp="1622601725488" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1035@0.25.1792.1035" timestamp="1622537093042" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1622531116088" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1037@0.25.1792.1037" timestamp="1621163634379" />
@@ -835,12 +856,13 @@
     </state>
     <state x="602" y="336" key="git4idea.merge.GitPullDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622177689890" />
     <state x="602" y="336" key="git4idea.merge.GitPullDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1620265358271" />
-    <state x="621" y="359" key="refactoring.ChangeSignatureDialog" timestamp="1622424710721">
-      <screen x="0" y="25" width="1792" height="1034" />
+    <state x="621" y="360" width="549" height="535" key="refactoring.ChangeSignatureDialog" timestamp="1622686510505">
+      <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="621" y="360" key="refactoring.ChangeSignatureDialog/-54.-1055.1920.1055/0.25.1792.1038@0.25.1792.1038" timestamp="1621220613812" />
     <state x="621" y="362" key="refactoring.ChangeSignatureDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620620788939" />
     <state x="621" y="359" key="refactoring.ChangeSignatureDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622424710721" />
+    <state x="621" y="360" width="549" height="535" key="refactoring.ChangeSignatureDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1622686510505" />
     <state x="2393" y="-245" width="718" height="601" key="search.everywhere.popup" timestamp="1621218847147">
       <screen x="1792" y="-468" width="1920" height="995" />
     </state>
