@@ -24,6 +24,7 @@ import kr.hs.dgsw.trust.databinding.FragmentLoginBinding
 import kr.hs.dgsw.trust.databinding.LayoutButtonBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.activity.MainActivity
+import kr.hs.dgsw.trust.ui.util.binding.PreferenceHelper
 import kr.hs.dgsw.trust.ui.viewmodel.factory.LoginViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.fragment.LoginViewModel
 import javax.inject.Inject
@@ -122,6 +123,11 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
+            PreferenceHelper.init(
+                    requireContext(),
+                    viewModel.username.value!!,
+                    viewModel.password.value!!
+            )
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
