@@ -13,13 +13,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
+import kr.hs.dgsw.domain.usecase.liked.PostLikedUseCase
 import kr.hs.dgsw.domain.usecase.post.GetAllPostUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.adapter.PostAdapter
+import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
+import kr.hs.dgsw.trust.ui.viewmodel.factory.ItemPostViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.factory.PostViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.fragment.PostViewModel
 import javax.inject.Inject
@@ -29,9 +32,18 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var getAllPostUseCase: GetAllPostUseCase
 
+    @Inject
+    lateinit var postLikedUseCase: PostLikedUseCase
+
+    @Inject
+    lateinit var deleteLikedUseCase: DeleteLikedUseCase
+
     private lateinit var viewModel: PostViewModel
+
+    private lateinit var recyclerViewModel: ItemPostViewModel
+
     private lateinit var binding: FragmentHomeBinding
-    private val recyclerAdapter: PostAdapter by lazy { PostAdapter(viewLifecycleOwner) }
+    private val recyclerAdapter: PostAdapter by lazy { PostAdapter(recyclerViewModel) }
     private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
 
     private val toolbar: Toolbar by lazy { binding.toolbarHome }
@@ -49,6 +61,7 @@ class HomeFragment : Fragment() {
         (application as MyDaggerApplication).daggerComponent.inject(this)
 
         viewModel = ViewModelProvider(this, PostViewModelFactory(getAllPostUseCase))[PostViewModel::class.java]
+        recyclerViewModel = ViewModelProvider(this, ItemPostViewModelFactory(postLikedUseCase, deleteLikedUseCase))[ItemPostViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.vm = viewModel
         return binding.root
@@ -79,7 +92,6 @@ class HomeFragment : Fragment() {
 
     private fun init() {
         recyclerView.adapter = recyclerAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerAdapter.onClick.observe(viewLifecycleOwner) {
             commentDialogOpen(it)
         }
@@ -89,6 +101,8 @@ class HomeFragment : Fragment() {
         viewModel.postList.observe(viewLifecycleOwner) {
             recyclerAdapter.submitList(it)
         }
+
+        recyclerViewModel.isFailure
     }
 
     private fun commentDialogOpen(postId: Int) {

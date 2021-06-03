@@ -46,7 +46,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_home"
-                tools:listitem="@layout/item_post" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_post"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
