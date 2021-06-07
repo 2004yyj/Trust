@@ -12,9 +12,6 @@ import java.util.concurrent.TimeUnit
 
 class LoginViewModel(private val postLoginUseCase: PostLoginUseCase) : ViewModel() {
 
-    companion object {
-        private const val TAG = "LoginViewModel"
-    }
     private val compositeDisposable = CompositeDisposable()
 
     private val _isSuccess = MutableLiveData<Boolean>()
