@@ -21,6 +21,7 @@ import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.adapter.PostAdapter
+import kr.hs.dgsw.trust.ui.dialog.CommentFragment
 import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
 import kr.hs.dgsw.trust.ui.viewmodel.factory.ItemPostViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.factory.PostViewModelFactory
@@ -71,13 +72,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         init()
-        observe()
-
-        viewModel.getAllPost()
-
-        viewModel.isFailure.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
 
         val appbarConfiguration = AppBarConfiguration(
             setOf(
@@ -91,15 +85,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun init() {
+
+        viewModel.getAllPost()
+
         recyclerView.adapter = recyclerAdapter
         recyclerAdapter.onClick.observe(viewLifecycleOwner) {
             commentDialogOpen(it)
         }
+        observe()
     }
 
     private fun observe() {
         viewModel.postList.observe(viewLifecycleOwner) {
             recyclerAdapter.submitList(it)
+        }
+
+        viewModel.isFailure.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
 
         recyclerViewModel.isFailure
