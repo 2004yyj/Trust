@@ -88,10 +88,16 @@ class CommentController(
             throw NotFoundException("글을 찾을 수 없습니다.")
         }
 
+        val list = commentRepository.findByPostId(postId)
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getCommentToObject(it))
+        }
+
         return JsonResponse(
             "200",
-            "댓글을 성공적으로 추가하였습니다.",
-            getCommentToObject(comment)
+            "댓글을 성공적으로 추가했습니다.",
+            jsonList
         ).returnJsonObject()
     }
 
@@ -118,7 +124,7 @@ class CommentController(
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
 
-        return if (commentRepository.existsById(commentId)) {
+        if (commentRepository.existsById(commentId)) {
             val accountMatch =
                 if (comment.isAnonymous == true)
                     passwordEncoder.matches(username, comment.username)
@@ -153,18 +159,24 @@ class CommentController(
                 }
 
                 commentRepository.save(comment)
-
-                JsonResponse(
-                    "200",
-                    "댓글을 성공적으로 업데이트 하였습니다.",
-                    getCommentToObject(comment)
-                ).returnJsonObject()
             } else {
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
         } else {
             throw NotFoundException("댓글을 찾을 수 없습니다.")
         }
+
+        val list = commentRepository.findByPostId(comment.postId!!)
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getCommentToObject(it))
+        }
+
+        return JsonResponse(
+            "200",
+            "댓글을 성공적으로 추가했습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @DeleteMapping("/comment/delete")
@@ -183,7 +195,7 @@ class CommentController(
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
 
-        return if (commentRepository.existsById(commentId)) {
+        if (commentRepository.existsById(commentId)) {
             val accountMatch =
                 if (comment.isAnonymous == true)
                     passwordEncoder.matches(username, comment.username)
@@ -209,17 +221,24 @@ class CommentController(
                 comment.imageList = JSONArray(pathList).toString()
 
                 commentRepository.deleteById(commentId)
-                JsonResponse(
-                    "200",
-                    "댓글을 성공적으로 삭제하였습니다.",
-                    getCommentToObject(comment)
-                ).returnJsonObject()
             } else {
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
         } else {
             throw NotFoundException("댓글을 찾을 수 없습니다.")
         }
+
+        val list = commentRepository.findByPostId(comment.postId!!)
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getCommentToObject(it))
+        }
+
+        return JsonResponse(
+            "200",
+            "댓글을 성공적으로 추가했습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     fun getCommentToObject(comment: Comment): JSONObject {
