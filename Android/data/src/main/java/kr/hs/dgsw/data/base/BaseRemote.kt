@@ -1,5 +1,7 @@
 package kr.hs.dgsw.data.base
 
+import android.util.Log
+import com.google.gson.Gson
 import io.reactivex.functions.Function
 import kr.hs.dgsw.data.network.service.AccountService
 import kr.hs.dgsw.data.util.Response
@@ -22,10 +24,11 @@ abstract class BaseRemote<SV> {
         }
     }
 
-    private fun checkError(response: retrofit2.Response<*>) {
+    private fun <T> checkError(response: retrofit2.Response<Response<T>>) {
         if (!response.isSuccessful) {
-            val errorBody = JSONObject(response.errorBody()!!.toString())
-            throw Throwable(errorBody.getString("message"))
+            val gson = Gson()
+            val errorBody = gson.fromJson(response.errorBody()!!.charStream(), Response::class.java)
+            throw Throwable(errorBody.message)
         }
     }
 }
