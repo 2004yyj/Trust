@@ -1,7 +1,7 @@
 package kr.hs.dgsw.data.network.service
 
 import io.reactivex.Single
-import kr.hs.dgsw.data.entity.PostResponse
+import kr.hs.dgsw.data.entity.CommentResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -9,35 +9,35 @@ import retrofit2.http.*
 
 interface CommentService {
 
-    @GET("/comment/{postId}")
-    fun getAllComment() : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
+    @GET("/comment")
+    fun getAllComment(@Query("postId") postId: Int) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 
     @Multipart
-    @POST("/comment/{postId}/save")
+    @POST("/comment/save")
     fun postComment(
-            @Path("postId") postId: Int,
+            @Part("postId") postId: Int,
             @Part("username") username: RequestBody,
             @Part("password") password: RequestBody,
             @Part("content") content: RequestBody,
-            @Part("isAnonymous") isAnonymous: RequestBody,
+            @Part("isAnonymous") isAnonymous: Boolean,
             @Part imageList: List<MultipartBody.Part>?
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 
     @Multipart
-    @PUT("/comment/{commentId}/update")
-    fun updatePost(
-            @Path("commentId") commentId: Int,
+    @PUT("/comment/update")
+    fun updateComment(
+            @Part("commentId") commentId: Int,
             @Part("username") username: RequestBody,
             @Part("password") password: RequestBody,
             @Part("content") content: RequestBody?,
-            @Part("isAnonymous") isAnonymous: RequestBody?,
+            @Part("isAnonymous") isAnonymous: Boolean?,
             @Part imageList: List<MultipartBody.Part>?
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 
-    @DELETE("/comment/{commentId}/delete")
+    @DELETE("/comment/delete")
     fun deleteComment(
-            @Path("commentId") commentId: Int,
+            @Query("commentId") commentId: Int,
             @Query("username") username: String,
             @Query("password") password: String,
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 }

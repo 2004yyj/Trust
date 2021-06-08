@@ -3,9 +3,11 @@ package kr.hs.dgsw.trust.di.module
 import dagger.Module
 import dagger.Provides
 import kr.hs.dgsw.data.datasource.AccountDataSource
+import kr.hs.dgsw.data.datasource.CommentDataSource
 import kr.hs.dgsw.data.datasource.LikedDataSource
 import kr.hs.dgsw.data.datasource.PostDataSource
 import kr.hs.dgsw.data.network.remote.AccountRemote
+import kr.hs.dgsw.data.network.remote.CommentRemote
 import kr.hs.dgsw.data.network.remote.LikedRemote
 import kr.hs.dgsw.data.network.remote.PostRemote
 import javax.inject.Singleton
@@ -28,4 +30,9 @@ class DataSourceModule {
     @Provides
     fun provideLikedDataSource(likedRemote: LikedRemote) : LikedDataSource =
             LikedDataSource(likedRemote)
+
+    @Singleton
+    @Provides
+    fun provideCommentDataSource(commentRemote: CommentRemote) : CommentDataSource =
+            CommentDataSource(commentRemote)
 }
