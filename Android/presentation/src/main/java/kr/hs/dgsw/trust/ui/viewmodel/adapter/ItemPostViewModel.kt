@@ -23,6 +23,8 @@ class ItemPostViewModel(
     val content = ObservableField<String>()
     val createdAt = ObservableField<Long>()
 
+    val likedSize = ObservableField<Int>()
+    val likedString = ObservableField<String>()
     val isCheckedLiked = ObservableField<Boolean>()
 
     private val _isFailure = MutableLiveData<String>()
@@ -33,7 +35,10 @@ class ItemPostViewModel(
         postLikedUseCase.buildUseCaseObservable(PostLikedUseCase.Params(detailedRequest))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe({}, {
+                .subscribe({
+                    likedSize.set(it.size)
+                    likedString.set("좋아요 ${likedSize.get()}명")
+                }, {
                     _isFailure.value = it.message
                 }).apply {
                     compositeDisposable.add(this)
@@ -46,7 +51,10 @@ class ItemPostViewModel(
         deleteLikedUseCase.buildUseCaseObservable(DeleteLikedUseCase.Params(detailedRequest))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe({}, {
+                .subscribe({
+                    likedSize.set(it.size)
+                    likedString.set("좋아요 ${likedSize.get()}명")
+                }, {
                     _isFailure.value = it.message
                 }).apply {
                     compositeDisposable.add(this)

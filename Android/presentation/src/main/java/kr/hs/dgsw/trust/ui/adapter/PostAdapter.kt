@@ -21,36 +21,38 @@ class PostAdapter(private val viewModel: ItemPostViewModel) : ListAdapter<Post, 
     inner class PostViewHolder(private val binding: ItemPostBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Post) {
+        fun bind(post: Post) = with(viewModel) {
 
-            with(viewModel) {
-                id.set(post.id)
-                name.set(post.account.name)
-                content.set(post.content)
-                createdAt.set(post.createdAt)
-                profileImagePath.set(post.account.profileImage)
-                isCheckedLiked.set(containLiked(post.likedList))
+            val imagePath = ADDR_IMG+post.account.profileImage
+            val likedList = post.likedList
 
-                with(binding) {
-                    vm = viewModel
-                    btnCommentPost.setOnClickListener { onClick.postValue(post.id) }
+            id.set(post.id)
+            content.set(post.content)
+            name.set(post.account.name)
+            createdAt.set(post.createdAt)
+            profileImagePath.set(imagePath)
+            isCheckedLiked.set(containLiked(likedList))
 
-                    chkLikePost.setOnClickListener {
-                        val liked = viewModel.isCheckedLiked.get()
-                        if (liked == true) {
-                            if (getPassword() != null) { // 토큰 기능이 완성되면 현재 토큰이 활성화되어 있는지 확인한다.
-                                viewModel.postLiked(post.id, post.account.username, getPassword()!!)
-                            } else {
-                                viewModel.isFailure.value = "세션이 만료되었습니다. 다시 로그인 해주세요."
-                            }
+            likedSize.set(likedList.size)
+            likedString.set("좋아요 ${likedList.size}명")
+
+            with(binding) {
+                vm = viewModel
+                btnCommentPost.setOnClickListener { onClick.postValue(post.id) }
+
+                chkLikePost.setOnClickListener {
+                    val liked = viewModel.isCheckedLiked.get()
+                    if (liked == true) {
+                        if (getPassword() != null) { // 현재 토큰이 활성화되어 있는지 확인한다.
+                            viewModel.postLiked(post.id, post.account.username, getPassword()!!)
                         } else {
-                            viewModel.deleteLiked(post.id, post.account.username, getPassword()!!)
+                            viewModel.isFailure.value = "세션이 만료되었습니다. 다시 로그인 해주세요."
                         }
+                    } else {
+                        viewModel.deleteLiked(post.id, post.account.username, getPassword()!!)
                     }
                 }
-
             }
-
         }
 
         private fun containLiked(list: List<String>): Boolean {
@@ -84,10 +86,6 @@ class PostAdapter(private val viewModel: ItemPostViewModel) : ListAdapter<Post, 
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.bind(getItem(position))
-    }
-
-    override fun onViewDetachedFromWindow(holder: PostViewHolder) {
-        super.onViewDetachedFromWindow(holder)
     }
 
 }
