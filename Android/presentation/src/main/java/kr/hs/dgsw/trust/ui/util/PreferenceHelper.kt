@@ -1,4 +1,4 @@
-package kr.hs.dgsw.trust.ui.util.binding
+package kr.hs.dgsw.trust.ui.util
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE

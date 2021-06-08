@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.ItemPostBinding
-import kr.hs.dgsw.trust.ui.util.binding.PreferenceHelper
+import kr.hs.dgsw.trust.ui.util.PreferenceHelper
+import kr.hs.dgsw.trust.ui.util.ServerAddress.ADDR_IMG
 import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
 
 class PostAdapter(private val viewModel: ItemPostViewModel) : ListAdapter<Post, PostAdapter.PostViewHolder>(diffUtil) {
