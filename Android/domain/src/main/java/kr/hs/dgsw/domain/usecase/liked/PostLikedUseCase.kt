@@ -9,9 +9,9 @@ import javax.inject.Inject
 
 class PostLikedUseCase @Inject constructor(
         private val likedRepository: LikedRepository
-): ParamsUseCase<PostLikedUseCase.Params, Single<Liked>>() {
+): ParamsUseCase<PostLikedUseCase.Params, Single<List<Liked>>>() {
 
-    override fun buildUseCaseObservable(params: Params): Single<Liked> {
+    override fun buildUseCaseObservable(params: Params): Single<List<Liked>> {
         return likedRepository.postLiked(
                 params.detailedRequest.postId,
                 params.detailedRequest.username,

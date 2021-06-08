@@ -17,12 +17,12 @@ interface LikedService {
             @Query("postId") postId: Int,
             @Query("username") username: String,
             @Query("password") password: String
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<LikedResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<LikedResponse>>>>
 
     @DELETE("/liked/delete")
     fun deleteLiked(
             @Query("postId") postId: Int,
             @Query("username") username: String,
             @Query("password") password: String,
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<LikedResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<LikedResponse>>>>
 }

@@ -14,11 +14,11 @@ class LikedRemote @Inject constructor(
         return service.getAllLiked(postId).map(getResponse())
     }
 
-    fun postLiked(postId: Int, username: String, password: String): Single<LikedResponse> {
+    fun postLiked(postId: Int, username: String, password: String): Single<List<LikedResponse>> {
         return service.postLiked(postId, username, password).map(getResponse())
     }
 
-    fun deleteLiked(postId: Int, username: String, password: String): Single<LikedResponse> {
+    fun deleteLiked(postId: Int, username: String, password: String): Single<List<LikedResponse>> {
         return service.deleteLiked(postId, username, password).map(getResponse())
     }
 }

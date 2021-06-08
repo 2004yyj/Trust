@@ -9,9 +9,9 @@ import javax.inject.Inject
 
 class DeleteLikedUseCase @Inject constructor(
         private val likedRepository: LikedRepository
-): ParamsUseCase<DeleteLikedUseCase.Params, Single<Liked>>() {
+): ParamsUseCase<DeleteLikedUseCase.Params, Single<List<Liked>>>() {
 
-    override fun buildUseCaseObservable(params: Params): Single<Liked> {
+    override fun buildUseCaseObservable(params: Params): Single<List<Liked>> {
         return likedRepository.deleteLiked(
                 params.detailedRequest.postId,
                 params.detailedRequest.username,

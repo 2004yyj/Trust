@@ -41,7 +41,6 @@ class LikedController(
     fun saveLiked(postId: Int, username: String, password: String): String {
         val liked = Liked()
         try {
-
             val account = accountRepository.findById(username).orElseThrow()
 
             if (username == account.username && passwordEncoder.matches(password, account.password)) {
@@ -63,12 +62,17 @@ class LikedController(
             throw UnauthenticatedException("계정을 찾을 수 없습니다.")
         }
 
+        val list = likedRepository.findAllByPostId(postId).orElseThrow()
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getLikedToObject(it))
+        }
+
         return JsonResponse(
             "200",
-            "좋아요를 성공적으로 추가하였습니다.",
-            getLikedToObject(liked)
+            "좋아요를 성공적으로 추가했습니다.",
+            jsonList
         ).returnJsonObject()
-
     }
 
     @DeleteMapping("/liked/delete")
@@ -90,15 +94,23 @@ class LikedController(
 
         val accountMatch = username == liked.username
 
-        return if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+        if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
             likedRepository.deleteByPostIdAndUsername(postId, username)
-            JsonResponse("200",
-                "좋아요를 성공적으로 삭제하였습니다.",
-                getLikedToObject(liked)
-            ).returnJsonObject()
         } else {
             throw UnauthenticatedException("계정을 찾을 수 없습니다.")
         }
+
+        val list = likedRepository.findAllByPostId(postId).orElseThrow()
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getLikedToObject(it))
+        }
+
+        return JsonResponse(
+            "200",
+            "좋아요를 성공적으로 삭제했습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     fun getLikedToObject(liked: Liked): JSONObject {
