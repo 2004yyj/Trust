@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
 import kr.hs.dgsw.domain.usecase.liked.PostLikedUseCase
 import kr.hs.dgsw.domain.usecase.post.GetAllPostUseCase
@@ -21,6 +22,7 @@ import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.adapter.PostAdapter
+import kr.hs.dgsw.trust.ui.dialog.CommentFragment.Companion.newInstance
 import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
 import kr.hs.dgsw.trust.ui.viewmodel.factory.ItemPostViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.factory.PostViewModelFactory
@@ -43,10 +45,11 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerViewModel: ItemPostViewModel
 
     private lateinit var binding: FragmentHomeBinding
+
     private val recyclerAdapter: PostAdapter by lazy { PostAdapter(recyclerViewModel) }
     private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
-
     private val toolbar: Toolbar by lazy { binding.toolbarHome }
+    private val swipeRefreshLayout: SwipeRefreshLayout by lazy { binding.swipeRefreshLayoutHome }
 
     private val navController: NavController by lazy {
         findNavController()
@@ -72,12 +75,7 @@ class HomeFragment : Fragment() {
 
         init()
         observe()
-
-        viewModel.getAllPost()
-
-        viewModel.isFailure.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
+        setPost()
 
         val appbarConfiguration = AppBarConfiguration(
             setOf(
@@ -92,21 +90,33 @@ class HomeFragment : Fragment() {
 
     private fun init() {
         recyclerView.adapter = recyclerAdapter
-        recyclerAdapter.onClick.observe(viewLifecycleOwner) {
-            commentDialogOpen(it)
-        }
     }
 
     private fun observe() {
+        swipeRefreshLayout.setOnRefreshListener {
+            setPost()
+            swipeRefreshLayout.isRefreshing = false
+        }
+        recyclerAdapter.onClick.observe(viewLifecycleOwner) {
+            commentDialogOpen(it)
+        }
         viewModel.postList.observe(viewLifecycleOwner) {
             recyclerAdapter.submitList(it)
         }
+        viewModel.isFailure.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+        recyclerViewModel.isFailure.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    }
 
-        recyclerViewModel.isFailure
+    private fun setPost() {
+        viewModel.getAllPost()
     }
 
     private fun commentDialogOpen(postId: Int) {
         val fm = requireActivity().supportFragmentManager
-        CommentFragment.newInstance(postId).showNow(fm, "comment")
+        newInstance(postId).showNow(fm, "comment")
     }
 }
