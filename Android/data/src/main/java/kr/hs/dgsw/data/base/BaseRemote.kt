@@ -1,11 +1,8 @@
 package kr.hs.dgsw.data.base
 
-import android.util.Log
 import com.google.gson.Gson
 import io.reactivex.functions.Function
-import kr.hs.dgsw.data.network.service.AccountService
 import kr.hs.dgsw.data.util.Response
-import org.json.JSONObject
 
 abstract class BaseRemote<SV> {
     abstract val service: SV

@@ -25,7 +25,7 @@ class LoginViewModel(private val postLoginUseCase: PostLoginUseCase) : ViewModel
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
-    fun login() {
+    fun postLogin() {
 
         isLoading.set(true)
 

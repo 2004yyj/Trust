@@ -89,7 +89,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:onClick="@{() -> vm.login()}"
+                    app:onClick="@{() -> vm.postLogin()}"
                     app:text="@{@string/login}" />
 
                 <LinearLayout

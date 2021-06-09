@@ -24,7 +24,7 @@ class SignUpViewModel(private val postSignUpUseCase: PostSignUpUseCase) : ViewMo
     private val _isFailure = MutableLiveData<String>()
     val isFailure = _isFailure
 
-    fun signUp(profileImage: MultipartBody.Part?) {
+    fun postSignUp(profileImage: MultipartBody.Part?) {
 
         val signUpRequest = SignUpRequest(name.value!!, username.value!!, password.value!!, profileImage)
 

@@ -1,6 +1,5 @@
 package kr.hs.dgsw.trust.ui.fragment
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -95,7 +94,7 @@ class SignUpUserInfoFragment : Fragment() {
                     } else {
                         null
                     }
-                    viewModel.signUp(multipartBody)
+                    viewModel.postSignUp(multipartBody)
 
                 } else {
                     Toast.makeText(context, "비밀번호를 다시 한번 확인해 주세요.", Toast.LENGTH_SHORT).show()

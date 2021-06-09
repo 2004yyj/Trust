@@ -11,7 +11,7 @@ import kr.hs.dgsw.domain.usecase.post.GetAllPostUseCase
 class PostViewModel(private val getAllPostUseCase: GetAllPostUseCase) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    val postList = MutableLiveData<ArrayList<Post>>(ArrayList())
+    val postList = MutableLiveData(ArrayList<Post>())
 
     private val _isFailure = MutableLiveData<String>()
     val isFailure = _isFailure

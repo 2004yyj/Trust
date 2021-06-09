@@ -243,7 +243,7 @@ class CommentController(
 
     fun getCommentToObject(comment: Comment): JSONObject {
         val commentObject = comment.toJsonObject()
-        commentObject.put("accoount", findAccount(comment.username!!, comment.isAnonymous!!).toJsonObject())
+        commentObject.put("account", findAccount(comment.username!!, comment.isAnonymous!!).toJsonObject())
         return commentObject
     }
 
