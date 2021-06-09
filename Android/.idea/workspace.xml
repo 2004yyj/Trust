@@ -9,6 +9,9 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -35,29 +38,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6703fe2-bf8e-4d30-85ee-7cfaa4284fbd" name="Default Changelist" comment="[Update]">
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/PreferenceHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/drawable/box_comment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_comment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/util/Response.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/util/Response.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RetrofitModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RetrofitModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/LoginFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/binding/PreferenceHelper.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/PostRemote.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/remote/PostRemote.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/service/PostService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/network/service/PostService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/liked/PostLikedUseCase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/usecase/liked/PostLikedUseCase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/component/MyComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/component/MyComponent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RemoteModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/module/RemoteModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/dialog/CommentFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/dialog/CommentFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/BindingUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/BindingUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/adapter/ItemPostViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/adapter/ItemPostViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/drawable/dialog_comment_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/drawable/dialog_comment_background.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_comment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_comment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_home.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/values/strings.xml" afterDir="false" />
-    </list>
-    <list id="3c822536-f148-4bb4-9927-65bfb3c76b81" name="Revert &quot;[Update] 그래들 추가&quot;" comment="Revert &quot;[Update] 그래들 추가&quot;&#10;&#10;This reverts commit 5f9e7208">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[Nexus_5X_API_30_Portrait]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/yang-yunjae/.android/avd/Nexus_5X_API_30_Portrait.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -109,11 +116,11 @@
         <option value="navigationResourceFile" />
         <option value="valueResourceFile" />
         <option value="Kotlin Data Class" />
-        <option value="layoutResourceFile" />
         <option value="Kotlin Interface" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="layoutResourceFile" />
         <option value="resourceFile" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -155,9 +162,6 @@
     <property name="settings.editor.selected.configurable" value="preferences.language.Kotlin" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateKotlinClassDialog.RecentsKey">
-      <recent name="kr.hs.dgsw.trust.ui.viewmodel.adapter" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util" />
     </key>
@@ -168,19 +172,22 @@
       <recent name="kr.hs.dgsw.data.entity" />
       <recent name="kr.hs.dgsw.domain.entity.account" />
     </key>
-    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
-      <recent name="kr.hs.dgsw.domain.request" />
-      <recent name="kr.hs.dgsw.trust.ui.viewmodel.factory" />
-      <recent name="kr.hs.dgsw.domain.usecase.liked" />
-      <recent name="kr.hs.dgsw.data.base" />
-      <recent name="kr.hs.dgsw.data.network.remote" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/mapper" />
       <recent name="$PROJECT_DIR$/data/src/main/java/kr/hs/dgsw/data/entity" />
       <recent name="$PROJECT_DIR$/presentation/src/main/res/drawable-v24" />
       <recent name="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust" />
       <recent name="$PROJECT_DIR$/app/src/main/java/kr/hs/dgsw/trust/ui/fragment" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="kr.hs.dgsw.data.repository" />
+      <recent name="kr.hs.dgsw.data.datasource" />
+      <recent name="kr.hs.dgsw.domain.usecase.comment" />
+      <recent name="kr.hs.dgsw.domain.repository" />
+      <recent name="kr.hs.dgsw.domain.request" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="kr.hs.dgsw.trust.ui.viewmodel.adapter" />
     </key>
   </component>
   <component name="RunManager">
@@ -199,6 +206,7 @@
       <option name="ARTIFACT_NAME" value="" />
       <option name="PM_INSTALL_OPTIONS" value="" />
       <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
@@ -249,6 +257,7 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -259,76 +268,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619958988621</updated>
-    </task>
-    <task id="LOCAL-00066" summary="[Fixed]">
-      <created>1622014378451</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014378451</updated>
-    </task>
-    <task id="LOCAL-00067" summary="[Update] 좋아요, 댓글 Response, Entity 추가">
-      <created>1622014406760</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014406760</updated>
-    </task>
-    <task id="LOCAL-00068" summary="[Update] 로그인 회원가입 뷰모델">
-      <created>1622014431030</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014431030</updated>
-    </task>
-    <task id="LOCAL-00069" summary="[Update] 댓글창 프래그먼트 다이얼로그 추가">
-      <created>1622014455731</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014455731</updated>
-    </task>
-    <task id="LOCAL-00070" summary="[Move] 파일 이동">
-      <created>1622014469562</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014469562</updated>
-    </task>
-    <task id="LOCAL-00071" summary="[Move] 화면 이동">
-      <created>1622014535642</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014535642</updated>
-    </task>
-    <task id="LOCAL-00072" summary="[Move] 파일 이동">
-      <created>1622014560159</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014560159</updated>
-    </task>
-    <task id="LOCAL-00073" summary="[Move] Post 리사이클러뷰 어댑터 추가">
-      <created>1622014593105</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1622014593105</updated>
-    </task>
-    <task id="LOCAL-00074" summary="[Update] SignUpUserInfoFragment.kt onActivityResult -&gt; activityResultLauncher">
-      <created>1622095879188</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1622095879188</updated>
-    </task>
-    <task id="LOCAL-00075" summary="[Fixed] fragment_anim -&gt; nav_default_anim Navigation Animation 수정">
-      <created>1622168969193</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1622168969195</updated>
     </task>
     <task id="LOCAL-00076" summary="[Fixed] &lt;Deprecated&gt; fragmentManager -&gt; supportFragmentManager">
       <created>1622169042174</created>
@@ -603,7 +542,77 @@
       <option name="project" value="LOCAL" />
       <updated>1623138638166</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="[Update] 파일 이동">
+      <created>1623139249902</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139249902</updated>
+    </task>
+    <task id="LOCAL-00116" summary="[Update]">
+      <created>1623139256775</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139256775</updated>
+    </task>
+    <task id="LOCAL-00117" summary="[Update]">
+      <created>1623139415163</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139415163</updated>
+    </task>
+    <task id="LOCAL-00118" summary="[Update] 서버 주소 object 추가">
+      <created>1623139467443</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139467443</updated>
+    </task>
+    <task id="LOCAL-00119" summary="[Update] SwipeRefreshLayout 콜백 추가">
+      <created>1623139533410</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139533410</updated>
+    </task>
+    <task id="LOCAL-00120" summary="[Update] Post 아이템에 좋아요 리스트 가져오기">
+      <created>1623139567293</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139567293</updated>
+    </task>
+    <task id="LOCAL-00121" summary="[Update] 댓글창 닫기 Indicator 추가">
+      <created>1623139586767</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1623139586767</updated>
+    </task>
+    <task id="LOCAL-00122" summary="[Update] commentList 리턴하도록 수정">
+      <created>1623158393035</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1623158393036</updated>
+    </task>
+    <task id="LOCAL-00123" summary="[Update] 댓글 기능 클린 아키텍쳐 구현">
+      <created>1623158441046</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1623158441046</updated>
+    </task>
+    <task id="LOCAL-00124" summary="[Update] 댓글 기능 클린 아키텍쳐 구현">
+      <created>1623158444286</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1623158444286</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -631,11 +640,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[Update] Post 서비스 Request Url 수정" />
-    <MESSAGE value="[Update] PostViewModel 글 가져오기 함수 추가" />
-    <MESSAGE value="[Update] HomeFragment Post 리사이클러뷰 완성" />
-    <MESSAGE value="[Update] 쿼리 추가" />
-    <MESSAGE value="[Update] BaseUseCase/ParamsUseCase 추가" />
     <MESSAGE value="[Update] ItemPostViewModel.kt 추가" />
     <MESSAGE value="[Update] UseCase 변수명 변경" />
     <MESSAGE value="[Update] BaseRemote, BaseDataSource 추가" />
@@ -644,7 +648,6 @@
     <MESSAGE value="[Update] 버튼 include 형식으로 변경" />
     <MESSAGE value="[Update] Post Entity/Response 좋아요 리스트 필드 추가" />
     <MESSAGE value="[Update] 사용자 정보를 담고 있는 Preference 추가" />
-    <MESSAGE value="[Update]" />
     <MESSAGE value="[Update] 글에서 좋아요 추가/삭제 기능 업데이트" />
     <MESSAGE value="[Update] 댓글 창 다이얼로그 MotionLayout 추가" />
     <MESSAGE value="Revert &quot;[Update] 그래들 추가&quot;&#10;&#10;This reverts commit 5f9e7208" />
@@ -654,9 +657,15 @@
     <MESSAGE value="[Update] 좋아요 추가/삭제 시 List 리턴하도록 수정" />
     <MESSAGE value="[Update] 에러 메시지 Throw할 수 있도록 수정" />
     <MESSAGE value="[Update] Glide 적용 BindingAdapter 추가" />
-    <MESSAGE value="[Update] SwipeRefreshLayout 콜백 추가" />
     <MESSAGE value="[Update] 파일 이동" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Update] 파일 이동" />
+    <MESSAGE value="[Update]" />
+    <MESSAGE value="[Update] 서버 주소 object 추가" />
+    <MESSAGE value="[Update] SwipeRefreshLayout 콜백 추가" />
+    <MESSAGE value="[Update] Post 아이템에 좋아요 리스트 가져오기" />
+    <MESSAGE value="[Update] 댓글창 닫기 Indicator 추가" />
+    <MESSAGE value="[Update] commentList 리턴하도록 수정" />
+    <MESSAGE value="[Update] 댓글 기능 클린 아키텍쳐 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="[Update] 댓글 기능 클린 아키텍쳐 구현" />
   </component>
   <component name="WindowStateProjectService">
     <state x="421" y="273" key="#PSD" timestamp="1620620699062">
@@ -668,8 +677,8 @@
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="549" y="348" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1792.1037@0.25.1792.1037" timestamp="1620354982072" />
-    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser" timestamp="1622608438821">
-      <screen x="0" y="25" width="1792" height="1034" />
+    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser" timestamp="1623158094605">
+      <screen x="0" y="25" width="1792" height="1039" />
     </state>
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/-54.-1055.1920.1055/0.25.1792.1038@0.25.1792.1038" timestamp="1621220394447" />
     <state x="675" y="256" key="#com.intellij.ide.util.MemberChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1620637961832" />
@@ -677,6 +686,8 @@
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622608438821" />
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1035@0.25.1792.1035" timestamp="1622534451017" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1036@0.25.1792.1036" timestamp="1622530087282" />
+    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1038@0.25.1792.1038" timestamp="1623139693631" />
+    <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1039@0.25.1792.1039" timestamp="1623158094605" />
     <state x="413" y="470" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1622441821423">
       <screen x="0" y="25" width="1792" height="1034" />
     </state>
@@ -717,8 +728,12 @@
     <state x="100" y="125" width="1592" height="835" key="AVDManager/0.25.1792.1036@0.25.1792.1036" timestamp="1622514239766" />
     <state x="99" y="108" width="1592" height="904" key="AVDManager/0.25.1792.1037@0.25.1792.1037" timestamp="1620448820136" />
     <state x="100" y="125" width="1592" height="837" key="AVDManager/0.25.1792.1038@0.25.1792.1038" timestamp="1623071275012" />
-    <state x="484" y="302" key="AndroidCreateResourceFileDialog" timestamp="1623121627699">
-      <screen x="0" y="25" width="1792" height="1036" />
+    <state x="484" y="300" key="AndroidCreateResourceDirectoryDialog" timestamp="1623147243544">
+      <screen x="0" y="25" width="1792" height="1039" />
+    </state>
+    <state x="484" y="300" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1039@0.25.1792.1039" timestamp="1623147243544" />
+    <state x="484" y="303" key="AndroidCreateResourceFileDialog" timestamp="1623147499283">
+      <screen x="0" y="25" width="1792" height="1039" />
     </state>
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/-54.-1055.1920.1055/0.25.1792.1040@0.25.1792.1040" timestamp="1620800711288" />
     <state x="484" y="299" key="AndroidCreateResourceFileDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620622572207" />
@@ -726,6 +741,7 @@
     <state x="484" y="301" key="AndroidCreateResourceFileDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1622545743700" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1623121627699" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1621163492389" />
+    <state x="484" y="303" key="AndroidCreateResourceFileDialog/0.25.1792.1039@0.25.1792.1039" timestamp="1623147499283" />
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/0.25.1792.1040@0.25.1792.1040" timestamp="1620897483165" />
     <state x="718" y="325" key="AndroidCreateXmlResourceDialog" timestamp="1622710373940">
       <screen x="0" y="25" width="1792" height="1037" />
@@ -749,7 +765,7 @@
       <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state x="100" y="125" width="1592" height="833" key="DiffContextDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1623063376211" />
-    <state width="1748" height="239" key="GridCell.Tab.0.bottom" timestamp="1623138761697">
+    <state width="874" height="239" key="GridCell.Tab.0.bottom" timestamp="1623139271903">
       <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521328" />
@@ -757,12 +773,12 @@
     <state width="1748" height="327" key="GridCell.Tab.0.bottom/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600459" />
     <state width="1748" height="279" key="GridCell.Tab.0.bottom/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639794" />
     <state width="1748" height="239" key="GridCell.Tab.0.bottom/0.25.1792.1037@0.25.1792.1037" timestamp="1623131214579" />
-    <state width="1748" height="239" key="GridCell.Tab.0.bottom/0.25.1792.1038@0.25.1792.1038" timestamp="1623138761697" />
+    <state width="874" height="239" key="GridCell.Tab.0.bottom/0.25.1792.1038@0.25.1792.1038" timestamp="1623139271903" />
     <state width="1748" height="540" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815721" />
     <state width="1876" height="287" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059331" />
     <state width="1748" height="327" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
     <state width="1876" height="17" key="GridCell.Tab.0.bottom/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154737" />
-    <state width="1748" height="239" key="GridCell.Tab.0.center" timestamp="1623138761697">
+    <state width="874" height="239" key="GridCell.Tab.0.center" timestamp="1623139271902">
       <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521327" />
@@ -770,12 +786,12 @@
     <state width="1748" height="327" key="GridCell.Tab.0.center/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600458" />
     <state width="1748" height="279" key="GridCell.Tab.0.center/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639793" />
     <state width="1748" height="239" key="GridCell.Tab.0.center/0.25.1792.1037@0.25.1792.1037" timestamp="1623131214578" />
-    <state width="1748" height="239" key="GridCell.Tab.0.center/0.25.1792.1038@0.25.1792.1038" timestamp="1623138761697" />
+    <state width="874" height="239" key="GridCell.Tab.0.center/0.25.1792.1038@0.25.1792.1038" timestamp="1623139271902" />
     <state width="1748" height="540" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815721" />
     <state width="1876" height="287" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
     <state width="1876" height="17" key="GridCell.Tab.0.center/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154736" />
-    <state width="1748" height="239" key="GridCell.Tab.0.left" timestamp="1623138761697">
+    <state width="874" height="239" key="GridCell.Tab.0.left" timestamp="1623139271902">
       <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521326" />
@@ -783,12 +799,12 @@
     <state width="1748" height="327" key="GridCell.Tab.0.left/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600458" />
     <state width="1748" height="279" key="GridCell.Tab.0.left/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639793" />
     <state width="1748" height="239" key="GridCell.Tab.0.left/0.25.1792.1037@0.25.1792.1037" timestamp="1623131214577" />
-    <state width="1748" height="239" key="GridCell.Tab.0.left/0.25.1792.1038@0.25.1792.1038" timestamp="1623138761697" />
+    <state width="874" height="239" key="GridCell.Tab.0.left/0.25.1792.1038@0.25.1792.1038" timestamp="1623139271902" />
     <state width="1748" height="540" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815720" />
     <state width="1876" height="287" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532788" />
     <state width="1876" height="17" key="GridCell.Tab.0.left/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154735" />
-    <state width="1748" height="239" key="GridCell.Tab.0.right" timestamp="1623138761697">
+    <state width="874" height="239" key="GridCell.Tab.0.right" timestamp="1623139271902">
       <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521327" />
@@ -796,7 +812,7 @@
     <state width="1748" height="327" key="GridCell.Tab.0.right/0.25.1792.1035@0.25.1792.1035" timestamp="1620719600459" />
     <state width="1748" height="279" key="GridCell.Tab.0.right/0.25.1792.1036@0.25.1792.1036" timestamp="1622527639793" />
     <state width="1748" height="239" key="GridCell.Tab.0.right/0.25.1792.1037@0.25.1792.1037" timestamp="1623131214578" />
-    <state width="1748" height="239" key="GridCell.Tab.0.right/0.25.1792.1038@0.25.1792.1038" timestamp="1623138761697" />
+    <state width="874" height="239" key="GridCell.Tab.0.right/0.25.1792.1038@0.25.1792.1038" timestamp="1623139271902" />
     <state width="1748" height="540" key="GridCell.Tab.0.right/1792.-468.1920.1055/0.25.1792.1035@0.25.1792.1035" timestamp="1621832815721" />
     <state width="1876" height="287" key="GridCell.Tab.0.right/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.right/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
@@ -829,15 +845,16 @@
       <screen x="0" y="25" width="1792" height="1034" />
     </state>
     <state x="746" y="460" key="VCS.ChangelistChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622014546664" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1623138996304">
-      <screen x="0" y="25" width="1792" height="1038" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1623158452317">
+      <screen x="0" y="25" width="1792" height="1039" />
     </state>
     <state x="496" y="276" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1620641812333" />
     <state x="496" y="279" key="Vcs.Push.Dialog.v2/0.25.1792.1034@0.25.1792.1034" timestamp="1622601725488" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1035@0.25.1792.1035" timestamp="1622537093042" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1622531116088" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1037@0.25.1792.1037" timestamp="1622694492577" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1038@0.25.1792.1038" timestamp="1623138996304" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1038@0.25.1792.1038" timestamp="1623140867464" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1039@0.25.1792.1039" timestamp="1623158452317" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1040@0.25.1792.1040" timestamp="1620901375987" />
     <state x="531" y="267" key="Vcs.Push.Dialog.v2/0.25.1920.986@0.25.1920.986" timestamp="1621920718362" />
     <state x="496" y="278" key="Vcs.Push.Dialog.v2/1792.-468.1920.1055/0.25.1792.1029@0.25.1792.1029" timestamp="1621920266033" />
