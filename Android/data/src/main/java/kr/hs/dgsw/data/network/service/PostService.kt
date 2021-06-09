@@ -29,9 +29,9 @@ interface PostService {
     ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
 
     @Multipart
-    @PUT("/post/{postId}/update")
+    @PUT("/post/update")
     fun updatePost(
-            @Path("postId") postId: Int,
+            @Part("postId") postId: Int,
             @Part("username") username: RequestBody,
             @Part("password") password: RequestBody,
             @Part("isAnonymous") isAnonymous: RequestBody?,
@@ -40,9 +40,9 @@ interface PostService {
             @Part updateImageList: List<MultipartBody.Part>?
     ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
 
-    @DELETE("/post/{postId}/delete")
+    @DELETE("/post/delete")
     fun deletePost(
-            @Path("postId") postId: Int,
+            @Query("postId") postId: Int,
             @Query("username") username: String,
             @Query("password") password: String,
     ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>

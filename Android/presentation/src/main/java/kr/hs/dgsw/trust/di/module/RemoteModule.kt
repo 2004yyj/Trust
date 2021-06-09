@@ -4,9 +4,11 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import kr.hs.dgsw.data.network.remote.AccountRemote
+import kr.hs.dgsw.data.network.remote.CommentRemote
 import kr.hs.dgsw.data.network.remote.LikedRemote
 import kr.hs.dgsw.data.network.remote.PostRemote
 import kr.hs.dgsw.data.network.service.AccountService
+import kr.hs.dgsw.data.network.service.CommentService
 import kr.hs.dgsw.data.network.service.LikedService
 import kr.hs.dgsw.data.network.service.PostService
 import retrofit2.Retrofit
@@ -29,5 +31,10 @@ class RemoteModule {
     @Singleton
     fun provideLikedRemote(retrofit: Retrofit) : LikedRemote =
             LikedRemote(retrofit.create(LikedService::class.java))
+
+    @Provides
+    @Singleton
+    fun provideCommentRemote(retrofit: Retrofit) : CommentRemote =
+            CommentRemote(retrofit.create(CommentService::class.java))
 
 }

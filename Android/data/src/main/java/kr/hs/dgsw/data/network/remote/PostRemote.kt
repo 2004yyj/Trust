@@ -1,11 +1,9 @@
 package kr.hs.dgsw.data.network.remote
 
-import com.google.gson.Gson
 import io.reactivex.Single
 import kr.hs.dgsw.data.base.BaseRemote
 import kr.hs.dgsw.data.entity.PostResponse
 import kr.hs.dgsw.data.network.service.PostService
-import kr.hs.dgsw.data.util.Response
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

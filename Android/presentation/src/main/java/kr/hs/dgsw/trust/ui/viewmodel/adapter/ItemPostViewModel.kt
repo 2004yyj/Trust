@@ -31,8 +31,7 @@ class ItemPostViewModel(
     val isFailure = _isFailure
 
     fun postLiked(postId: Int, username: String, password: String) {
-        val detailedRequest = DetailedRequest(postId, username, password)
-        postLikedUseCase.buildUseCaseObservable(PostLikedUseCase.Params(detailedRequest))
+        postLikedUseCase.buildUseCaseObservable(PostLikedUseCase.Params(postId, username, password))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
@@ -47,8 +46,7 @@ class ItemPostViewModel(
     }
 
     fun deleteLiked(postId: Int, username: String, password: String) {
-        val detailedRequest = DetailedRequest(postId, username, password)
-        deleteLikedUseCase.buildUseCaseObservable(DeleteLikedUseCase.Params(detailedRequest))
+        deleteLikedUseCase.buildUseCaseObservable(DeleteLikedUseCase.Params(postId, username, password))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({

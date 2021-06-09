@@ -13,13 +13,15 @@ class PostLikedUseCase @Inject constructor(
 
     override fun buildUseCaseObservable(params: Params): Single<List<Liked>> {
         return likedRepository.postLiked(
-                params.detailedRequest.postId,
-                params.detailedRequest.username,
-                params.detailedRequest.password
+                params.postId,
+                params.username,
+                params.password
         )
     }
 
     data class Params(
-            val detailedRequest: DetailedRequest
+            val postId: Int,
+            val username: String,
+            val password: String
     )
 }
