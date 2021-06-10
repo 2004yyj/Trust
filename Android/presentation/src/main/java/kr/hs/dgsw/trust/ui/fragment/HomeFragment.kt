@@ -80,7 +80,6 @@ class HomeFragment : Fragment() {
         val appbarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.homeFragment,
-                R.id.boardFragment,
                 R.id.chatFragment,
                 R.id.userInfoFragment
             ), null
