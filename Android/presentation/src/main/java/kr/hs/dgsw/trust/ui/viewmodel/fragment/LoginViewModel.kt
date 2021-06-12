@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kr.hs.dgsw.domain.entity.Token
 import kr.hs.dgsw.domain.request.LoginRequest
 import kr.hs.dgsw.domain.usecase.account.PostLoginUseCase
 import java.util.concurrent.TimeUnit
@@ -14,13 +15,15 @@ class LoginViewModel(private val postLoginUseCase: PostLoginUseCase) : ViewModel
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val _isSuccess = MutableLiveData<Boolean>()
+    private val _isSuccess = MutableLiveData<Token>()
     val isSuccess = _isSuccess
 
     private val _isFailure = MutableLiveData<String>()
     val isFailure = _isFailure
 
     val isLoading = ObservableField<Boolean>()
+
+    val autoLoginChk = ObservableField(false)
 
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
@@ -40,7 +43,7 @@ class LoginViewModel(private val postLoginUseCase: PostLoginUseCase) : ViewModel
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .subscribe ({
-                        _isSuccess.postValue(true)
+                        _isSuccess.postValue(it)
                         isLoading.set(false)
                     }, {
                         isLoading.set(false)

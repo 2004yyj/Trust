@@ -3,6 +3,7 @@ package kr.hs.dgsw.trust.ui.fragment
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,11 +124,13 @@ class LoginFragment : Fragment() {
         }
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
-            PreferenceHelper.init(
-                    requireContext(),
-                    viewModel.username.value!!,
-                    viewModel.password.value!!
-            )
+
+            PreferenceHelper.token = it.token
+            PreferenceHelper.username = it.username
+            PreferenceHelper.autoLogin = viewModel.autoLoginChk.get()!!
+
+            Log.d(TAG, "observe: ${it.token}")
+
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
