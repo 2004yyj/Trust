@@ -1,15 +1,23 @@
 package kr.hs.dgsw.trust.server.controller
 
+import kr.hs.dgsw.trust.server.data.dto.TokenDTO
 import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.ExistsException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
-import kr.hs.dgsw.trust.server.repository.AccountRepository
+import kr.hs.dgsw.trust.server.service.AccountService
 import kr.hs.dgsw.trust.server.service.FileService
+import kr.hs.dgsw.trust.server.token.JwtFilter
+import kr.hs.dgsw.trust.server.token.TokenProvider
+import kr.hs.dgsw.trust.server.util.tokenGenerator
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -17,48 +25,48 @@ import org.springframework.web.multipart.MultipartFile
 @RestController
 @RequestMapping("/account")
 class AccountController(
-    private val accountRepository: AccountRepository,
-    private val passwordEncoder : PasswordEncoder,
+    private val accountService: AccountService,
+    private val authenticationManagerBuilder: AuthenticationManagerBuilder,
+    private val tokenProvider: TokenProvider
 ) {
 
-    @Autowired
-    private lateinit var fileService: FileService
+    @PostMapping("/autoLogin")
+    fun login(@RequestHeader (name="Authorization") token: String): String {
+        return if (tokenProvider.validateToken(token)) {
+            val authentication = tokenProvider.getAuthentication(token)
+            val user = authentication.principal as User
+            val account = accountService.getAccount(user.username)
+
+            JsonResponse(
+                "200",
+                "로그인에 성공하였습니다.",
+                account.toJsonObject()
+            ).returnJsonObject()
+        } else {
+            throw UnauthenticatedException("유효하지 않은 토큰입니다.")
+        }
+    }
 
     @PostMapping("/login")
-    fun login(username: String, password: String) : String {
+    fun login(username: String, password: String) : ResponseEntity<TokenDTO> {
         val account = Account()
         account.username = username
         account.password = password
 
         return if (isIdAndPwNotNull(account)) {
-            if (isIdAndPwExist(account)) {
-                val foundAccount = getAccount(account)
-                account.name = foundAccount.name
-                account.profileImage = foundAccount.profileImage
-                JsonResponse(
-                    "200",
-                    "로그인에 성공하였습니다.",
-                    account.toJsonObject()
-                ).returnJsonObject()
+            if (accountService.isIdAndPwExist(account)) {
+
+                val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
+
+                val httpHeaders = HttpHeaders()
+                httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
+
+                ResponseEntity<TokenDTO>(TokenDTO(jwt, username), httpHeaders, HttpStatus.OK)
             } else {
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
             }
         } else {
             throw NullPointerException("빈칸이 없는지 확인해 주세요.")
-        }
-    }
-
-    fun getAccount(account: Account): Account {
-        return accountRepository.findById(account.username!!).orElseThrow()
-    }
-
-    fun isIdAndPwExist(account: Account) : Boolean {
-        val isPresent = accountRepository.findById(account.username!!).isPresent
-        return if (isPresent) {
-            val foundAccount = accountRepository.findById(account.username!!).get()
-            passwordEncoder.matches(account.password!!, foundAccount.password)
-        } else {
-            false
         }
     }
 
@@ -73,45 +81,24 @@ class AccountController(
                username: String,
                password: String,
                profileImage: MultipartFile?,
-    ) : String {
+    ) : ResponseEntity<TokenDTO> {
+        return if (isAccountInfoNotNull(name, username, password)) {
 
-        val account = Account()
-        account.name = name
-        account.username = username
-        account.password = passwordEncoder.encode(password)
+            accountService.signUp(name, username, password, profileImage)
 
-        return if (isAccountInfoNotNull(account)) {
-            if (isNotIdExist(account)) {
-                val filePath = if (profileImage != null) {
-                    fileService.saveFile(profileImage)
-                } else {
-                    "defaultUserProfile.png"
-                }
-                account.profileImage = filePath
+            val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
+            val httpHeaders = HttpHeaders()
+            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
 
-                accountRepository.save(account)
-                JsonResponse(
-                    "200",
-                    "회원가입에 성공하였습니다.",
-                    account.toJsonObject()
-                ).returnJsonObject()
-            } else {
-                throw ExistsException("중복된 아이디가 있습니다.")
-            }
+            ResponseEntity<TokenDTO>(TokenDTO(jwt, username), httpHeaders, HttpStatus.OK)
+
         } else {
             throw NullPointerException("빈칸이 없는지 확인해 주세요.")
         }
     }
 
-    fun isAccountInfoNotNull(account: Account) : Boolean {
-        val name: String? = account.name
-        val username: String? = account.username
-        val password: String? = account.password
+    fun isAccountInfoNotNull(name: String, username: String, password: String) : Boolean {
         return !(name.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty())
-    }
-
-    fun isNotIdExist(account: Account) : Boolean {
-        return accountRepository.findById(account.username!!).isEmpty
     }
 
     @ExceptionHandler(value = [BadRequestException::class])
