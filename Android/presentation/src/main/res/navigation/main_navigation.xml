@@ -8,25 +8,19 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.HomeFragment"
-        android:label="fragment_home"
+        android:label="홈"
         tools:layout="@layout/fragment_home">
-    </fragment>
-    <fragment
-        android:id="@+id/boardFragment"
-        android:name="kr.hs.dgsw.trust.ui.fragment.BoardFragment"
-        android:label="fragment_board"
-        tools:layout="@layout/fragment_board">
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.ChatFragment"
-        android:label="fragment_chat"
+        android:label="채팅"
         tools:layout="@layout/fragment_chat">
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.UserInfoFragment"
-        android:label="fragment_user_info"
+        android:label="내 정보"
         tools:layout="@layout/fragment_user_info">
     </fragment>
 </navigation>

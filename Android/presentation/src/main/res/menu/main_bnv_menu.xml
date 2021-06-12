@@ -4,10 +4,6 @@
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/home" />
 
-    <item android:id="@+id/boardFragment"
-        android:icon="@drawable/ic_baseline_group_24"
-        android:title="@string/board" />
-
     <item android:id="@+id/chatFragment"
         android:icon="@drawable/ic_baseline_chat_bubble_24"
         android:title="@string/chat" />

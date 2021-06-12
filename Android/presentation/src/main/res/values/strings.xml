@@ -22,4 +22,5 @@
     <string name="idError">아이디를 입력해주세요.</string>
     <string name="pwError">비밀번호를 입력해주세요.</string>
     <string name="input_comment">댓글을 입력하세요..</string>
+    <string name="auto_login">자동 로그인</string>
 </resources>
