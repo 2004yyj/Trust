@@ -1,6 +1,7 @@
 package kr.hs.dgsw.trust.server.controller
 
 import kr.hs.dgsw.trust.server.data.dto.TokenDTO
+import kr.hs.dgsw.trust.server.data.dto.toJsonObject
 import kr.hs.dgsw.trust.server.data.entity.Account
 import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
@@ -48,7 +49,7 @@ class AccountController(
     }
 
     @PostMapping("/login")
-    fun login(username: String, password: String) : ResponseEntity<TokenDTO> {
+    fun login(username: String, password: String) : String {
         val account = Account()
         account.username = username
         account.password = password
@@ -58,10 +59,14 @@ class AccountController(
 
                 val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
 
-                val httpHeaders = HttpHeaders()
-                httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
-
-                ResponseEntity<TokenDTO>(TokenDTO(jwt, username), httpHeaders, HttpStatus.OK)
+//                val httpHeaders = HttpHeaders()
+//                httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
+                
+                JsonResponse(
+                    "200",
+                    "로그인에 성공하였습니다.",
+                    TokenDTO(jwt, username).toJsonObject()
+                ).returnJsonObject()
             } else {
                 throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
             }
@@ -81,17 +86,18 @@ class AccountController(
                username: String,
                password: String,
                profileImage: MultipartFile?,
-    ) : ResponseEntity<TokenDTO> {
+    ) : String {
         return if (isAccountInfoNotNull(name, username, password)) {
 
             accountService.signUp(name, username, password, profileImage)
 
             val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
-            val httpHeaders = HttpHeaders()
-            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
 
-            ResponseEntity<TokenDTO>(TokenDTO(jwt, username), httpHeaders, HttpStatus.OK)
-
+            JsonResponse(
+                "200",
+                "회원가입에 성공하였습니다.",
+                TokenDTO(jwt, username).toJsonObject()
+            ).returnJsonObject()
         } else {
             throw NullPointerException("빈칸이 없는지 확인해 주세요.")
         }
