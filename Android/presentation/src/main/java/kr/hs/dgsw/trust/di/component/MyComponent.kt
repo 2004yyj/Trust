@@ -5,12 +5,11 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
-import kr.hs.dgsw.trust.ui.activity.IntroActivity
-import kr.hs.dgsw.trust.ui.activity.MainActivity
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.di.module.RemoteModule
 import kr.hs.dgsw.trust.di.module.RepositoryModule
 import kr.hs.dgsw.trust.di.module.RetrofitModule
+import kr.hs.dgsw.trust.ui.activity.IntroActivity
 import kr.hs.dgsw.trust.ui.dialog.CommentFragment
 import kr.hs.dgsw.trust.ui.fragment.HomeFragment
 import kr.hs.dgsw.trust.ui.fragment.LoginFragment
@@ -26,6 +25,7 @@ import javax.inject.Singleton
 ])
 interface MyComponent : AndroidInjector<MyDaggerApplication> {
 
+    fun inject(introActivity: IntroActivity)
     fun inject(commentFragment: CommentFragment)
     fun inject(loginFragment: LoginFragment)
     fun inject(homeFragment: HomeFragment)

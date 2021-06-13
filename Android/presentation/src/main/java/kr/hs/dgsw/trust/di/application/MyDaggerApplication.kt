@@ -4,6 +4,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import kr.hs.dgsw.trust.di.component.DaggerMyComponent
 import kr.hs.dgsw.trust.di.component.MyComponent
+import kr.hs.dgsw.trust.ui.util.PreferenceHelper
 
 class MyDaggerApplication : DaggerApplication() {
 
@@ -17,6 +18,7 @@ class MyDaggerApplication : DaggerApplication() {
 
     override fun onCreate() {
         daggerComponent = DaggerMyComponent.factory().create(this)
+        PreferenceHelper.init(applicationContext)
         super.onCreate()
     }
 }
