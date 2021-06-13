@@ -33,15 +33,14 @@ class AccountController(
 
     @PostMapping("/autoLogin")
     fun login(@RequestHeader (name="Authorization") token: String): String {
-        return if (tokenProvider.validateToken(token)) {
+        return if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val authentication = tokenProvider.getAuthentication(token)
             val user = authentication.principal as User
-            val account = accountService.getAccount(user.username)
 
             JsonResponse(
                 "200",
                 "로그인에 성공하였습니다.",
-                account.toJsonObject()
+                TokenDTO(token, user.username).toJsonObject()
             ).returnJsonObject()
         } else {
             throw UnauthenticatedException("유효하지 않은 토큰입니다.")
@@ -61,7 +60,7 @@ class AccountController(
 
 //                val httpHeaders = HttpHeaders()
 //                httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
-                
+
                 JsonResponse(
                     "200",
                     "로그인에 성공하였습니다.",
