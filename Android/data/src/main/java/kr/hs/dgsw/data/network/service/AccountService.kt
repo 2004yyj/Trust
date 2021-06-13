@@ -23,4 +23,8 @@ interface AccountService {
                    @Part("password") password: RequestBody,
                    @Part profileImage: MultipartBody.Part?
     ) : Single<Response<kr.hs.dgsw.data.util.Response<TokenResponse>>>
+
+    @POST("/account/autoLogin")
+    fun postAutoLogin(
+    ): Single<Response<kr.hs.dgsw.data.util.Response<TokenResponse>>>
 }

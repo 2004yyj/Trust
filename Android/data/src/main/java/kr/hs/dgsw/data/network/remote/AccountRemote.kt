@@ -14,6 +14,10 @@ class AccountRemote @Inject constructor(
         override val service: AccountService,
 ): BaseRemote<AccountService>() {
 
+    fun postAutoLogin(): Single<TokenResponse> {
+        return service.postAutoLogin().map(getResponse())
+    }
+
     fun postLogin(loginRequest: LoginRequest): Single<TokenResponse> {
         return service.postLogin(loginRequest.username, loginRequest.password).map(getResponse())
     }

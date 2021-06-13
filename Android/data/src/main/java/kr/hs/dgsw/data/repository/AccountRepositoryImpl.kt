@@ -10,6 +10,10 @@ import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(private val accountDataSource: AccountDataSource) : AccountRepository {
 
+    override fun postAutoLogin(): Single<Token> {
+        return accountDataSource.postAutoLogin()
+    }
+
     override fun postLogin(loginRequest: LoginRequest): Single<Token> {
         return accountDataSource.postLogin(loginRequest)
     }

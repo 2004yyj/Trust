@@ -13,6 +13,10 @@ class AccountDataSource @Inject constructor(
         override val remote: AccountRemote,
 ): NoCacheDataSource<AccountRemote>() {
 
+    fun postAutoLogin() : Single<Token> {
+        return remote.postAutoLogin().map { it.toEntity() }
+    }
+
     fun postLogin(loginRequest: LoginRequest) : Single<Token> {
         return remote.postLogin(loginRequest).map { it.toEntity() }
     }

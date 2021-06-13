@@ -7,6 +7,8 @@ import kr.hs.dgsw.domain.request.SignUpRequest
 
 interface AccountRepository {
 
+    fun postAutoLogin() : Single<Token>
+
     fun postLogin(loginRequest: LoginRequest) : Single<Token>
 
     fun postSignUp(signUpRequest: SignUpRequest) : Single<Token>
