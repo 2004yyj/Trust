@@ -5,73 +5,99 @@ import kr.hs.dgsw.trust.server.data.entity.*
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
-import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.repository.CommentRepository
 import kr.hs.dgsw.trust.server.repository.LikedRepository
 import kr.hs.dgsw.trust.server.repository.PostRepository
+import kr.hs.dgsw.trust.server.service.AccountService
 import kr.hs.dgsw.trust.server.service.FileService
+import kr.hs.dgsw.trust.server.token.TokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.sql.Timestamp
+import kotlin.NoSuchElementException
+import kotlin.collections.ArrayList
 
 @RestController
 class PostController(
     private val postRepository: PostRepository,
     private val commentRepository: CommentRepository,
     private val likedRepository: LikedRepository,
-    private val accountRepository: AccountRepository,
-    private val passwordEncoder : PasswordEncoder
+    private val accountService: AccountService,
+    private val tokenProvider: TokenProvider,
+    private val encoder: PasswordEncoder
 ) {
 
     @Autowired
     private lateinit var fileService: FileService
 
     @GetMapping("/post")
-    fun getPostList(): String {
-        val list = postRepository.findAll()
-        val jsonList = JSONArray()
+    fun getPostList(@RequestHeader (name="Authorization") token: String): String {
 
-        list.forEach { post ->
-            jsonList.put(getPostToObject(post))
+        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
+
+            val username = (tokenProvider.getAuthentication(token).principal as User).username
+            val account = accountService.getAccount(username)
+
+            val list = postRepository.findAll()
+            val jsonList = JSONArray()
+
+            list.forEach { post ->
+                jsonList.put(getPostToObject(post, account))
+            }
+
+            return JsonResponse(
+                "200",
+                "글을 성공적으로 가져왔습니다.",
+                jsonList
+            ).returnJsonObject()
+        } else {
+            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
         }
-
-        return JsonResponse(
-            "200",
-            "글을 성공적으로 가져왔습니다.",
-            jsonList
-        ).returnJsonObject()
     }
 
     @GetMapping(path= ["/post"], params= ["username"])
-    fun getUserPostList(username: String): String {
-        val list = postRepository.findByUsername(username)
-        val jsonList = JSONArray()
+    fun getUserPostList(@RequestHeader (name="Authorization") token: String, username: String): String {
+        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
 
-        list.forEach { post ->
-            jsonList.put(getPostToObject(post))
+            val usernameAuth = (tokenProvider.getAuthentication(token).principal as User).username
+            val account = accountService.getAccount(usernameAuth)
+
+            val list = postRepository.findByUsername(username)
+            val jsonList = JSONArray()
+
+            list.forEach { post ->
+                jsonList.put(getPostToObject(post, account))
+            }
+
+            return JsonResponse(
+                "200",
+                "글을 성공적으로 가져왔습니다.",
+                jsonList
+            ).returnJsonObject()
+        } else {
+            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
         }
-
-        return JsonResponse(
-            "200",
-            "글을 성공적으로 가져왔습니다.",
-            jsonList
-        ).returnJsonObject()
     }
 
     @GetMapping(path= ["/post"], params= ["postId"])
-    fun getPost(postId: Int): String {
+    fun getPost(@RequestHeader (name="Authorization") token: String, postId: Int): String {
         return try {
+
+            val username = (tokenProvider.getAuthentication(token).principal as User).username
+            val account = accountService.getAccount(username)
+
             val post = postRepository.findById(postId).orElseThrow()
 
             JsonResponse(
                 "200",
-                "글을 성공적으로 삭제 하였습니다.",
-                getPostToObject(post)
+                "글을 성공적으로 가져왔습니다.",
+                getPostToObject(post, account)
             ).returnJsonObject()
 
         } catch (e: NotFoundException) {
@@ -81,53 +107,52 @@ class PostController(
 
     @PostMapping("/post/save")
     fun savePost(
-        username: String,
-        password: String,
+        @RequestHeader (name="Authorization")
+        token: String,
         content: String,
         isAnonymous: Boolean,
         imageList: ArrayList<MultipartFile>?
     ): String {
         val post = Post()
-        try {
-            val account = accountRepository.findById(username).orElseThrow()
-            val pathList = ArrayList<String>()
 
-            if (username == account.username && passwordEncoder.matches(password, account.password)) {
-                post.username =
-                    if (!isAnonymous) {
-                        username
-                    } else {
-                        passwordEncoder.encode(username)
-                    }
-
+        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
+            val username = (tokenProvider.getAuthentication(token).principal as User).username
+            val account = accountService.getAccount(username)
+            try {
+                val imagePathList = ArrayList<String>()
+                post.username = if (!isAnonymous) {
+                    username
+                } else {
+                    encoder.encode(username)
+                }
                 post.isAnonymous = isAnonymous
                 post.createdAt = Timestamp(System.currentTimeMillis())
                 post.content = content
                 imageList?.forEach {
                     val file = fileService.saveFile(it)
-                    pathList.add(file)
+                    imagePathList.add(file)
                 }
-                post.imageList = JSONArray(pathList).toString()
+                post.imageList = JSONArray(imagePathList).toString()
                 postRepository.save(post)
-            } else {
-                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            } catch (e: BadRequestException) {
+                throw BadRequestException("오류가 발생했습니다.")
             }
-        } catch (e: BadRequestException) {
-            throw BadRequestException("오류가 발생했습니다.")
-        }
 
-        return JsonResponse(
-            "200",
-            "글을 성공적으로 추가하였습니다.",
-            getPostToObject(post)
-        ).returnJsonObject()
+            return JsonResponse(
+                "200",
+                "글을 성공적으로 추가하였습니다.",
+                getPostToObject(post, account)
+            ).returnJsonObject()
+        } else {
+            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
+        }
     }
 
     @PutMapping("/post/update")
     fun updatePost(
+        @RequestHeader (name="Authorization")
+        token: String,
         postId: Int,
-        username: String,
-        password: String,
         content: String?,
         deleteFileList: Array<String>?,
         updateFileList: ArrayList<MultipartFile>?
@@ -138,22 +163,23 @@ class PostController(
             } catch (e: NoSuchElementException) {
                 throw NotFoundException("글을 찾을 수 없습니다.")
             }
-        val account =
-            try {
-                accountRepository.findById(username).orElseThrow()
-            } catch (e: NoSuchElementException) {
-                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
-            }
+        val account = if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
+            val username = (tokenProvider.getAuthentication(token).principal as User).username
+            accountService.getAccount(username)
+        } else {
+            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
+        }
 
         return if (postRepository.existsById(postId)) {
 
-            val accountMatch =
-                if (post.isAnonymous == true)
-                    passwordEncoder.matches(username, post.username)
-                else
-                    username == post.username
+            val validUsername = if (post.isAnonymous == false) {
 
-            if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+                account.username == post.username
+            } else {
+                encoder.matches(account.password, post.username)
+            }
+
+            if (validUsername) {
                 post.content = if (!content.isNullOrEmpty()) content else post.content
 
                 val imageJsonArray = JSONArray(post.imageList)
@@ -187,10 +213,10 @@ class PostController(
                 JsonResponse(
                     "200",
                     "글을 성공적으로 업데이트 하였습니다.",
-                    getPostToObject(post)
+                    getPostToObject(post, account)
                 ).returnJsonObject()
             } else {
-                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+                throw UnauthenticatedException("오류가 발생하였습니다.")
             }
         } else {
             throw NotFoundException("글을 찾을 수 없습니다.")
@@ -198,7 +224,7 @@ class PostController(
     }
 
     @DeleteMapping("/post/delete")
-    fun deletePost(postId: Int, username: String, password: String): String {
+    fun deletePost(@RequestHeader (name="Authorization") token: String, postId: Int): String {
         val post =
             try {
                 postRepository.findById(postId).orElseThrow()
@@ -207,19 +233,21 @@ class PostController(
             }
         val account =
             try {
-                accountRepository.findById(username).orElseThrow()
+                val username = (tokenProvider.getAuthentication(token).principal as User).username
+                accountService.getAccount(username)
             } catch (e: NoSuchElementException) {
-                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+                throw UnauthenticatedException("유효하지 않은 토큰입니다.")
             }
 
         return if (postRepository.existsById(postId)) {
-            val accountMatch =
-                if (post.isAnonymous == true)
-                    passwordEncoder.matches(username, post.username)
-                else
-                    username == post.username
+            val validUsername = if (post.isAnonymous == false) {
+                account.username == post.username
+            } else {
+                encoder.matches(account.password, post.username)
+            }
 
-            if (accountMatch && passwordEncoder.matches(password, account.password!!)) {
+            if (validUsername) {
+
                 postRepository.deleteById(postId)
                 likedRepository.deleteAllByPostId(postId)
                 commentRepository.deleteAllByPostId(postId)
@@ -245,7 +273,7 @@ class PostController(
                 JsonResponse(
                     "200",
                     "글을 성공적으로 삭제 하였습니다.",
-                    getPostToObject(post)
+                    null
                 ).returnJsonObject()
 
             } else {
@@ -256,17 +284,20 @@ class PostController(
         }
     }
 
-    fun getPostToObject(post: Post): JSONObject {
+    fun getPostToObject(post: Post, account: Account): JSONObject {
         val postObject = post.toJsonObject()
         postObject.put("account", findAccount(post.username!!, post.isAnonymous!!).toJsonObject())
 
         val likedList = findLikedList(post.id!!)
-        val likedObject = JSONArray()
+        var isChecked = false
+
         likedList.forEach {
-            likedObject.put(it.username)
+            if (account.username == it.username) {
+                isChecked = true
+            }
         }
-        postObject.put("likedList", likedObject)
-        postObject.put("likedSize", likedObject.length())
+        postObject.put("isChecked", isChecked)
+        postObject.put("likedSize", likedList.size)
 
         return postObject
     }
@@ -281,14 +312,14 @@ class PostController(
 
     fun findAccount(username: String, isAnonymous: Boolean): Account {
         return try {
-            val account = accountRepository.findById(username).orElseThrow()
+            val account = accountService.getAccount(username)
             account.password = null
             account
         } catch (e: NoSuchElementException) {
             val account = Account()
 
             if (isAnonymous) {
-                account.username = username
+                account.username = "anonymous"
                 account.name = "익명"
             } else {
                 account.username = "DELETED"
