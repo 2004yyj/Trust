@@ -236,7 +236,7 @@ class PostController(
                 val username = (tokenProvider.getAuthentication(token).principal as User).username
                 accountService.getAccount(username)
             } catch (e: NoSuchElementException) {
-                throw UnauthenticatedException("유효하지 않은 토큰입니다.")
+                throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
             }
 
         return if (postRepository.existsById(postId)) {
@@ -325,7 +325,7 @@ class PostController(
                 account.username = "DELETED"
                 account.name = "삭제된 계정"
             }
-            account.profileImage = "/image/defaultUserProfile.png"
+            account.profileImage = "defaultUserProfile.png"
             account
         }
     }

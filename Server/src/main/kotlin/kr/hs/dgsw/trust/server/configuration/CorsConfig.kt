@@ -17,6 +17,9 @@ class CorsConfig {
         config.addAllowedHeader("*")
         config.addAllowedMethod("*")
         source.registerCorsConfiguration("/account/**", config)
+        source.registerCorsConfiguration("/post/**", config)
+        source.registerCorsConfiguration("/liked/**", config)
+        source.registerCorsConfiguration("/comment/**", config)
         return CorsFilter(source)
     }
 }
