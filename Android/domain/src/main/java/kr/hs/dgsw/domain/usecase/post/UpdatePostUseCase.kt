@@ -13,8 +13,6 @@ class UpdatePostUseCase @Inject constructor(
     override fun buildUseCaseObservable(params: Params): Single<Post> {
         return repository.updatePost(
                 params.postId,
-                params.username,
-                params.password,
                 params.isAnonymous,
                 params.content,
                 params.deleteFileList,
@@ -24,8 +22,6 @@ class UpdatePostUseCase @Inject constructor(
 
     data class Params(
             val postId: Int,
-            val username: String,
-            val password: String,
             val content: String?,
             val isAnonymous: Boolean?,
             val deleteFileList: List<String>,

@@ -21,8 +21,6 @@ interface PostService {
     @Multipart
     @POST("/post/save")
     fun postPost(
-            @Part("username") username: RequestBody,
-            @Part("password") password: RequestBody,
             @Part("isAnonymous") isAnonymous: RequestBody,
             @Part("content") content: RequestBody,
             @Part imageList: List<MultipartBody.Part>?
@@ -32,8 +30,6 @@ interface PostService {
     @PUT("/post/update")
     fun updatePost(
             @Part("postId") postId: Int,
-            @Part("username") username: RequestBody,
-            @Part("password") password: RequestBody,
             @Part("isAnonymous") isAnonymous: RequestBody?,
             @Part("content") content: RequestBody?,
             @Part("deleteFileList") deleteFileList: List<String>?,
@@ -43,7 +39,5 @@ interface PostService {
     @DELETE("/post/delete")
     fun deletePost(
             @Query("postId") postId: Int,
-            @Query("username") username: String,
-            @Query("password") password: String,
     ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
 }

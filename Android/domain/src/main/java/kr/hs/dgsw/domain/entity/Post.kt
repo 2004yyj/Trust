@@ -7,6 +7,6 @@ data class Post(
         val content: String,
         val imageList: List<String>,
         val account: Account,
-        val likedList: List<String>,
+        val isChecked: Boolean,
         val likedSize: Int
 )

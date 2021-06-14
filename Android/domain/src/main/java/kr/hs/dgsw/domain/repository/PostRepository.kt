@@ -13,8 +13,6 @@ interface PostRepository {
     fun getAllPostByUsername(username: String) : Single<List<Post>>
 
     fun postPost(
-            username: String,
-            password: String,
             isAnonymous: Boolean,
             content: String,
             imageList: List<MultipartBody.Part>?
@@ -22,8 +20,6 @@ interface PostRepository {
 
     fun updatePost(
             postId: Int,
-            username: String,
-            password: String,
             isAnonymous: Boolean?,
             content: String?,
             deleteFileList: List<String>?,
@@ -32,8 +28,6 @@ interface PostRepository {
 
     fun deletePost(
             postId: Int,
-            username: String,
-            password: String,
     ) : Single<Post>
 
 }

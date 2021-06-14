@@ -4,7 +4,6 @@ import io.reactivex.Single
 import kr.hs.dgsw.domain.base.ParamsUseCase
 import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.domain.repository.PostRepository
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class DeletePostUseCase @Inject constructor(
@@ -12,13 +11,11 @@ class DeletePostUseCase @Inject constructor(
 ): ParamsUseCase<DeletePostUseCase.Params, Single<Post>>() {
 
     override fun buildUseCaseObservable(params: Params): Single<Post> {
-        return repository.deletePost(params.postId, params.username, params.password)
+        return repository.deletePost(params.postId)
     }
 
     data class Params(
             val postId: Int,
-            val username: String,
-            val password: String
     )
 
 }

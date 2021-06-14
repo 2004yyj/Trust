@@ -27,46 +27,36 @@ class PostRemote @Inject constructor(
     }
 
     fun postPost(
-            username: String,
-            password: String,
             isAnonymous: Boolean,
             content: String,
             imageList: List<MultipartBody.Part>?
     ): Single<PostResponse> {
         val textType = "text/plain".toMediaType()
-        val usernameBody = username.toRequestBody(textType)
-        val passwordBody = password.toRequestBody(textType)
         val contentBody = content.toRequestBody(textType)
         val isAnonymousBody = isAnonymous.toString().toRequestBody()
 
-        return service.postPost(usernameBody, passwordBody, isAnonymousBody, contentBody, imageList).map(getResponse())
+        return service.postPost(isAnonymousBody, contentBody, imageList).map(getResponse())
     }
 
     fun updatePost(
             postId: Int,
-            username: String,
-            password: String,
             isAnonymous: Boolean?,
             content: String?,
             deleteFileList: List<String>?,
             updateFileList: List<MultipartBody.Part>?
     ): Single<PostResponse> {
         val textType = "text/plain".toMediaType()
-        val usernameBody = username.toRequestBody(textType)
-        val passwordBody = password.toRequestBody(textType)
         val contentBody: RequestBody? = content?.toRequestBody(textType)
         val isAnonymousBody = isAnonymous.toString().toRequestBody()
 
-        return service.updatePost(postId, usernameBody, passwordBody, isAnonymousBody, contentBody, deleteFileList, updateFileList).map(getResponse())
+        return service.updatePost(postId, isAnonymousBody, contentBody, deleteFileList, updateFileList).map(getResponse())
     }
 
     fun deletePost(
             postId: Int,
-            username: String,
-            password: String,
     ): Single<PostResponse> {
 
-        return service.deletePost(postId, username, password).map(getResponse())
+        return service.deletePost(postId).map(getResponse())
     }
 
 }

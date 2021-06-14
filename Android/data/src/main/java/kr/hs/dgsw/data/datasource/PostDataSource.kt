@@ -1,7 +1,6 @@
 package kr.hs.dgsw.data.datasource
 
 import io.reactivex.Single
-import kr.hs.dgsw.data.base.BaseDataSource
 import kr.hs.dgsw.data.base.NoCacheDataSource
 import kr.hs.dgsw.data.mapper.toEntity
 import kr.hs.dgsw.data.network.remote.PostRemote
@@ -38,33 +37,27 @@ class PostDataSource @Inject constructor(
     }
 
     fun postPost(
-            username: String,
-            password: String,
             isAnonymous: Boolean,
             content: String,
             imageList: List<MultipartBody.Part>?
     ) : Single<Post> {
-        return remote.postPost(username, password, isAnonymous, content, imageList).map { it.toEntity() }
+        return remote.postPost(isAnonymous, content, imageList).map { it.toEntity() }
     }
 
     fun updatePost(
             postId: Int,
-            username: String,
-            password: String,
             isAnonymous: Boolean?,
             content: String?,
             deleteFileList: List<String>?,
             updateFileList: List<MultipartBody.Part>?
     ) : Single<Post> {
-        return remote.updatePost(postId, username, password, isAnonymous, content, deleteFileList, updateFileList).map { it.toEntity() }
+        return remote.updatePost(postId, isAnonymous, content, deleteFileList, updateFileList).map { it.toEntity() }
     }
 
     fun deletePost(
             postId: Int,
-            username: String,
-            password: String
     ) : Single<Post> {
-        return remote.deletePost(postId, username, password).map { it.toEntity() }
+        return remote.deletePost(postId).map { it.toEntity() }
     }
 
 }

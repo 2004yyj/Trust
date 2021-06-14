@@ -12,12 +12,10 @@ class PostPostUseCase @Inject constructor(
 ): ParamsUseCase<PostPostUseCase.Params, Single<Post>>() {
 
     override fun buildUseCaseObservable(params: Params): Single<Post> {
-        return repository.postPost(params.username, params.password, params.isAnonymous, params.content, params.imageList)
+        return repository.postPost(params.isAnonymous, params.content, params.imageList)
     }
 
     data class Params(
-            val username: String,
-            val password: String,
             val content: String,
             val isAnonymous: Boolean,
             val imageList: List<MultipartBody.Part>?
