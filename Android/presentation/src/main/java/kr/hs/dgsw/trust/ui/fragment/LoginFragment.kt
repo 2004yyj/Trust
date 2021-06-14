@@ -25,7 +25,8 @@ import kr.hs.dgsw.trust.databinding.FragmentLoginBinding
 import kr.hs.dgsw.trust.databinding.LayoutButtonBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.activity.MainActivity
-import kr.hs.dgsw.trust.ui.util.PreferenceHelper
+import kr.hs.dgsw.trust.ui.util.PreferenceHelper.autoLogin
+import kr.hs.dgsw.trust.ui.util.PreferenceHelper.token
 import kr.hs.dgsw.trust.ui.viewmodel.factory.LoginViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.fragment.LoginViewModel
 import javax.inject.Inject
@@ -105,6 +106,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun init() {
+
+        viewModel.autoLoginChk.set(autoLogin)
+
         tilId = binding.tilIdLogin
         tilPw = binding.tilPwLogin
         btnLogin = binding.btnLoginLogin
@@ -125,9 +129,8 @@ class LoginFragment : Fragment() {
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
 
-            PreferenceHelper.token = it.token
-            PreferenceHelper.username = it.username
-            PreferenceHelper.autoLogin = viewModel.autoLoginChk.get()!!
+            token = it.token
+            autoLogin = viewModel.autoLoginChk.get()!!
 
             Log.d(TAG, "observe: ${it.token}")
 
