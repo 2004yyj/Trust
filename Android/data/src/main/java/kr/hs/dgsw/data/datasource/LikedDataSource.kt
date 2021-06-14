@@ -20,8 +20,8 @@ class LikedDataSource @Inject constructor(
         }
     }
 
-    fun postLiked(postId: Int, username: String, password: String): Single<List<Liked>> {
-        return remote.postLiked(postId, username, password).map { likedResponseList ->
+    fun postLiked(postId: Int): Single<List<Liked>> {
+        return remote.postLiked(postId).map { likedResponseList ->
             val likedList = ArrayList<Liked>()
             likedResponseList.forEach {
                 likedList.add(it.toEntity())
@@ -30,8 +30,8 @@ class LikedDataSource @Inject constructor(
         }
     }
 
-    fun deleteLiked(postId: Int, username: String, password: String): Single<List<Liked>> {
-        return remote.deleteLiked(postId, username, password).map { likedResponseList ->
+    fun deleteLiked(postId: Int): Single<List<Liked>> {
+        return remote.deleteLiked(postId).map { likedResponseList ->
             val likedList = ArrayList<Liked>()
             likedResponseList.forEach {
                 likedList.add(it.toEntity())

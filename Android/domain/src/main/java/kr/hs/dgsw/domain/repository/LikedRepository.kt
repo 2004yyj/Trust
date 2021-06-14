@@ -5,6 +5,6 @@ import kr.hs.dgsw.domain.entity.Liked
 
 interface LikedRepository {
     fun getAllLiked(postId: Int): Single<List<Liked>>
-    fun postLiked(postId: Int, username: String, password: String): Single<List<Liked>>
-    fun deleteLiked(id: Int, username: String, password: String): Single<List<Liked>>
+    fun postLiked(postId: Int): Single<List<Liked>>
+    fun deleteLiked(id: Int): Single<List<Liked>>
 }

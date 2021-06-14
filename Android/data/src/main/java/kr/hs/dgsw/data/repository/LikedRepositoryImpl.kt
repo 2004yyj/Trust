@@ -13,11 +13,11 @@ class LikedRepositoryImpl @Inject constructor(
         return likedDataSource.getAllLiked(postId)
     }
 
-    override fun postLiked(postId: Int, username: String, password: String): Single<List<Liked>> {
-        return likedDataSource.postLiked(postId, username, password)
+    override fun postLiked(postId: Int): Single<List<Liked>> {
+        return likedDataSource.postLiked(postId)
     }
 
-    override fun deleteLiked(id: Int, username: String, password: String): Single<List<Liked>> {
-        return likedDataSource.deleteLiked(id, username, password)
+    override fun deleteLiked(id: Int): Single<List<Liked>> {
+        return likedDataSource.deleteLiked(id)
     }
 }

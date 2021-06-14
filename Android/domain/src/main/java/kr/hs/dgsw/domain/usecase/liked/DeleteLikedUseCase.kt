@@ -4,7 +4,6 @@ import io.reactivex.Single
 import kr.hs.dgsw.domain.base.ParamsUseCase
 import kr.hs.dgsw.domain.entity.Liked
 import kr.hs.dgsw.domain.repository.LikedRepository
-import kr.hs.dgsw.domain.request.DetailedRequest
 import javax.inject.Inject
 
 class DeleteLikedUseCase @Inject constructor(
@@ -14,14 +13,10 @@ class DeleteLikedUseCase @Inject constructor(
     override fun buildUseCaseObservable(params: Params): Single<List<Liked>> {
         return likedRepository.deleteLiked(
                 params.postId,
-                params.username,
-                params.password
         )
     }
 
     data class Params(
             val postId: Int,
-            val username: String,
-            val password: String
     )
 }

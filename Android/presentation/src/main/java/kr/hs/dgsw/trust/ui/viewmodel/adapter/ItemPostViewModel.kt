@@ -31,8 +31,8 @@ class ItemPostViewModel(
     private val _isFailure = MutableLiveData<String>()
     val isFailure = _isFailure
 
-    fun postLiked(postId: Int, username: String, password: String) {
-        postLikedUseCase.buildUseCaseObservable(PostLikedUseCase.Params(postId, username, password))
+    fun postLiked(postId: Int) {
+        postLikedUseCase.buildUseCaseObservable(PostLikedUseCase.Params(postId))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
@@ -46,8 +46,8 @@ class ItemPostViewModel(
 
     }
 
-    fun deleteLiked(postId: Int, username: String, password: String) {
-        deleteLikedUseCase.buildUseCaseObservable(DeleteLikedUseCase.Params(postId, username, password))
+    fun deleteLiked(postId: Int) {
+        deleteLikedUseCase.buildUseCaseObservable(DeleteLikedUseCase.Params(postId))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
