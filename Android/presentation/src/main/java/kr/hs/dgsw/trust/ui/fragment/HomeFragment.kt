@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val recyclerAdapter: PostAdapter by lazy { PostAdapter(recyclerViewModel) }
+    private val recyclerAdapter: PostAdapter by lazy { PostAdapter(postLikedUseCase, deleteLikedUseCase) }
     private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
     private val toolbar: Toolbar by lazy { binding.toolbarHome }
     private val swipeRefreshLayout: SwipeRefreshLayout by lazy { binding.swipeRefreshLayoutHome }
@@ -103,9 +103,6 @@ class HomeFragment : Fragment() {
             recyclerAdapter.submitList(it)
         }
         viewModel.isFailure.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        }
-        recyclerViewModel.isFailure.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
     }
