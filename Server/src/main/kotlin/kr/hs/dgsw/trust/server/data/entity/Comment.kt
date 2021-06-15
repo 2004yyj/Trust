@@ -19,7 +19,6 @@ class Comment {
     var createdAt: Timestamp? = null
     var content: String? = null
     var imageList : String? = null
-    var isAnonymous: Boolean? = null
 }
 
 fun Comment.toJsonObject(): JSONObject {
@@ -30,6 +29,5 @@ fun Comment.toJsonObject(): JSONObject {
     jsonObject.put("createdAt", createdAt?.time)
     jsonObject.put("content", content)
     jsonObject.put("imageList", jsonArray)
-    jsonObject.put("isAnonymous", isAnonymous)
     return jsonObject
 }
