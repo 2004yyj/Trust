@@ -95,19 +95,27 @@
                     app:layout_constraintHorizontal_bias="0"
                     tools:text="내용내용내용내용내용내용내용내용내용내용내용내용내용" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_content_image"
+                <androidx.cardview.widget.CardView
+                    app:cardCornerRadius="5dp"
+                    android:elevation="0dp"
+                    android:id="@+id/cv_content_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:orientation="horizontal"
-                    android:visibility="@{vm.imagePathList.size() > 0 ? View.VISIBLE : View.GONE}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_content_post"
-                    tools:listitem="@layout/item_post_image" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_content_post" >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_content_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/item_post_image"
+                        android:visibility="@{vm.imagePathList.size() > 0 ? View.VISIBLE : View.GONE}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                </androidx.cardview.widget.CardView>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
@@ -116,7 +124,7 @@
                     android:layout_marginTop="15dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_content_image"
+                    app:layout_constraintTop_toBottomOf="@id/cv_content_image"
                     app:layout_constraintHorizontal_bias="0">
 
                     <TextView
