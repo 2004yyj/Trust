@@ -1,6 +1,5 @@
 package kr.hs.dgsw.data.repository
 
-import android.util.Log
 import io.reactivex.Single
 import kr.hs.dgsw.data.datasource.CommentDataSource
 import kr.hs.dgsw.domain.entity.Comment
@@ -15,15 +14,15 @@ class CommentRepositoryImpl @Inject constructor(
         return commentDataSource.getAllComment(postId)
     }
 
-    override fun postComment(postId: Int, username: String, password: String, content: String, isAnonymous: Boolean, imageList: List<MultipartBody.Part>?): Single<List<Comment>> {
-        return commentDataSource.postComment(postId, username, password, content, isAnonymous, imageList)
+    override fun postComment(postId: Int, content: String, imageList: List<MultipartBody.Part>?): Single<List<Comment>> {
+        return commentDataSource.postComment(postId, content, imageList)
     }
 
-    override fun updateComment(commentId: Int, username: String, password: String, content: String?, isAnonymous: Boolean?, imageList: List<MultipartBody.Part>?): Single<List<Comment>> {
-        return commentDataSource.updateComment(commentId, username, password, content, isAnonymous, imageList)
+    override fun updateComment(commentId: Int, content: String?, imageList: List<MultipartBody.Part>?): Single<List<Comment>> {
+        return commentDataSource.updateComment(commentId, content, imageList)
     }
 
-    override fun deleteComment(commentId: Int, username: String, password: String): Single<List<Comment>> {
-        return commentDataSource.deleteComment(commentId, username, password)
+    override fun deleteComment(commentId: Int): Single<List<Comment>> {
+        return commentDataSource.deleteComment(commentId)
     }
 }

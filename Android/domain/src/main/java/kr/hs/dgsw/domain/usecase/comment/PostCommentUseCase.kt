@@ -14,20 +14,14 @@ class PostCommentUseCase @Inject constructor(
     override fun buildUseCaseObservable(params: Params): Single<List<Comment>> {
         return commentRepository.postComment(
                 params.postId,
-                params.username,
-                params.password,
                 params.content,
-                params.isAnonymous,
                 params.imageList
         )
     }
 
     data class Params(
             val postId: Int,
-            val username: String,
-            val password: String,
             val content: String,
-            val isAnonymous: Boolean,
             val imageList: List<MultipartBody.Part>?
     )
 }

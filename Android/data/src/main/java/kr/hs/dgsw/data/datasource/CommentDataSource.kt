@@ -24,18 +24,12 @@ class CommentDataSource @Inject constructor(
 
     fun postComment(
             postId: Int,
-            username: String,
-            password: String,
             content: String,
-            isAnonymous: Boolean,
             imageList: List<MultipartBody.Part>?
     ): Single<List<Comment>> {
         return remote.postComment(
                 postId,
-                username,
-                password,
                 content,
-                isAnonymous,
                 imageList
         ).map { commentResponseList ->
             val commentList = ArrayList<Comment>()
@@ -48,18 +42,12 @@ class CommentDataSource @Inject constructor(
 
     fun updateComment(
             commentId: Int,
-            username: String,
-            password: String,
             content: String?,
-            isAnonymous: Boolean?,
             imageList: List<MultipartBody.Part>?
     ): Single<List<Comment>> {
         return remote.updateComment(
                 commentId,
-                username,
-                password,
                 content,
-                isAnonymous,
                 imageList
         ).map { commentResponseList ->
             val commentList = ArrayList<Comment>()
@@ -70,16 +58,8 @@ class CommentDataSource @Inject constructor(
         }
     }
 
-    fun deleteComment(
-            commentId: Int,
-            username: String,
-            password: String
-    ): Single<List<Comment>> {
-        return remote.deleteComment(
-                commentId,
-                username,
-                password
-        ).map { commentResponseList ->
+    fun deleteComment(commentId: Int): Single<List<Comment>> {
+        return remote.deleteComment(commentId).map { commentResponseList ->
             val commentList = ArrayList<Comment>()
             commentResponseList.forEach {
                 commentList.add(it.toEntity())

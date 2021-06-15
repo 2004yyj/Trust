@@ -28,4 +28,30 @@ class CommentViewModel(private val getAllCommentUseCase: GetAllCommentUseCase) :
                 compositeDisposable.add(this)
             }
     }
+
+    fun postComment(
+        content: String,
+        imageList: List<MultipartBody.Part>?
+    ) {
+        if (postId.value != null) {
+            postCommentUseCase.buildUseCaseObservable(
+                PostCommentUseCase.Params(postId.value!!, content, imageList)
+            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    commentList.value = it as ArrayList<Comment>?
+                }, {
+                    _isFailure.value = it.message
+                }).apply {
+                    compositeDisposable.add(this)
+                }
+        }
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 }

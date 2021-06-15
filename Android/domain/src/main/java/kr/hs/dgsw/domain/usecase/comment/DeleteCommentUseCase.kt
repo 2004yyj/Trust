@@ -4,7 +4,6 @@ import io.reactivex.Single
 import kr.hs.dgsw.domain.base.ParamsUseCase
 import kr.hs.dgsw.domain.entity.Comment
 import kr.hs.dgsw.domain.repository.CommentRepository
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class DeleteCommentUseCase @Inject constructor(
@@ -13,15 +12,11 @@ class DeleteCommentUseCase @Inject constructor(
 
     override fun buildUseCaseObservable(params: Params): Single<List<Comment>> {
         return commentRepository.deleteComment(
-                params.postId,
-                params.username,
-                params.password,
+                params.postId
         )
     }
 
     data class Params(
-            val postId: Int,
-            val username: String,
-            val password: String
+            val postId: Int
     )
 }

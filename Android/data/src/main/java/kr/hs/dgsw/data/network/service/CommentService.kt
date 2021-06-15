@@ -16,10 +16,7 @@ interface CommentService {
     @POST("/comment/save")
     fun postComment(
             @Part("postId") postId: Int,
-            @Part("username") username: RequestBody,
-            @Part("password") password: RequestBody,
             @Part("content") content: RequestBody,
-            @Part("isAnonymous") isAnonymous: Boolean,
             @Part imageList: List<MultipartBody.Part>?
     ) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 
@@ -27,17 +24,12 @@ interface CommentService {
     @PUT("/comment/update")
     fun updateComment(
             @Part("commentId") commentId: Int,
-            @Part("username") username: RequestBody,
-            @Part("password") password: RequestBody,
             @Part("content") content: RequestBody?,
-            @Part("isAnonymous") isAnonymous: Boolean?,
             @Part imageList: List<MultipartBody.Part>?
     ) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 
     @DELETE("/comment/delete")
     fun deleteComment(
             @Query("commentId") commentId: Int,
-            @Query("username") username: String,
-            @Query("password") password: String,
     ) : Single<Response<kr.hs.dgsw.data.util.Response<List<CommentResponse>>>>
 }
