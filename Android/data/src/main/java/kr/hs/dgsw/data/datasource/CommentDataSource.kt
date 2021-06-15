@@ -23,9 +23,9 @@ class CommentDataSource @Inject constructor(
     }
 
     fun postComment(
-            postId: Int,
-            content: String,
-            imageList: List<MultipartBody.Part>?
+        postId: Int,
+        content: String,
+        imageList: List<MultipartBody.Part>?
     ): Single<List<Comment>> {
         return remote.postComment(
                 postId,

@@ -9,9 +9,9 @@ interface CommentRepository {
     fun getAllComment(postId: Int) : Single<List<Comment>>
 
     fun postComment(
-            postId: Int,
-            content: String,
-            imageList: List<MultipartBody.Part>?
+        postId: Int,
+        content: String,
+        imageList: List<MultipartBody.Part>?
     ) : Single<List<Comment>>
 
     fun updateComment(

@@ -20,8 +20,8 @@ class PostCommentUseCase @Inject constructor(
     }
 
     data class Params(
-            val postId: Int,
-            val content: String,
-            val imageList: List<MultipartBody.Part>?
+        val postId: Int,
+        val content: String,
+        val imageList: List<MultipartBody.Part>?
     )
 }

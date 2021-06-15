@@ -1,6 +1,6 @@
 package kr.hs.dgsw.trust.ui.viewmodel.fragment
 
-import android.util.Log
+import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -8,10 +8,19 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kr.hs.dgsw.domain.entity.Comment
 import kr.hs.dgsw.domain.usecase.comment.GetAllCommentUseCase
+import kr.hs.dgsw.domain.usecase.comment.PostCommentUseCase
+import okhttp3.MultipartBody
 
-class CommentViewModel(private val getAllCommentUseCase: GetAllCommentUseCase) : ViewModel() {
-    private val compositeDisposable =  CompositeDisposable()
+
+class CommentViewModel(
+    private val getAllCommentUseCase: GetAllCommentUseCase,
+    private val postCommentUseCase: PostCommentUseCase
+) : ViewModel() {
+
+    private val compositeDisposable = CompositeDisposable()
     val postId = MutableLiveData<Int>()
+    val postCommentText = MutableLiveData<String>()
+    val postImageList = ObservableArrayList<MultipartBody.Part>()
     val commentList = MutableLiveData(ArrayList<Comment>())
     private val _isFailure = MutableLiveData<String>()
 
@@ -22,20 +31,23 @@ class CommentViewModel(private val getAllCommentUseCase: GetAllCommentUseCase) :
             .subscribe({
                 commentList.value = it as ArrayList<Comment>?
             }, {
-                Log.d("asfasdaf", "getAllComment: ${it.message}")
                 _isFailure.value = it.message
             }).apply {
                 compositeDisposable.add(this)
             }
     }
 
-    fun postComment(
-        content: String,
-        imageList: List<MultipartBody.Part>?
-    ) {
+    fun postComment(content: String) {
         if (postId.value != null) {
+
+            val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+            postImageList.forEach {
+                builder.addPart(it)
+            }
+            val list = builder.build().parts
+
             postCommentUseCase.buildUseCaseObservable(
-                PostCommentUseCase.Params(postId.value!!, content, imageList)
+                PostCommentUseCase.Params(postId.value!!, content, list)
             )
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

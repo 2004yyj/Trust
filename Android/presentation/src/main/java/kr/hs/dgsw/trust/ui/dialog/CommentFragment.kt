@@ -1,21 +1,30 @@
 package kr.hs.dgsw.trust.ui.dialog
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import kr.hs.dgsw.domain.usecase.comment.GetAllCommentUseCase
+import kr.hs.dgsw.domain.usecase.comment.PostCommentUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentCommentBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
+import kr.hs.dgsw.trust.function.asMultipart
 import kr.hs.dgsw.trust.ui.adapter.CommentAdapter
+import kr.hs.dgsw.trust.ui.adapter.CommentPostImageAdapter
+import kr.hs.dgsw.trust.ui.decoration.SpaceDecoration
 import kr.hs.dgsw.trust.ui.util.setOnTransitionCompletedListener
 import kr.hs.dgsw.trust.ui.viewmodel.factory.CommentViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.fragment.CommentViewModel
@@ -26,11 +35,15 @@ class CommentFragment : DialogFragment() {
     @Inject
     lateinit var getAllCommentUseCase: GetAllCommentUseCase
 
+    @Inject
+    lateinit var postCommentUseCase: PostCommentUseCase
+
     private lateinit var viewModel: CommentViewModel
     private lateinit var motionLayout: MotionLayout
     private lateinit var binding: FragmentCommentBinding
+    private lateinit var activityResultLauncher: ActivityResultLauncher<String>
     private val recyclerAdapter: CommentAdapter by lazy { CommentAdapter() }
-    private val recyclerView: RecyclerView by lazy { binding.rvCommentListComment }
+    private val recyclerImageAdapter: CommentPostImageAdapter by lazy { CommentPostImageAdapter(viewModel) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +58,12 @@ class CommentFragment : DialogFragment() {
 
         (requireActivity().application as MyDaggerApplication).daggerComponent.inject(this)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false)
-        viewModel = ViewModelProvider(this, CommentViewModelFactory(getAllCommentUseCase))[CommentViewModel::class.java]
+        viewModel =
+            ViewModelProvider(
+            this,
+            CommentViewModelFactory(getAllCommentUseCase, postCommentUseCase))[CommentViewModel::class.java]
+        binding.vm = viewModel
+
         viewModel.postId.value = requireArguments().getInt("postId")
 
         return binding.root
@@ -65,16 +83,79 @@ class CommentFragment : DialogFragment() {
         }
     }
 
-    private fun init() {
-        recyclerView.adapter = recyclerAdapter
+    private fun init() = with(binding) {
+        val size = resources.getDimensionPixelSize(R.dimen.MY_SIZE)
+        val deco = SpaceDecoration(size)
+        rvCommentPostImageComment.adapter = recyclerImageAdapter
+        rvCommentPostImageComment.addItemDecoration(deco)
+
+        rvCommentListComment.adapter = recyclerAdapter
+
+        etCommentPostComment.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                submitComment()
+            }
+            true
+        }
+
+        btnCommentPostComment.setOnClickListener {
+            submitComment()
+        }
+
+        btnCommentImagePostComment.setOnClickListener {
+            activityResultLauncher.launch("image/*")
+        }
+
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            if (it != null) {
+                val list = ArrayList<Uri>()
+                if (recyclerImageAdapter.currentList.isNotEmpty()) {
+                    list.addAll(recyclerImageAdapter.currentList)
+                }
+                list.add(it)
+                imageListChanged(list)
+                recyclerImageAdapter.submitList(list)
+            }
+        }
     }
 
-    private fun observe() {
-        viewModel.postId.observe(this) {
-            viewModel.getAllComment(it)
+    private fun submitComment(): Unit = with(viewModel) {
+        val text = postCommentText.value
+        if (!text.isNullOrBlank()) {
+            postComment(postCommentText.value!!)
+            clearPostComment()
         }
-        viewModel.commentList.observe(this) {
+    }
+
+    private fun imageListChanged(list: ArrayList<Uri>) = with(viewModel) {
+        postImageList.clear()
+        list.forEach { uri ->
+            with(requireActivity()) {
+                val multipartBody = uri.asMultipart("imageList", cacheDir, contentResolver)!!
+                postImageList.add(multipartBody)
+            }
+        }
+    }
+
+    private fun clearPostComment() = with(viewModel) {
+        postCommentText.value = ""
+        postImageList.clear()
+        with(binding) {
+            etCommentPostComment.setText("")
+            recyclerImageAdapter.clearList()
+        }
+    }
+
+    private fun observe() = with(viewModel) {
+        postId.observe(this@CommentFragment) {
+            getAllComment(it)
+        }
+        commentList.observe(this@CommentFragment) {
             recyclerAdapter.submitList(it)
+        }
+        postCommentText.observe(this@CommentFragment) {
+            binding.btnCommentPostComment.visibility =
+                if (!it.isNullOrBlank()) VISIBLE else GONE
         }
     }
 

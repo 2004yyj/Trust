@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <import type="kr.hs.dgsw.trust.ui.viewmodel.fragment.CommentViewModel"/>
+        <variable
+            name="vm"
+            type="CommentViewModel" />
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
@@ -27,11 +31,21 @@
             android:orientation="vertical">
 
             <View
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/dialog_comment_background"
+                app:layout_constraintBottom_toTopOf="@+id/view2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
                 android:id="@+id/view1"
                 android:layout_width="80sp"
                 android:layout_height="5dp"
                 android:layout_marginTop="25dp"
-                android:layout_marginBottom="26dp"
+                android:layout_marginBottom="25dp"
                 android:layout_gravity="center"
                 android:background="@drawable/close_indicator"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +71,7 @@
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view2"
@@ -73,36 +87,60 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="30dp"
+                android:outlineProvider="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <EditText
                     android:id="@+id/et_commentPost_comment"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:hint="@string/input_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:background="@drawable/et_comment_box"
+                    android:hint="@string/input_comment"
+                    android:paddingStart="20dp"
                     android:paddingEnd="100dp"
+                    android:singleLine="true"
+                    android:text="@={vm.postCommentText}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="Autofill,RtlSymmetry,TextFields" />
+                    app:layout_constraintTop_toBottomOf="@id/rv_commentPostImage_comment"
+                    tools:ignore="Autofill,RtlSymmetry,TextFields"
+                    tools:text="@tools:sample/lorem/random" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_commentImagePost_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_circle"
+                    android:src="@drawable/ic_camera"
+                    app:layout_goneMarginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@id/et_commentPost_comment"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_commentPost_comment"
+                    app:layout_constraintStart_toStartOf="@id/et_commentPost_comment"
+                    app:layout_constraintTop_toTopOf="@id/et_commentPost_comment"
+                    app:layout_constraintHorizontal_bias="1" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/btn_commentPost_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/ripple_circle"
+                    android:src="@drawable/ic_send"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_commentPost_comment"
+                    app:layout_constraintEnd_toEndOf="@id/et_commentPost_comment"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintTop_toTopOf="@id/et_commentPost_comment" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

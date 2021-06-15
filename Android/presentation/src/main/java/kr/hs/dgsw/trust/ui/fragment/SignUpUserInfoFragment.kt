@@ -162,7 +162,9 @@ class SignUpUserInfoFragment : Fragment() {
             if (it != null) {
                 val inputStream = requireActivity().contentResolver.openInputStream(it)
                 val image = BitmapFactory.decodeStream(inputStream)
-                multipartBody = it.asMultipart(requireActivity().contentResolver)!!
+                with(requireActivity()) {
+                    multipartBody = it.asMultipart("profileImage", cacheDir, contentResolver)!!
+                }
                 ivProfileImage.setImageBitmap(image)
             }
         }
