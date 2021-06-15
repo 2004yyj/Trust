@@ -98,6 +98,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_commentPostImage_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin="10dp"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="horizontal"
+                    android:visibility="@{vm.postImageList.size() > 0 ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@id/et_commentPost_comment"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:listitem="@layout/item_comment_post_image" />
+
                 <EditText
                     android:id="@+id/et_commentPost_comment"
                     android:layout_width="match_parent"
