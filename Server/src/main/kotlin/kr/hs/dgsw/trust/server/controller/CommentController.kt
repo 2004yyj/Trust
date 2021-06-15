@@ -21,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.sql.Timestamp
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @RestController
 class CommentController(
@@ -62,7 +64,8 @@ class CommentController(
         token: String,
         postId: Int,
         content: String,
-        imageList: List<MultipartFile>?
+        imageList: ArrayList<MultipartFile>?,
+        request: HttpServletRequest
     ): String {
         val comment = Comment()
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
