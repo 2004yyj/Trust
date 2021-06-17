@@ -2,24 +2,13 @@ package kr.hs.dgsw.trust.server.controller
 
 import kr.hs.dgsw.trust.server.data.dto.TokenDTO
 import kr.hs.dgsw.trust.server.data.dto.toJsonObject
-import kr.hs.dgsw.trust.server.data.entity.Account
-import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.ExistsException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.service.AccountService
 import kr.hs.dgsw.trust.server.service.FileService
-import kr.hs.dgsw.trust.server.token.JwtFilter
-import kr.hs.dgsw.trust.server.token.TokenProvider
-import kr.hs.dgsw.trust.server.util.tokenGenerator
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
@@ -27,83 +16,46 @@ import org.springframework.web.multipart.MultipartFile
 @RequestMapping("/account")
 class AccountController(
     private val accountService: AccountService,
-    private val authenticationManagerBuilder: AuthenticationManagerBuilder,
-    private val tokenProvider: TokenProvider
+    private val fileService: FileService,
 ) {
 
     @PostMapping("/autoLogin")
     fun login(@RequestHeader (name="Authorization") token: String): String {
-        return if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            val authentication = tokenProvider.getAuthentication(token)
-            val user = authentication.principal as User
-
-            JsonResponse(
-                "200",
-                "로그인에 성공하였습니다.",
-                TokenDTO(token, user.username).toJsonObject()
-            ).returnJsonObject()
-        } else {
-            throw UnauthenticatedException("유효하지 않은 토큰입니다.")
-        }
+        val tokenDTO = accountService.login(token)
+        return JsonResponse(
+            "200",
+            "로그인에 성공하였습니다.",
+            tokenDTO.toJsonObject()
+        ).returnJsonObject()
     }
 
     @PostMapping("/login")
     fun login(username: String, password: String) : String {
-        val account = Account()
-        account.username = username
-        account.password = password
-
-        return if (isIdAndPwNotNull(account)) {
-            if (accountService.isIdAndPwExist(account)) {
-
-                val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
-
-//                val httpHeaders = HttpHeaders()
-//                httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer $jwt")
-
-                JsonResponse(
-                    "200",
-                    "로그인에 성공하였습니다.",
-                    TokenDTO(jwt, username).toJsonObject()
-                ).returnJsonObject()
-            } else {
-                throw UnauthenticatedException("아이디 또는 비밀번호가 잘못되었습니다.")
-            }
-        } else {
-            throw NullPointerException("빈칸이 없는지 확인해 주세요.")
-        }
+        val tokenDTO = accountService.login(username, password)
+        return JsonResponse(
+            "200",
+            "로그인에 성공하였습니다.",
+            tokenDTO.toJsonObject()
+        ).returnJsonObject()
     }
-
-    fun isIdAndPwNotNull(account: Account) : Boolean {
-        val username : String? = account.username
-        val password : String? = account.password
-        return !(username.isNullOrEmpty() || password.isNullOrEmpty())
-    }
-
     @PostMapping("/signUp")
     fun signUp(name: String,
                username: String,
                password: String,
                profileImage: MultipartFile?,
     ) : String {
-        return if (isAccountInfoNotNull(name, username, password)) {
-
-            accountService.signUp(name, username, password, profileImage)
-
-            val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
-
-            JsonResponse(
-                "200",
-                "회원가입에 성공하였습니다.",
-                TokenDTO(jwt, username).toJsonObject()
-            ).returnJsonObject()
+        val profileImageStr = if (profileImage != null) {
+            fileService.saveFile(profileImage)
         } else {
-            throw NullPointerException("빈칸이 없는지 확인해 주세요.")
+            "defaultUserProfile.png"
         }
-    }
 
-    fun isAccountInfoNotNull(name: String, username: String, password: String) : Boolean {
-        return !(name.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty())
+        val tokenDTO = accountService.signUp(name, username, password, profileImageStr)
+        return JsonResponse(
+            "200",
+            "회원가입에 성공하였습니다.",
+            tokenDTO.toJsonObject()
+        ).returnJsonObject()
     }
 
     @ExceptionHandler(value = [BadRequestException::class])

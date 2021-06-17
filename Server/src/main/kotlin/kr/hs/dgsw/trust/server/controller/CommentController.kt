@@ -1,15 +1,17 @@
 package kr.hs.dgsw.trust.server.controller
 
 import javassist.NotFoundException
-import kr.hs.dgsw.trust.server.data.entity.Account
-import kr.hs.dgsw.trust.server.data.entity.Comment
+import kr.hs.dgsw.trust.server.data.dto.CommentVO
+import kr.hs.dgsw.trust.server.data.dto.toDTO
+import kr.hs.dgsw.trust.server.data.dto.toJsonObject
+import kr.hs.dgsw.trust.server.data.entity.AccountDTO
 import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
-import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.repository.CommentRepository
 import kr.hs.dgsw.trust.server.repository.PostRepository
+import kr.hs.dgsw.trust.server.service.AccountService
 import kr.hs.dgsw.trust.server.service.FileService
 import kr.hs.dgsw.trust.server.token.TokenProvider
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,18 +19,16 @@ import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.userdetails.User
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.sql.Timestamp
 import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @RestController
 class CommentController(
     private val commentRepository: CommentRepository,
-    private val postRepository: PostRepository,
-    private val accountRepository: AccountRepository,
+    private val accountService: AccountService,
+    private val postService: PostRepository,
     private val tokenProvider: TokenProvider
 ) {
 
@@ -67,9 +67,9 @@ class CommentController(
         imageList: ArrayList<MultipartFile>?,
         request: HttpServletRequest
     ): String {
-        val comment = Comment()
+        val comment = CommentVO()
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            if (postRepository.existsById(postId)) {
+            if (postService.existsById(postId)) {
                 try {
                     val username = (tokenProvider.getAuthentication(token).principal as User).username
 
@@ -227,16 +227,15 @@ class CommentController(
         }
     }
 
-    fun getCommentToObject(comment: Comment): JSONObject {
-        val commentObject = comment.toJsonObject()
-        commentObject.put("account", findAccount(comment.username!!).toJsonObject())
+    fun getCommentToObject(commentVO: CommentVO): JSONObject {
+        val commentObject = commentVO.toJsonObject()
+        commentObject.put("account", findAccount(commentVO.username!!).toJsonObject())
         return commentObject
     }
 
-    fun findAccount(username: String): Account {
-        val account = accountRepository.findById(username).orElseThrow()
-        account.password = null
-        return account
+    fun findAccount(username: String): AccountDTO {
+        val account = accountService.getAccount(username)
+        return account.toDTO()
     }
 
     @ExceptionHandler(value = [UnauthenticatedException::class])

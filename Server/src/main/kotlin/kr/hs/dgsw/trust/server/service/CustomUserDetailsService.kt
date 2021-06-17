@@ -1,6 +1,6 @@
 package kr.hs.dgsw.trust.server.service
 
-import kr.hs.dgsw.trust.server.data.entity.Account
+import kr.hs.dgsw.trust.server.data.dto.AccountVO
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -21,7 +21,7 @@ class CustomUserDetailsService(private val accountRepository: AccountRepository)
             .orElseThrow { UsernameNotFoundException("$username -> 데이터베이스에서 찾을 수 없습니다.") }
     }
 
-    private fun createAccount(account: Account): User {
+    private fun createAccount(account: AccountVO): User {
         val grantedAuthorities: MutableList<SimpleGrantedAuthority>? = account.authorities?.stream()
             ?.map { authority -> SimpleGrantedAuthority(authority.authorityName) }
             ?.collect(Collectors.toList())

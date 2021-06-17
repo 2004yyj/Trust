@@ -1,4 +1,4 @@
-package kr.hs.dgsw.trust.server.data.entity
+package kr.hs.dgsw.trust.server.data.dto
 
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
@@ -9,8 +9,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity(name = "comment")
-class Comment {
-
+class CommentVO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int? = null
@@ -21,7 +20,7 @@ class Comment {
     var imageList : String? = null
 }
 
-fun Comment.toJsonObject(): JSONObject {
+fun CommentVO.toJsonObject(): JSONObject {
     val jsonObject = JSONObject()
     val jsonArray = JSONArray(imageList)
     jsonObject.put("id", id)

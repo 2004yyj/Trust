@@ -2,6 +2,8 @@ package kr.hs.dgsw.trust.server.service
 
 import javassist.NotFoundException
 import kr.hs.dgsw.trust.server.configuration.FileUploadProperties
+import kr.hs.dgsw.trust.server.repository.PostRepository
+import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.core.io.Resource
 import org.springframework.core.io.UrlResource
 import org.springframework.stereotype.Service
@@ -15,7 +17,10 @@ import java.util.*
 import javax.annotation.PostConstruct
 
 @Service
-class FileService(fileUploadProperties: FileUploadProperties) {
+class FileService(
+    fileUploadProperties: FileUploadProperties,
+    private val postRepository: PostRepository
+) {
 
     private var location = Paths.get(fileUploadProperties.location)
         .toAbsolutePath().normalize()
@@ -26,6 +31,34 @@ class FileService(fileUploadProperties: FileUploadProperties) {
             Files.createDirectories(location)
         } catch (e : IOException) {
             e.printStackTrace()
+        }
+    }
+
+    fun updateFile(postId: Int, deleteFileList: Array<String>?, updateFileList: ArrayList<MultipartFile>?): ArrayList<String> {
+        try {
+            val post = postRepository.findById(postId).orElseThrow()
+            val pathList = ArrayList<String>()
+            val imageJsonArray = JSONArray(post.imageList)
+            var i = 0
+            while (i < imageJsonArray.length()) {
+                pathList.add(imageJsonArray[i] as String)
+                i++
+            }
+            deleteFileList?.forEach {
+                if (isFileExist(it)) {
+                    deleteFileByName(it)
+                    pathList.remove(it)
+                }
+            }
+            updateFileList?.forEach {
+                if (!it.originalFilename.isNullOrEmpty()) {
+                    val fileName = saveFile(it)
+                    pathList.add(fileName)
+                }
+            }
+            return pathList
+        } catch (e: Exception) {
+            throw NotFoundException("글을 찾을 수 없습니다.")
         }
     }
 

@@ -1,12 +1,13 @@
-package kr.hs.dgsw.trust.server.data.entity
+package kr.hs.dgsw.trust.server.data.dto
 
+import kr.hs.dgsw.trust.server.data.entity.PostDTO
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import java.sql.Timestamp
 import javax.persistence.*
 
 @Entity(name = "post")
-class Post {
+class PostVO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int? = null
@@ -18,13 +19,13 @@ class Post {
     var isAnonymous: Boolean? = null
 }
 
-fun Post.toJsonObject(): JSONObject {
-    val jsonObject = JSONObject()
-    val jsonArray = JSONArray(imageList)
-    jsonObject.put("id", id)
-    jsonObject.put("createdAt", createdAt?.time)
-    jsonObject.put("content", content)
-    jsonObject.put("imageList", jsonArray)
-    jsonObject.put("isAnonymous", isAnonymous)
-    return jsonObject
+fun PostVO.toDTO(): PostDTO {
+    return PostDTO(
+        this.id!!,
+        this.username!!,
+        this.createdAt!!,
+        this.content!!,
+        this.imageList!!,
+        this.isAnonymous!!
+    )
 }

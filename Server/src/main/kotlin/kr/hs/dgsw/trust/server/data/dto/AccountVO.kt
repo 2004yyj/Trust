@@ -1,12 +1,13 @@
-package kr.hs.dgsw.trust.server.data.entity
+package kr.hs.dgsw.trust.server.data.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import javax.persistence.*
+import kr.hs.dgsw.trust.server.data.entity.AccountDTO as AccountDTO
 
 
 @Entity(name = "account")
-class Account {
+class AccountVO {
     @Column(name = "name_")
     var name: String? = null
     @Id
@@ -26,13 +27,13 @@ class Account {
         inverseJoinColumns = [JoinColumn(name = "authority_name", referencedColumnName = "authority_name")]
     )
 
-    var authorities: Set<Authority>? = null
+    var authorities: Set<AuthorityVO>? = null
 }
 
-fun Account.toJsonObject(): JSONObject {
-    val jsonObject = JSONObject()
-    jsonObject.put("name", name)
-    jsonObject.put("username", username)
-    jsonObject.put("profileImage", profileImage)
-    return jsonObject
+fun AccountVO.toDTO(): AccountDTO {
+    return AccountDTO(
+        this.name!!,
+        this.username!!,
+        this.profileImage,
+    )
 }
