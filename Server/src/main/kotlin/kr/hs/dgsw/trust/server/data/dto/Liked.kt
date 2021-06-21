@@ -1,6 +1,5 @@
-package kr.hs.dgsw.trust.server.data.entity
+package kr.hs.dgsw.trust.server.data.dto
 
-import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import java.sql.Timestamp
 import javax.persistence.Entity

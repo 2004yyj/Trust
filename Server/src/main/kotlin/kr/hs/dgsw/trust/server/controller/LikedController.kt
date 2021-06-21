@@ -1,27 +1,28 @@
 package kr.hs.dgsw.trust.server.controller
 
 import javassist.NotFoundException
-import kr.hs.dgsw.trust.server.data.entity.Account
-import kr.hs.dgsw.trust.server.data.entity.Liked
+import kr.hs.dgsw.trust.server.data.dto.*
+import kr.hs.dgsw.trust.server.data.entity.AccountDTO
 import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.ExistsException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.repository.LikedRepository
+import kr.hs.dgsw.trust.server.service.AccountService
+import kr.hs.dgsw.trust.server.service.LikedService
 import kr.hs.dgsw.trust.server.token.TokenProvider
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.userdetails.User
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import java.sql.Timestamp
 
 @RestController
 class LikedController(
     private val likedRepository: LikedRepository,
-    private val accountRepository: AccountRepository,
+    private val accountService: AccountService,
     private val tokenProvider: TokenProvider
 ) {
     @GetMapping("/liked")
@@ -117,24 +118,9 @@ class LikedController(
         return likedObject
     }
 
-    fun findAccount(username: String): Account {
-        return try {
-            val account = accountRepository.findById(username).orElseThrow()
-            account.password = null
-            account
-        } catch (e: NoSuchElementException) {
-            val account = Account()
-
-            if (username == "UnknownAccount") {
-                account.username = "Unknown"
-                account.name = "익명"
-            } else {
-                account.username = "DELETED"
-                account.name = "삭제된 계정"
-            }
-            account.profileImage = "/image/defaultUserProfile.png"
-            account
-        }
+    fun findAccount(username: String): AccountDTO {
+        val accountVO = accountService.getAccount(username)
+        return accountVO.toDTO()
     }
 
     @ExceptionHandler(value = [UnauthenticatedException::class])

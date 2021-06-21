@@ -1,6 +1,6 @@
 package kr.hs.dgsw.trust.server.repository
 
-import kr.hs.dgsw.trust.server.data.entity.Liked
+import kr.hs.dgsw.trust.server.data.dto.Liked
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 import javax.transaction.Transactional
