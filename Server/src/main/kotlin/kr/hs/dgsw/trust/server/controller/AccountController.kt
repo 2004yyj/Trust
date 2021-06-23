@@ -1,7 +1,6 @@
 package kr.hs.dgsw.trust.server.controller
 
-import kr.hs.dgsw.trust.server.data.dto.TokenDTO
-import kr.hs.dgsw.trust.server.data.dto.toJsonObject
+import kr.hs.dgsw.trust.server.data.vo.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.ExistsException
@@ -38,6 +37,7 @@ class AccountController(
             tokenDTO.toJsonObject()
         ).returnJsonObject()
     }
+
     @PostMapping("/signUp")
     fun signUp(name: String,
                username: String,

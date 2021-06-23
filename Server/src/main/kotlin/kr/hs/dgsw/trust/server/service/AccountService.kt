@@ -1,8 +1,8 @@
 package kr.hs.dgsw.trust.server.service
 
-import kr.hs.dgsw.trust.server.data.dto.AccountVO
-import kr.hs.dgsw.trust.server.data.dto.AuthorityVO
-import kr.hs.dgsw.trust.server.data.dto.TokenDTO
+import kr.hs.dgsw.trust.server.data.vo.AccountVO
+import kr.hs.dgsw.trust.server.data.vo.AuthorityVO
+import kr.hs.dgsw.trust.server.data.vo.TokenDTO
 import kr.hs.dgsw.trust.server.exception.ExistsException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
@@ -70,7 +70,7 @@ class AccountService(
 
     @Transactional(readOnly = true)
     fun login(username: String, password: String): TokenDTO {
-        val account = getAccount(username)
+        val account = findAccount(username)
 
         if (isLoginInfoNotNull(username, password) &&
             matchPassword(password, account.password!!)
@@ -82,7 +82,20 @@ class AccountService(
         }
     }
 
-    fun getAccount(username: String): AccountVO {
+    fun getAccount(token: String): AccountVO {
+        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
+            val username = (tokenProvider.getAuthentication(token).principal as User).username
+            try {
+                return accountRepository.findById(username).orElseThrow()
+            } catch (e: Exception) {
+                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            }
+        } else {
+            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
+        }
+    }
+
+    fun findAccount(username: String): AccountVO {
         try {
             return accountRepository.findById(username).orElseThrow()
         } catch (e: Exception) {

@@ -1,6 +1,6 @@
 package kr.hs.dgsw.trust.server.service
 
-import kr.hs.dgsw.trust.server.data.dto.AccountVO
+import kr.hs.dgsw.trust.server.data.vo.AccountVO
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User

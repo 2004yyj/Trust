@@ -1,6 +1,5 @@
-package kr.hs.dgsw.trust.server.data.entity
+package kr.hs.dgsw.trust.server.data.dto
 
-import kr.hs.dgsw.trust.server.data.dto.AuthorityVO
 import org.springframework.boot.configurationprocessor.json.JSONObject
 
 class AccountDTO(

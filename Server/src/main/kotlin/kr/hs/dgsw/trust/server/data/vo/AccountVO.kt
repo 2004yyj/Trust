@@ -1,9 +1,8 @@
-package kr.hs.dgsw.trust.server.data.dto
+package kr.hs.dgsw.trust.server.data.vo
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import org.springframework.boot.configurationprocessor.json.JSONObject
 import javax.persistence.*
-import kr.hs.dgsw.trust.server.data.entity.AccountDTO as AccountDTO
+import kr.hs.dgsw.trust.server.data.dto.AccountDTO as AccountDTO
 
 
 @Entity(name = "account")

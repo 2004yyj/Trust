@@ -1,4 +1,4 @@
-package kr.hs.dgsw.trust.server.data.dto
+package kr.hs.dgsw.trust.server.data.vo
 
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject

@@ -1,11 +1,11 @@
 package kr.hs.dgsw.trust.server.controller
 
 import javassist.NotFoundException
-import kr.hs.dgsw.trust.server.data.dto.CommentVO
-import kr.hs.dgsw.trust.server.data.dto.toDTO
+import kr.hs.dgsw.trust.server.data.vo.CommentVO
+import kr.hs.dgsw.trust.server.data.vo.toDTO
+import kr.hs.dgsw.trust.server.data.vo.toJsonObject
+import kr.hs.dgsw.trust.server.data.dto.AccountDTO
 import kr.hs.dgsw.trust.server.data.dto.toJsonObject
-import kr.hs.dgsw.trust.server.data.entity.AccountDTO
-import kr.hs.dgsw.trust.server.data.entity.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
