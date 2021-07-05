@@ -43,9 +43,6 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.webjars:webjars-locator-core")
-    implementation("org.webjars:sockjs-client:1.5.1")
-    implementation("org.webjars:stomp-websocket:2.3.4")
 }
 
 tasks.withType<KotlinCompile> {

@@ -80,7 +80,7 @@ class PostController(
         deleteFileList: Array<String>?,
         updateFileList: ArrayList<MultipartFile>?
     ): String {
-        val pathList = fileService.updateFile(postId, deleteFileList, updateFileList)
+        val pathList = fileService.updatePostFile(postId, deleteFileList, updateFileList)
         val post = postService.update(token, postId, content, pathList)
 
         return JsonResponse(

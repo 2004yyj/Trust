@@ -7,29 +7,23 @@ import kr.hs.dgsw.trust.server.data.vo.toJsonObject
 import kr.hs.dgsw.trust.server.data.dto.AccountDTO
 import kr.hs.dgsw.trust.server.data.dto.toJsonObject
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
-import kr.hs.dgsw.trust.server.exception.BadRequestException
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
-import kr.hs.dgsw.trust.server.repository.CommentRepository
 import kr.hs.dgsw.trust.server.repository.PostRepository
 import kr.hs.dgsw.trust.server.service.AccountService
+import kr.hs.dgsw.trust.server.service.CommentService
 import kr.hs.dgsw.trust.server.service.FileService
 import kr.hs.dgsw.trust.server.token.TokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.userdetails.User
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.sql.Timestamp
-import javax.servlet.http.HttpServletRequest
 
 @RestController
 class CommentController(
-    private val commentRepository: CommentRepository,
+    private val commentService: CommentService,
     private val accountService: AccountService,
-    private val postService: PostRepository,
-    private val tokenProvider: TokenProvider
 ) {
 
     @Autowired
@@ -37,77 +31,49 @@ class CommentController(
 
     @GetMapping("/comment")
     fun getCommentList(
-        @RequestHeader("Authorization")
-        token: String,
+        @RequestHeader (name="Authorization") token: String,
         postId: Int
     ): String {
-        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            val list = commentRepository.findByPostId(postId)
-            val jsonList = JSONArray()
-            list.forEach { comment ->
-                jsonList.put(getCommentToObject(comment))
-            }
-
-            return JsonResponse(
-                "200",
-                "댓글을 성공적으로 가져왔습니다.",
-                jsonList
-            ).returnJsonObject()
-        } else {
-            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
+        val list = commentService.findAllComment(token, postId)
+        val jsonList = JSONArray()
+        list.forEach { comment ->
+            jsonList.put(getCommentToObject(comment, token))
         }
+
+        return JsonResponse(
+            "200",
+            "댓글을 성공적으로 가져왔습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @PostMapping("/comment/save")
     fun saveComment(
-        @RequestHeader("Authorization")
-        token: String,
+        @RequestHeader (name="Authorization") token: String,
         postId: Int,
         content: String,
         imageList: ArrayList<MultipartFile>?,
-        request: HttpServletRequest
     ): String {
-        val comment = CommentVO()
-        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            if (postService.existsById(postId)) {
-                try {
-                    val username = (tokenProvider.getAuthentication(token).principal as User).username
+        val pathList = ArrayList<String>()
 
-                    val pathList = ArrayList<String>()
-                    comment.postId = postId
-                    comment.username = username
-                    comment.createdAt = Timestamp(System.currentTimeMillis())
-                    comment.content = content
-
-                    imageList?.forEach {
-                        val file = fileService.saveFile(it)
-                        pathList.add(file)
-                    }
-
-                    comment.imageList = JSONArray(pathList).toString()
-                    commentRepository.save(comment)
-
-                    val list = commentRepository.findByPostId(postId)
-                    val jsonList = JSONArray()
-                    list.forEach {
-                        jsonList.put(getCommentToObject(it))
-                    }
-
-                    return JsonResponse(
-                        "200",
-                        "댓글을 성공적으로 추가했습니다.",
-                        jsonList
-                    ).returnJsonObject()
-
-                } catch (e: BadRequestException) {
-                    throw BadRequestException("오류가 발생했습니다.")
-                }
-            } else {
-                throw NotFoundException("글을 찾을 수 없습니다.")
-            }
-        } else {
-            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
+        imageList?.forEach {
+            val file = fileService.saveFile(it)
+            pathList.add(file)
         }
+
+        commentService.saveComment(token, postId, content, pathList)
+
+        val list = commentService.findAllComment(token, postId)
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getCommentToObject(it, token))
+        }
+
+        return JsonResponse(
+            "200",
+            "댓글을 성공적으로 추가했습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
     @PutMapping("/comment/update")
@@ -119,60 +85,21 @@ class CommentController(
         deleteFileList: Array<String>?,
         updateFileList: ArrayList<MultipartFile>?
     ): String {
-        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            val comment =
-                try {
-                    commentRepository.findById(commentId).orElseThrow()
-                } catch (e: NoSuchElementException) {
-                    throw NotFoundException("댓글을 찾을 수 없습니다.")
-                }
 
-            if (commentRepository.existsById(commentId)) {
-                comment.content = content
+        val pathList = fileService.updateCommentFile(commentId, deleteFileList, updateFileList)
 
-                val imageJsonArray = JSONArray(comment.imageList)
+        val list = commentService.updateComment(token, commentId, content, pathList)
 
-                val pathList = ArrayList<String>()
-
-                var i = 0
-                while (i < imageJsonArray.length()) {
-                    pathList.add(imageJsonArray[i] as String)
-                    i++
-                }
-
-                deleteFileList?.forEach {
-                    if (fileService.isFileExist(it)) {
-                        fileService.deleteFileByName(it)
-                        pathList.remove(it)
-                    }
-                }
-
-                updateFileList?.forEach {
-                    if (!it.originalFilename.isNullOrEmpty()) {
-                        val fileName = fileService.saveFile(it)
-                        pathList.add(fileName)
-                    }
-                }
-
-                commentRepository.save(comment)
-            } else {
-                throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
-            }
-
-            val list = commentRepository.findByPostId(comment.postId!!)
-            val jsonList = JSONArray()
-            list.forEach {
-                jsonList.put(getCommentToObject(it))
-            }
-
-            return JsonResponse(
-                "200",
-                "댓글을 성공적으로 추가했습니다.",
-                jsonList
-            ).returnJsonObject()
-        } else {
-            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getCommentToObject(it, token))
         }
+
+        return JsonResponse(
+        "200",
+        "댓글을 성공적으로 추가했습니다.",
+        jsonList
+        ).returnJsonObject()
     }
 
     @DeleteMapping("/comment/delete")
@@ -181,60 +108,41 @@ class CommentController(
         token: String,
         commentId: Int
     ): String {
-        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            val comment =
-                try {
-                    commentRepository.findById(commentId).orElseThrow()
-                } catch (e: NoSuchElementException) {
-                    throw NotFoundException("댓글을 찾을 수 없습니다.")
-                }
+        val comment = commentService.deleteComment(token, commentId)
+        val imageJsonArray = JSONArray(comment.imageList)
+        val pathList = ArrayList<String>()
 
-            if (commentRepository.existsById(commentId)) {
-                val imageJsonArray = JSONArray(comment.imageList)
-
-                val pathList = ArrayList<String>()
-
-                var i = 0
-                while (i < imageJsonArray.length()) {
-                    pathList.add(imageJsonArray[i] as String)
-                    i++
-                }
-
-                pathList.forEach {
-                    fileService.deleteFileByName(it)
-                }
-
-                comment.imageList = JSONArray(pathList).toString()
-
-                commentRepository.deleteById(commentId)
-            } else {
-                throw NotFoundException("댓글을 찾을 수 없습니다.")
-            }
-
-            val list = commentRepository.findByPostId(comment.postId!!)
-            val jsonList = JSONArray()
-            list.forEach {
-                jsonList.put(getCommentToObject(it))
-            }
-
-            return JsonResponse(
-                "200",
-                "댓글을 성공적으로 추가했습니다.",
-                jsonList
-            ).returnJsonObject()
-        } else {
-            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
+        var i = 0
+        while (i < imageJsonArray.length()) {
+            pathList.add(imageJsonArray[i] as String)
+            i++
         }
+
+        pathList.forEach {
+            fileService.deleteFileByName(it)
+        }
+
+        val list = commentService.findAllComment(token, commentId)
+        val jsonList = JSONArray()
+        list.forEach {
+            jsonList.put(getCommentToObject(it, token))
+        }
+
+        return JsonResponse(
+            "200",
+            "댓글을 성공적으로 삭제했습니다.",
+            jsonList
+        ).returnJsonObject()
     }
 
-    fun getCommentToObject(commentVO: CommentVO): JSONObject {
+    fun getCommentToObject(commentVO: CommentVO, token: String): JSONObject {
         val commentObject = commentVO.toJsonObject()
-        commentObject.put("account", findAccount(commentVO.username!!).toJsonObject())
+        commentObject.put("account", findAccount(token).toJsonObject())
         return commentObject
     }
 
-    fun findAccount(username: String): AccountDTO {
-        val account = accountService.getAccount(username)
+    fun findAccount(token: String): AccountDTO {
+        val account = accountService.getAccount(token)
         return account.toDTO()
     }
 
