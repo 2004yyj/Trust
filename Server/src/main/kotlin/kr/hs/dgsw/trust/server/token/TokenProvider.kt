@@ -74,6 +74,7 @@ class TokenProvider(
          logger.info("잘못된 JWT 서명입니다.")
       } catch (e: MalformedJwtException) {
          logger.info("잘못된 JWT 서명입니다.")
+         e.printStackTrace()
       } catch (e: ExpiredJwtException) {
          logger.info("만료된 JWT 토큰입니다.")
       } catch (e: UnsupportedJwtException) {

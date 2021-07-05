@@ -1,6 +1,6 @@
 package kr.hs.dgsw.trust.server.repository
 
-import kr.hs.dgsw.trust.server.data.dto.PostVO
+import kr.hs.dgsw.trust.server.data.vo.PostVO
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface PostRepository : JpaRepository<PostVO, Int?> {

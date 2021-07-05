@@ -1,10 +1,10 @@
 package kr.hs.dgsw.trust.server.service
 
 import javassist.NotFoundException
-import kr.hs.dgsw.trust.server.data.dto.*
-import kr.hs.dgsw.trust.server.data.entity.AccountDTO
-import kr.hs.dgsw.trust.server.data.entity.PostDTO
-import kr.hs.dgsw.trust.server.data.entity.toJsonObject
+import kr.hs.dgsw.trust.server.data.vo.*
+import kr.hs.dgsw.trust.server.data.dto.AccountDTO
+import kr.hs.dgsw.trust.server.data.dto.PostDTO
+import kr.hs.dgsw.trust.server.data.dto.toJsonObject
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.repository.AccountRepository
 import kr.hs.dgsw.trust.server.repository.LikedRepository
@@ -94,7 +94,7 @@ class PostService(
             return account.toDTO()
         } catch (e: Exception) {
             if (isAnonymous) {
-                return AccountDTO("anonymous", "익명", "defaultUserProfile.png")
+                return AccountDTO("익명", "ANONYMOUS", "defaultUserProfile.png")
             }
             throw UnauthenticatedException("오류가 발생했습니다.")
         }

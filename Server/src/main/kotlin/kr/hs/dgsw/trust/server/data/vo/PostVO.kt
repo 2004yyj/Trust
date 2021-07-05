@@ -1,8 +1,6 @@
-package kr.hs.dgsw.trust.server.data.dto
+package kr.hs.dgsw.trust.server.data.vo
 
-import kr.hs.dgsw.trust.server.data.entity.PostDTO
-import org.springframework.boot.configurationprocessor.json.JSONArray
-import org.springframework.boot.configurationprocessor.json.JSONObject
+import kr.hs.dgsw.trust.server.data.dto.PostDTO
 import java.sql.Timestamp
 import javax.persistence.*
 

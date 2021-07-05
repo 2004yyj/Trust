@@ -1,17 +1,13 @@
 package kr.hs.dgsw.trust.server.controller
 
 import javassist.NotFoundException
-import kr.hs.dgsw.trust.server.data.dto.toJsonObject
-import kr.hs.dgsw.trust.server.data.entity.*
 import kr.hs.dgsw.trust.server.data.response.JsonResponse
 import kr.hs.dgsw.trust.server.exception.UnauthenticatedException
 import kr.hs.dgsw.trust.server.service.AccountService
 import kr.hs.dgsw.trust.server.service.FileService
 import kr.hs.dgsw.trust.server.service.PostService
-import kr.hs.dgsw.trust.server.token.TokenProvider
 import org.springframework.boot.configurationprocessor.json.JSONArray
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.userdetails.User
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import kotlin.collections.ArrayList
@@ -21,7 +17,6 @@ class PostController(
     private val postService: PostService,
     private val accountService: AccountService,
     private val fileService: FileService,
-    private val tokenProvider: TokenProvider,
 ) {
     @GetMapping("/post")
     fun getPostList(@RequestHeader (name="Authorization") token: String): String {
@@ -61,8 +56,7 @@ class PostController(
         isAnonymous: Boolean,
         imageList: ArrayList<MultipartFile>?
     ): String {
-        val username = (tokenProvider.getAuthentication(token).principal as User).username
-        val account = accountService.getAccount(username)
+        val account = accountService.getAccount(token)
         val imagePathList = ArrayList<String>()
         imageList?.forEach {
             val file = fileService.saveFile(it)

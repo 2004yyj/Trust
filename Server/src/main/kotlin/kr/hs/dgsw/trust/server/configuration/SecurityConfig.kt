@@ -2,7 +2,7 @@ package kr.hs.dgsw.trust.server.configuration
 
 import kr.hs.dgsw.trust.server.token.JwtAccessDeniedHandler
 import kr.hs.dgsw.trust.server.token.JwtAuthenticationEntryPoint
-import kr.hs.dgsw.trust.server.token.JwtSecurityConfig
+import kr.hs.dgsw.trust.server.token.JwtSecurityConfigAdapter
 import kr.hs.dgsw.trust.server.token.TokenProvider
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -52,6 +52,6 @@ class SecurityConfig(
             .antMatchers("/user/**").hasRole("USER")
             .anyRequest().permitAll() // 나머지 요청은 누구나 접근 가능
             .and()
-            .apply(JwtSecurityConfig(tokenProvider))
+            .apply(JwtSecurityConfigAdapter(tokenProvider))
     }
 }

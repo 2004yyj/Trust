@@ -1,4 +1,4 @@
-package kr.hs.dgsw.trust.server.data.dto
+package kr.hs.dgsw.trust.server.data.vo
 
 import lombok.*
 import org.springframework.boot.configurationprocessor.json.JSONObject
