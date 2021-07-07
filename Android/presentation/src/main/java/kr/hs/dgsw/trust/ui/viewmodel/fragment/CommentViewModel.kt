@@ -7,6 +7,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kr.hs.dgsw.domain.entity.Comment
+import kr.hs.dgsw.domain.usecase.comment.DeleteCommentUseCase
 import kr.hs.dgsw.domain.usecase.comment.GetAllCommentUseCase
 import kr.hs.dgsw.domain.usecase.comment.PostCommentUseCase
 import okhttp3.MultipartBody
@@ -14,7 +15,8 @@ import okhttp3.MultipartBody
 
 class CommentViewModel(
     private val getAllCommentUseCase: GetAllCommentUseCase,
-    private val postCommentUseCase: PostCommentUseCase
+    private val postCommentUseCase: PostCommentUseCase,
+    private val deleteCommentUseCase: DeleteCommentUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -40,11 +42,15 @@ class CommentViewModel(
     fun postComment(content: String) {
         if (postId.value != null) {
 
-            val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-            postImageList.forEach {
-                builder.addPart(it)
+            val list = if(postImageList.isNotEmpty()) {
+                val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                postImageList.forEach {
+                    builder.addPart(it)
+                }
+                builder.build().parts
+            } else {
+                null
             }
-            val list = builder.build().parts
 
             postCommentUseCase.buildUseCaseObservable(
                 PostCommentUseCase.Params(postId.value!!, content, list)
@@ -60,6 +66,19 @@ class CommentViewModel(
                 }
         }
 
+    }
+
+    fun deleteComment(commentId: Int) {
+        deleteCommentUseCase.buildUseCaseObservable(DeleteCommentUseCase.Params(commentId))
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe({
+                commentList.value = it as ArrayList<Comment>?
+            }, {
+                _isFailure.value = it.message
+            }).apply {
+                compositeDisposable.add(this)
+            }
     }
 
     override fun onCleared() {

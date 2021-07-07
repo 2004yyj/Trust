@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.hs.dgsw.trust.databinding.ItemCommentPostImageBinding
-import kr.hs.dgsw.trust.ui.viewmodel.fragment.CommentViewModel
 
-class CommentPostImageAdapter(private val viewModel: CommentViewModel) : ListAdapter<Uri, CommentPostImageAdapter.ViewHolder>(diffUtil) {
+class CommentPostImageAdapter : ListAdapter<Uri, CommentPostImageAdapter.ViewHolder>(diffUtil) {
 
     fun clearList() {
         submitList(null)

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import kr.hs.dgsw.data.util.ServerAddress.ADDR_IMG
 import kr.hs.dgsw.domain.entity.Post
 import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
 import kr.hs.dgsw.domain.usecase.liked.PostLikedUseCase
@@ -31,7 +30,7 @@ class PostAdapter(
 
         fun bind(post: Post) = with(viewModel) {
 
-            val imagePath = ADDR_IMG+post.account.profileImage
+            val imagePath = post.account.profileImage
 
             id.set(post.id)
             content.set(post.content)

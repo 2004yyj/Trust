@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "905247048780",
+    "project_id": "trust-chatting",
+    "storage_bucket": "trust-chatting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905247048780:android:af5bddca2d33907594a0e9",
+        "android_client_info": {
+          "package_name": "kr.hs.dgsw.trust"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905247048780-3t5i0p5iar2to11e5d5p0vn58esvemeq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC0TvxHRvDUDBpKuAUjq7Y2V1MujmMM7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905247048780-3t5i0p5iar2to11e5d5p0vn58esvemeq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

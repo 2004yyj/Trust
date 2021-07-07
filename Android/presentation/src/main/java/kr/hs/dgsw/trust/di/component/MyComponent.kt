@@ -6,10 +6,11 @@ import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
+import kr.hs.dgsw.trust.di.module.NetworkModule
 import kr.hs.dgsw.trust.di.module.RemoteModule
 import kr.hs.dgsw.trust.di.module.RepositoryModule
-import kr.hs.dgsw.trust.di.module.RetrofitModule
 import kr.hs.dgsw.trust.ui.activity.IntroActivity
+import kr.hs.dgsw.trust.ui.activity.SplashActivity
 import kr.hs.dgsw.trust.ui.dialog.CommentFragment
 import kr.hs.dgsw.trust.ui.fragment.HomeFragment
 import kr.hs.dgsw.trust.ui.fragment.LoginFragment
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     AndroidSupportInjectionModule::class,
-    RetrofitModule::class,
+    NetworkModule::class,
     RepositoryModule::class,
     RemoteModule::class
 ])
@@ -30,6 +31,7 @@ interface MyComponent : AndroidInjector<MyDaggerApplication> {
     fun inject(loginFragment: LoginFragment)
     fun inject(homeFragment: HomeFragment)
     fun inject(signUpUserInfoFragment: SignUpUserInfoFragment)
+    fun inject(splashActivity: SplashActivity)
 
     @Component.Factory
     interface Factory {

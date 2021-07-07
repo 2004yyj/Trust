@@ -1,6 +1,5 @@
 package kr.hs.dgsw.trust.di.module
 
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import kr.hs.dgsw.data.network.remote.AccountRemote
@@ -21,7 +20,6 @@ class RemoteModule {
     fun provideAccountRemote(retrofit: Retrofit) : AccountRemote =
             AccountRemote(retrofit.create(AccountService::class.java))
 
-
     @Provides
     @Singleton
     fun providePostRemote(retrofit: Retrofit) : PostRemote =
@@ -36,5 +34,4 @@ class RemoteModule {
     @Singleton
     fun provideCommentRemote(retrofit: Retrofit) : CommentRemote =
             CommentRemote(retrofit.create(CommentService::class.java))
-
 }

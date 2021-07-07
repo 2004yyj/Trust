@@ -129,10 +129,10 @@ class LoginFragment : Fragment() {
 
         viewModel.isSuccess.observe(viewLifecycleOwner) {
 
+            Log.d(TAG, "observe: $it")
+
             token = it.token
             autoLogin = viewModel.autoLoginChk.get()!!
-
-            Log.d(TAG, "observe: ${it.token}")
 
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)

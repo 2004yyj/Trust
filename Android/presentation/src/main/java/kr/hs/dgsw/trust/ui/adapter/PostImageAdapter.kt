@@ -5,19 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import kr.hs.dgsw.data.util.ServerAddress.ADDR_IMG
 import kr.hs.dgsw.trust.databinding.ItemPostImageBinding
 
 class PostImageAdapter : ListAdapter<String, PostImageAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(
         private val binding: ItemPostImageBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(imagePath: String) = with(binding) {
-            Glide
-                .with(root.context)
-                .load(ADDR_IMG+imagePath)
-                .into(ivImageListItemPost)
+        fun bind(imagePath: String) {
+            binding.imagePath = imagePath
         }
     }
 

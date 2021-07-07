@@ -17,12 +17,17 @@ class SplashViewModel(private val postAutoLoginUseCase: PostAutoLoginUseCase) : 
     private val _isFailure = MutableLiveData<String>()
     val isFailure = _isFailure
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading = _isLoading
+
     fun postAutoLogin() {
+        _isLoading.postValue(true)
         postAutoLoginUseCase.buildUseCaseObservable()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
                 _isSuccess.postValue(it)
+                _isLoading.postValue(false)
             }, {
                 _isFailure.postValue(it.message)
             }).apply {

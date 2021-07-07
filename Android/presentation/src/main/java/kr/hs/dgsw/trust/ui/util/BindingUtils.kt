@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.google.android.material.textfield.TextInputLayout
+import kr.hs.dgsw.data.util.ServerAddress.ADDR_IMG
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,8 +16,8 @@ fun TextView.setTime(time: Long) {
 }
 
 @BindingAdapter("setImage")
-fun ImageView.setImage(imagePath: String = "") {
-    Glide.with(this.context).load(imagePath).into(this)
+fun ImageView.setImage(imagePath: String) {
+    Glide.with(this.context).load(ADDR_IMG+imagePath).centerCrop().into(this)
 }
 
 fun MotionLayout.setOnTransitionCompletedListener(listener: (MotionLayout?, Int) -> Unit) {

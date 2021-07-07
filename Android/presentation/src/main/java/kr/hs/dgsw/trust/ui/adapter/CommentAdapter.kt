@@ -1,17 +1,20 @@
 package kr.hs.dgsw.trust.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import kr.hs.dgsw.data.util.ServerAddress.ADDR_IMG
 import kr.hs.dgsw.domain.entity.Comment
 import kr.hs.dgsw.trust.databinding.ItemCommentBinding
+import kr.hs.dgsw.trust.ui.util.PreferenceHelper.username
 
 class CommentAdapter : ListAdapter<Comment, CommentAdapter.ViewHolder>(DiffUtil) {
+
+    val deleteComment = MutableLiveData<Int>()
 
     companion object {
         val DiffUtil = object : DiffUtil.ItemCallback<Comment>() {
@@ -27,11 +30,8 @@ class CommentAdapter : ListAdapter<Comment, CommentAdapter.ViewHolder>(DiffUtil)
 
     inner class ViewHolder(private val binding: ItemCommentBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(comment: Comment) = with(binding) {
+
             binding.comment = comment
-            Glide
-                .with(root.context)
-                .load(ADDR_IMG+comment.account.profileImage)
-                .into(ivProfileImagePost)
 
             val postImageAdapter = PostImageAdapter()
 
@@ -40,6 +40,14 @@ class CommentAdapter : ListAdapter<Comment, CommentAdapter.ViewHolder>(DiffUtil)
                 val pagerSnapHelper = PagerSnapHelper()
                 pagerSnapHelper.attachToRecyclerView(rvImageListComment)
             }
+
+            if (comment.account.username == username) {
+                btnDeleteComment.visibility = View.VISIBLE
+            }
+            btnDeleteComment.setOnClickListener {
+                deleteComment.value = comment.id
+            }
+
             postImageAdapter.submitList(comment.imageList)
         }
     }

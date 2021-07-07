@@ -28,6 +28,7 @@
 
             <ImageView
                 android:id="@+id/iv_profileImage_post"
+                app:setImage="@{comment.account.profileImage}"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?selectableItemBackground"
@@ -66,12 +67,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                tools:text="잘하면되요"
                 android:text="@{comment.content}"
                 app:layout_constraintBottom_toTopOf="@id/cv_imageList_comment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_name_item_comment" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_item_comment"
+                tools:text="잘하면되요" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_imageList_comment"
@@ -95,6 +96,17 @@
 
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_delete_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:background="?selectableItemBackground"
+                android:src="@drawable/ic_baseline_delete_forever_24"
+                app:layout_constraintBottom_toTopOf="@+id/tv_content_item_comment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

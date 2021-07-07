@@ -16,6 +16,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import kr.hs.dgsw.domain.usecase.comment.DeleteCommentUseCase
 import kr.hs.dgsw.domain.usecase.comment.GetAllCommentUseCase
 import kr.hs.dgsw.domain.usecase.comment.PostCommentUseCase
 import kr.hs.dgsw.trust.R
@@ -38,12 +39,15 @@ class CommentFragment : DialogFragment() {
     @Inject
     lateinit var postCommentUseCase: PostCommentUseCase
 
+    @Inject
+    lateinit var deleteCommentUseCase: DeleteCommentUseCase
+
     private lateinit var viewModel: CommentViewModel
     private lateinit var motionLayout: MotionLayout
     private lateinit var binding: FragmentCommentBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<String>
     private val recyclerAdapter: CommentAdapter by lazy { CommentAdapter() }
-    private val recyclerImageAdapter: CommentPostImageAdapter by lazy { CommentPostImageAdapter(viewModel) }
+    private val recyclerImageAdapter: CommentPostImageAdapter by lazy { CommentPostImageAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +65,7 @@ class CommentFragment : DialogFragment() {
         viewModel =
             ViewModelProvider(
             this,
-            CommentViewModelFactory(getAllCommentUseCase, postCommentUseCase))[CommentViewModel::class.java]
+            CommentViewModelFactory(getAllCommentUseCase, postCommentUseCase, deleteCommentUseCase))[CommentViewModel::class.java]
         binding.vm = viewModel
 
         viewModel.postId.value = requireArguments().getInt("postId")
@@ -90,6 +94,10 @@ class CommentFragment : DialogFragment() {
         rvCommentPostImageComment.addItemDecoration(deco)
 
         rvCommentListComment.adapter = recyclerAdapter
+
+        recyclerAdapter.deleteComment.observe(viewLifecycleOwner) {
+            viewModel.deleteComment(it)
+        }
 
         etCommentPostComment.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {

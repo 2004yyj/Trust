@@ -1,18 +1,14 @@
 package kr.hs.dgsw.trust.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
@@ -48,18 +44,13 @@ class HomeFragment : Fragment() {
 
     private val recyclerAdapter: PostAdapter by lazy { PostAdapter(postLikedUseCase, deleteLikedUseCase) }
     private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
-    private val toolbar: Toolbar by lazy { binding.toolbarHome }
     private val swipeRefreshLayout: SwipeRefreshLayout by lazy { binding.swipeRefreshLayoutHome }
-
-    private val navController: NavController by lazy {
-        findNavController()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        Log.d("HomeFragment", "onCreateView: ")
         val application = requireActivity().application
         (application as MyDaggerApplication).daggerComponent.inject(this)
 
@@ -76,15 +67,6 @@ class HomeFragment : Fragment() {
         init()
         observe()
         setPost()
-
-        val appbarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment,
-                R.id.chatFragment,
-                R.id.userInfoFragment
-            ), null
-        )
-        NavigationUI.setupWithNavController(toolbar, navController, appbarConfiguration)
     }
 
     private fun init() {

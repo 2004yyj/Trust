@@ -200,36 +200,10 @@
                         android:text="@string/comment"
                         android:textAlignment="textStart"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/view4"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/view3"
                         app:layout_constraintTop_toBottomOf="@id/view3"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/view4"
-                        android:layout_width="1dp"
-                        android:layout_height="24dp"
-                        android:background="@color/grey"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/btn_comment_post"
-                        app:layout_constraintStart_toEndOf="@id/btn_chatting_post"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_chatting_post"
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:background="?selectableItemBackground"
-                        android:drawableStart="@drawable/ic_chat"
-                        android:drawablePadding="10dp"
-                        android:text="@string/chatting"
-                        android:textAlignment="textStart"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.542"
-                        app:layout_constraintStart_toEndOf="@id/view4"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

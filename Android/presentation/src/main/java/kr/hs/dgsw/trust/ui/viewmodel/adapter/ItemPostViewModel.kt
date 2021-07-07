@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.ui.viewmodel.adapter
 
+import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -36,6 +37,7 @@ class ItemPostViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.d("TAG", "postLiked: ${it.size}")
                     likedSize.set(it.size)
                     likedString.set("좋아요 ${likedSize.get()}명")
                 }, {
@@ -51,6 +53,7 @@ class ItemPostViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.d("TAG", "deleteLiked: ${it.size}")
                     likedSize.set(it.size)
                     likedString.set("좋아요 ${likedSize.get()}명")
                 }, {
