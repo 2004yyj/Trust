@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="kr.hs.dgsw.trust">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,7 +15,7 @@
         android:theme="@style/Theme.Trust"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.activity.SplashActivity"
-            android:theme="">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
