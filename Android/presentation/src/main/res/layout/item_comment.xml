@@ -92,7 +92,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:orientation="horizontal"
                     android:visibility="@{comment.imageList.size() > 0 ? View.VISIBLE : View.GONE}"
-                    tools:listitem="@layout/item_post_image" />
+                    tools:listitem="@layout/item_image" />
 
 
             </androidx.cardview.widget.CardView>

@@ -50,14 +50,26 @@ class PostDataSource @Inject constructor(
             content: String?,
             deleteFileList: List<String>?,
             updateFileList: List<MultipartBody.Part>?
-    ) : Single<Post> {
-        return remote.updatePost(postId, isAnonymous, content, deleteFileList, updateFileList).map { it.toEntity() }
+    ) : Single<List<Post>> {
+        return remote.updatePost(postId, isAnonymous, content, deleteFileList, updateFileList).map { postResponseList ->
+            val postList = ArrayList<Post>()
+            postResponseList.forEach {
+                postList.add(it.toEntity())
+            }
+            postList
+        }
     }
 
     fun deletePost(
             postId: Int,
-    ) : Single<Post> {
-        return remote.deletePost(postId).map { it.toEntity() }
+    ) : Single<List<Post>> {
+        return remote.deletePost(postId).map { postResponseList ->
+            val postList = ArrayList<Post>()
+            postResponseList.forEach {
+                postList.add(it.toEntity())
+            }
+            postList
+        }
     }
 
 }

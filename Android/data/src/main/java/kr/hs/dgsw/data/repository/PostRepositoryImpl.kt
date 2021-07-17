@@ -24,11 +24,11 @@ class PostRepositoryImpl @Inject constructor(private val postDataSource: PostDat
         return postDataSource.postPost(isAnonymous, content, imageList)
     }
 
-    override fun updatePost(postId: Int, isAnonymous: Boolean?, content: String?, deleteFileList: List<String>?, updateFileList: List<MultipartBody.Part>?): Single<Post> {
+    override fun updatePost(postId: Int, isAnonymous: Boolean?, content: String?, deleteFileList: List<String>?, updateFileList: List<MultipartBody.Part>?): Single<List<Post>> {
         return postDataSource.updatePost(postId, isAnonymous, content, deleteFileList, updateFileList)
     }
 
-    override fun deletePost(postId: Int): Single<Post> {
+    override fun deletePost(postId: Int): Single<List<Post>> {
         return postDataSource.deletePost(postId)
     }
 

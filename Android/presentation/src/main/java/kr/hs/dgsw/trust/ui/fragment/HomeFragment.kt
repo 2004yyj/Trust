@@ -9,23 +9,30 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
 import kr.hs.dgsw.domain.usecase.liked.PostLikedUseCase
+import kr.hs.dgsw.domain.usecase.post.DeletePostUseCase
 import kr.hs.dgsw.domain.usecase.post.GetAllPostUseCase
+import kr.hs.dgsw.domain.usecase.post.UpdatePostUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
 import kr.hs.dgsw.trust.ui.adapter.PostAdapter
 import kr.hs.dgsw.trust.ui.dialog.CommentFragment.Companion.newInstance
-import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
-import kr.hs.dgsw.trust.ui.viewmodel.factory.ItemPostViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.factory.PostViewModelFactory
 import kr.hs.dgsw.trust.ui.viewmodel.fragment.PostViewModel
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
+
+    private val navController: NavController by lazy {
+        findNavController()
+    }
 
     @Inject
     lateinit var getAllPostUseCase: GetAllPostUseCase
@@ -36,15 +43,21 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var deleteLikedUseCase: DeleteLikedUseCase
 
-    private lateinit var viewModel: PostViewModel
+    @Inject
+    lateinit var deletePostUseCase: DeletePostUseCase
 
-    private lateinit var recyclerViewModel: ItemPostViewModel
+    @Inject
+    lateinit var updatePostUseCase: UpdatePostUseCase
+
+    private lateinit var viewModel: PostViewModel
 
     private lateinit var binding: FragmentHomeBinding
 
     private val recyclerAdapter: PostAdapter by lazy { PostAdapter(postLikedUseCase, deleteLikedUseCase) }
-    private val recyclerView: RecyclerView by lazy { binding.rvPostHome }
-    private val swipeRefreshLayout: SwipeRefreshLayout by lazy { binding.swipeRefreshLayoutHome }
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var fabAdd: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,8 +67,7 @@ class HomeFragment : Fragment() {
         val application = requireActivity().application
         (application as MyDaggerApplication).daggerComponent.inject(this)
 
-        viewModel = ViewModelProvider(this, PostViewModelFactory(getAllPostUseCase))[PostViewModel::class.java]
-        recyclerViewModel = ViewModelProvider(this, ItemPostViewModelFactory(postLikedUseCase, deleteLikedUseCase))[ItemPostViewModel::class.java]
+        viewModel = ViewModelProvider(this, PostViewModelFactory(getAllPostUseCase, updatePostUseCase, deletePostUseCase))[PostViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.vm = viewModel
         return binding.root
@@ -70,6 +82,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun init() {
+        recyclerView = binding.rvPostHome
+        swipeRefreshLayout = binding.swipeRefreshLayoutHome
+        fabAdd = binding.fabAddHome
+
         recyclerView.adapter = recyclerAdapter
     }
 
@@ -78,15 +94,28 @@ class HomeFragment : Fragment() {
             setPost()
             swipeRefreshLayout.isRefreshing = false
         }
-        recyclerAdapter.onClick.observe(viewLifecycleOwner) {
-            commentDialogOpen(it)
+        fabAdd.setOnClickListener {
+            navigateHomeToAdd()
         }
+
         viewModel.postList.observe(viewLifecycleOwner) {
             recyclerAdapter.submitList(it)
         }
         viewModel.isFailure.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
+
+        recyclerAdapter.onClick.observe(viewLifecycleOwner) {
+            commentDialogOpen(it)
+        }
+        recyclerAdapter.onDeleteClick.observe(viewLifecycleOwner) {
+            viewModel.deletePost(it)
+        }
+
+    }
+
+    private fun navigateHomeToAdd() {
+        navController.navigate(R.id.action_homeFragment_to_addFragment)
     }
 
     private fun setPost() {

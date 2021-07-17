@@ -44,7 +44,7 @@ class PostRemote @Inject constructor(
             content: String?,
             deleteFileList: List<String>?,
             updateFileList: List<MultipartBody.Part>?
-    ): Single<PostResponse> {
+    ): Single<List<PostResponse>> {
         val textType = "text/plain".toMediaType()
         val contentBody: RequestBody? = content?.toRequestBody(textType)
         val isAnonymousBody = isAnonymous.toString().toRequestBody()
@@ -54,7 +54,7 @@ class PostRemote @Inject constructor(
 
     fun deletePost(
             postId: Int,
-    ): Single<PostResponse> {
+    ): Single<List<PostResponse>> {
 
         return service.deletePost(postId).map(getResponse())
     }

@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.ui.util
 
+import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -18,6 +19,11 @@ fun TextView.setTime(time: Long) {
 @BindingAdapter("setImage")
 fun ImageView.setImage(imagePath: String) {
     Glide.with(this.context).load(ADDR_IMG+imagePath).centerCrop().into(this)
+}
+
+@BindingAdapter("setImage")
+fun ImageView.setImage(imageUri: Uri) {
+    Glide.with(this.context).load(imageUri).centerCrop().into(this)
 }
 
 fun MotionLayout.setOnTransitionCompletedListener(listener: (MotionLayout?, Int) -> Unit) {

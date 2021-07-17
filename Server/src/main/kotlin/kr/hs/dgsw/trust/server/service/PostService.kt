@@ -68,6 +68,17 @@ class PostService(
         val postObject = postDTO.toJsonObject()
         val username = (tokenProvider.getAuthentication(token).principal as User).username
         postObject.put("account", findAccount(postDTO.username, postDTO.isAnonymous).toJsonObject())
+
+
+        postObject.put(
+            "admin",
+            if (postDTO.isAnonymous) {
+                encoder.matches(username, postDTO.username)
+            } else {
+                username == postDTO.username
+            }
+        )
+
         val likedList = findLikedList(postDTO.id)
         var isChecked = false
         likedList.forEach {
@@ -118,6 +129,7 @@ class PostService(
             post.createdAt = Timestamp(System.currentTimeMillis())
             post.content = content
             post.imageList = JSONArray(imagePathList).toString()
+
             return getPostToObject(postRepository.save(post).toDTO(), token)
         } else {
             throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")

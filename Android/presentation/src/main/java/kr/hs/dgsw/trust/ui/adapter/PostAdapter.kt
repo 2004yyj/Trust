@@ -2,6 +2,7 @@ package kr.hs.dgsw.trust.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -18,15 +19,26 @@ import kr.hs.dgsw.trust.ui.viewmodel.adapter.ItemPostViewModel
 
 class PostAdapter(
     private val postLikedUseCase: PostLikedUseCase,
-    private val deleteLikedUseCase: DeleteLikedUseCase
+    private val deleteLikedUseCase: DeleteLikedUseCase,
 ) : ListAdapter<Post, PostAdapter.PostViewHolder>(diffUtil) {
 
     val onClick = MutableLiveData<Int>()
+
+    val onDeleteClick = MutableLiveData<Int>()
+    val onUpdateClick = MutableLiveData<Int>()
 
     inner class PostViewHolder(
         private val binding: ItemPostBinding,
         private val viewModel: ItemPostViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        private val postImageAdapter = ImageAdapter()
+
+        init {
+            val pagerSnapHelper = PagerSnapHelper()
+            pagerSnapHelper.attachToRecyclerView(binding.rvContentImage)
+            binding.rvContentImage.adapter = postImageAdapter
+        }
 
         fun bind(post: Post) = with(viewModel) {
 
@@ -39,18 +51,12 @@ class PostAdapter(
             profileImagePath.set(imagePath)
             likedSize.set(post.likedSize)
             likedString.set("좋아요 ${post.likedSize}명")
+            admin.set(post.admin)
             imagePathList.addAll(post.imageList)
 
             with(binding) {
                 vm = viewModel
-
-                val postImageAdapter = PostImageAdapter()
-
-                rvContentImage.adapter = postImageAdapter
                 postImageAdapter.submitList(post.imageList)
-
-                val pagerSnapHelper = PagerSnapHelper()
-                pagerSnapHelper.attachToRecyclerView(rvContentImage)
 
                 btnCommentPost.setOnClickListener { onClick.postValue(post.id) }
 
@@ -62,6 +68,23 @@ class PostAdapter(
                         viewModel.deleteLiked(post.id)
                     }
                 }
+
+                btnMenuPost.setOnClickListener {
+                    val popupMenu = PopupMenu(binding.root.context, btnMenuPost)
+                    popupMenu.inflate(R.menu.admin)
+                    popupMenu.setOnMenuItemClickListener {
+                        when(it.itemId) {
+                            R.id.update_post -> {
+                                onUpdateClick.postValue(post.id)
+                            }
+                            R.id.delete_post -> {
+                                onDeleteClick.postValue(post.id)
+                            }
+                        }
+                        return@setOnMenuItemClickListener true
+                    }
+                    popupMenu.show()
+                }
             }
         }
     }
@@ -69,11 +92,11 @@ class PostAdapter(
     companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Post>() {
             override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem == newItem
+                return false
             }
 
             override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
-                return oldItem == newItem
+                return false
             }
 
         }

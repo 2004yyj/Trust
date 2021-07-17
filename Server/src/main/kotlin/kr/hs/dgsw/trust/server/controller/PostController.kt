@@ -56,8 +56,10 @@ class PostController(
         isAnonymous: Boolean,
         imageList: ArrayList<MultipartFile>?
     ): String {
+
         val account = accountService.getAccount(token)
         val imagePathList = ArrayList<String>()
+        println(imageList?.size)
         imageList?.forEach {
             val file = fileService.saveFile(it)
             imagePathList.add(file)
@@ -81,12 +83,13 @@ class PostController(
         updateFileList: ArrayList<MultipartFile>?
     ): String {
         val pathList = fileService.updatePostFile(postId, deleteFileList, updateFileList)
-        val post = postService.update(token, postId, content, pathList)
+        postService.update(token, postId, content, pathList)
 
+        val postList = postService.findAll(token)
         return JsonResponse(
             "200",
-            "글을 성공적으로 업데이트 하였습니다.",
-            post
+            "글을 성공적으로 삭제했습니다.",
+            postList,
         ).returnJsonObject()
     }
 
@@ -106,10 +109,12 @@ class PostController(
             }
         }
 
+        val postList = postService.findAll(token)
+
         return JsonResponse(
             "200",
-            "글을 성공적으로 삭제 하였습니다.",
-            null
+            "글을 성공적으로 삭제했습니다.",
+            postList,
         ).returnJsonObject()
     }
 

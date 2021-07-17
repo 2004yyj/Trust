@@ -3,6 +3,7 @@ package kr.hs.dgsw.trust.ui.viewmodel.adapter
 import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,10 +11,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
 import kr.hs.dgsw.domain.usecase.liked.PostLikedUseCase
+import kr.hs.dgsw.trust.ui.util.SingleLiveEvent
 
 class ItemPostViewModel(
-        private val postLikedUseCase: PostLikedUseCase,
-        private val deleteLikedUseCase: DeleteLikedUseCase
+    private val postLikedUseCase: PostLikedUseCase,
+    private val deleteLikedUseCase: DeleteLikedUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -28,9 +30,12 @@ class ItemPostViewModel(
     val likedString = ObservableField<String>()
 
     val imagePathList = ObservableArrayList<String>()
+    val admin = ObservableField<Boolean>()
 
     private val _isFailure = MutableLiveData<String>()
-    val isFailure = _isFailure
+    val isFailure: LiveData<String> = _isFailure
+
+    val isDeleteSuccess = SingleLiveEvent<Unit>()
 
     fun postLiked(postId: Int) {
         postLikedUseCase.buildUseCaseObservable(PostLikedUseCase.Params(postId))

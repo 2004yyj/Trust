@@ -24,10 +24,10 @@ interface PostRepository {
             content: String?,
             deleteFileList: List<String>?,
             updateFileList: List<MultipartBody.Part>?
-    ) : Single<Post>
+    ) : Single<List<Post>>
 
     fun deletePost(
             postId: Int,
-    ) : Single<Post>
+    ) : Single<List<Post>>
 
 }

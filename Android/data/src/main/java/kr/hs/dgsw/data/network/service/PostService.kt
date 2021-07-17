@@ -34,10 +34,10 @@ interface PostService {
             @Part("content") content: RequestBody?,
             @Part("deleteFileList") deleteFileList: List<String>?,
             @Part updateImageList: List<MultipartBody.Part>?
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
 
     @DELETE("/post/delete")
     fun deletePost(
             @Query("postId") postId: Int,
-    ) : Single<Response<kr.hs.dgsw.data.util.Response<PostResponse>>>
+    ) : Single<Response<kr.hs.dgsw.data.util.Response<List<PostResponse>>>>
 }

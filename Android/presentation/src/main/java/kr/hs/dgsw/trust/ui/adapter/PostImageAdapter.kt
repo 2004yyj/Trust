@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.ui.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,11 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kr.hs.dgsw.trust.databinding.ItemPostImageBinding
 
-class PostImageAdapter : ListAdapter<String, PostImageAdapter.ViewHolder>(diffUtil) {
+class PostImageAdapter : ListAdapter<Uri, PostImageAdapter.ViewHolder>(diffUtil) {
     inner class ViewHolder(
         private val binding: ItemPostImageBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(imagePath: String) {
+        fun bind(imagePath: Uri) {
             binding.imagePath = imagePath
         }
     }
@@ -26,13 +27,13 @@ class PostImageAdapter : ListAdapter<String, PostImageAdapter.ViewHolder>(diffUt
     }
 
     companion object {
-        private val diffUtil = object : DiffUtil.ItemCallback<String>() {
-            override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-                return oldItem == newItem
+        private val diffUtil = object : DiffUtil.ItemCallback<Uri>() {
+            override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
+                return false
             }
 
-            override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-                return oldItem == newItem
+            override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
+                return false
             }
         }
     }

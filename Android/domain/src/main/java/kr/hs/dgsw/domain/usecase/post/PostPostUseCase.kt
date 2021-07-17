@@ -1,5 +1,6 @@
 package kr.hs.dgsw.domain.usecase.post
 
+import android.util.Log
 import io.reactivex.Single
 import kr.hs.dgsw.domain.base.ParamsUseCase
 import kr.hs.dgsw.domain.entity.Post
@@ -12,6 +13,8 @@ class PostPostUseCase @Inject constructor(
 ): ParamsUseCase<PostPostUseCase.Params, Single<Post>>() {
 
     override fun buildUseCaseObservable(params: Params): Single<Post> {
+        Log.d("PostPostUseCase", "buildUseCaseObservable: ${params.content}")
+
         return repository.postPost(params.isAnonymous, params.content, params.imageList)
     }
 

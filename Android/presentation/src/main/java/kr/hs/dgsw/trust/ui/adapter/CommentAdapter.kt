@@ -33,7 +33,7 @@ class CommentAdapter : ListAdapter<Comment, CommentAdapter.ViewHolder>(DiffUtil)
 
             binding.comment = comment
 
-            val postImageAdapter = PostImageAdapter()
+            val postImageAdapter = ImageAdapter()
 
             if (rvImageListComment.adapter == null) {
                 rvImageListComment.adapter = postImageAdapter

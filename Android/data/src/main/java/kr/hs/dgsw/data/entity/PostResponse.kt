@@ -8,5 +8,6 @@ data class PostResponse(
     val imageList: List<String>,
     val account: AccountResponse,
     val isChecked: Boolean,
-    val likedSize: Int
+    val likedSize: Int,
+    val admin: Boolean
 )

@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class DeletePostUseCase @Inject constructor(
         private val repository: PostRepository
-): ParamsUseCase<DeletePostUseCase.Params, Single<Post>>() {
+): ParamsUseCase<DeletePostUseCase.Params, Single<List<Post>>>() {
 
-    override fun buildUseCaseObservable(params: Params): Single<Post> {
+    override fun buildUseCaseObservable(params: Params): Single<List<Post>> {
         return repository.deletePost(params.postId)
     }
 

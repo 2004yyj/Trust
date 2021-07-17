@@ -24,6 +24,17 @@
             android:paddingVertical="15dp"
             android:clipToPadding="false">
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_menu_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.admin ? View.VISIBLE : View.GONE}"
+                android:src="@drawable/ic_menu_three_dots"
+                android:background="?selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_post"
                 android:layout_width="wrap_content"
@@ -37,12 +48,12 @@
                     android:id="@+id/iv_profileImage_post"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:setImage="@{vm.profileImagePath}"
                     android:background="?selectableItemBackground"
-                    tools:background="@color/grey"
                     android:contentDescription="@string/profile_image"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setImage="@{vm.profileImagePath}"
+                    tools:background="@color/grey" />
 
             </androidx.cardview.widget.CardView>
 
@@ -52,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView_post"
                 app:layout_constraintStart_toEndOf="@+id/cardView_post"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -74,6 +86,7 @@
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -89,31 +102,31 @@
                     android:layout_marginTop="15dp"
                     android:text="@{vm.content}"
                     android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="내용내용내용내용내용내용내용내용내용내용내용내용내용" />
 
                 <androidx.cardview.widget.CardView
-                    app:cardCornerRadius="5dp"
-                    android:elevation="0dp"
                     android:id="@+id/cv_content_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_content_post" >
+                    app:layout_constraintTop_toBottomOf="@id/tv_content_post">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_content_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        tools:listitem="@layout/item_post_image"
                         android:visibility="@{vm.imagePathList.size() > 0 ? View.VISIBLE : View.GONE}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_image" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -122,35 +135,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cv_content_image"
-                    app:layout_constraintHorizontal_bias="0">
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_content_image">
 
                     <TextView
                         android:id="@+id/tv_liked_size_post"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{vm.likedString}"
                         android:textSize="12sp"
                         android:visibility="@{vm.likedSize > 0 ? View.VISIBLE : View.GONE}"
-                        android:text="@{vm.likedString}"
-                        tools:text="좋아요 3개"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintHorizontal_bias="0"/>
+                        tools:text="좋아요 3개" />
 
                     <View
                         android:id="@+id/view"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginTop="5dp"
-                        app:layout_goneMarginTop="0dp"
                         android:background="@color/grey"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_liked_size_post"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_goneMarginTop="0dp" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -159,12 +172,12 @@
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/constraintLayout"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/constraintLayout">
 
 
                     <androidx.appcompat.widget.AppCompatCheckBox
@@ -174,11 +187,11 @@
                         android:button="@drawable/btn_like"
                         android:paddingHorizontal="5dp"
                         android:text="@string/like"
-                        tools:checked="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/view3"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:checked="true" />
 
                     <View
                         android:id="@+id/view3"

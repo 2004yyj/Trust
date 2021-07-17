@@ -4,14 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.net.Uri"/>
         <variable
             name="imagePath"
-            type="String" />
+            type="Uri" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="20dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_baseline_cancel_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_imageList_item_post"

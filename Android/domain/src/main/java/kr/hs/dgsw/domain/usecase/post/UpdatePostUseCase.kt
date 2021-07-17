@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class UpdatePostUseCase @Inject constructor(
         private val repository: PostRepository
-): ParamsUseCase<UpdatePostUseCase.Params, Single<Post>>() {
-    override fun buildUseCaseObservable(params: Params): Single<Post> {
+): ParamsUseCase<UpdatePostUseCase.Params, Single<List<Post>>>() {
+    override fun buildUseCaseObservable(params: Params): Single<List<Post>> {
         return repository.updatePost(
                 params.postId,
                 params.isAnonymous,

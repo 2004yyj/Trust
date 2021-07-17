@@ -12,7 +12,8 @@ fun PostResponse.toEntity(): Post {
             this.imageList,
             this.account.toEntity(),
             this.isChecked,
-            this.likedSize
+            this.likedSize,
+            this.admin
     )
 }
 
@@ -25,6 +26,7 @@ fun Post.toResponse(): PostResponse {
             this.imageList,
             this.account.toResponse(),
             this.isChecked,
-            this.likedSize
+            this.likedSize,
+            this.admin
     )
 }

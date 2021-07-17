@@ -12,6 +12,7 @@ import kr.hs.dgsw.trust.di.module.RepositoryModule
 import kr.hs.dgsw.trust.ui.activity.IntroActivity
 import kr.hs.dgsw.trust.ui.activity.SplashActivity
 import kr.hs.dgsw.trust.ui.dialog.CommentFragment
+import kr.hs.dgsw.trust.ui.fragment.AddFragment
 import kr.hs.dgsw.trust.ui.fragment.HomeFragment
 import kr.hs.dgsw.trust.ui.fragment.LoginFragment
 import kr.hs.dgsw.trust.ui.fragment.SignUpUserInfoFragment
@@ -32,6 +33,7 @@ interface MyComponent : AndroidInjector<MyDaggerApplication> {
     fun inject(homeFragment: HomeFragment)
     fun inject(signUpUserInfoFragment: SignUpUserInfoFragment)
     fun inject(splashActivity: SplashActivity)
+    fun inject(addFragment: AddFragment)
 
     @Component.Factory
     interface Factory {
