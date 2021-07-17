@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -22,10 +21,48 @@ class PostAdapter(
     private val deleteLikedUseCase: DeleteLikedUseCase,
 ) : ListAdapter<Post, PostAdapter.PostViewHolder>(diffUtil) {
 
-    val onClick = MutableLiveData<Int>()
+    private lateinit var onClickPostListener: OnClickPostListener
+    private lateinit var onClickDeletePostListener: OnClickDeletePostListener
+    private lateinit var onClickUpdatePostListener: OnClickUpdatePostListener
 
-    val onDeleteClick = MutableLiveData<Int>()
-    val onUpdateClick = MutableLiveData<Int>()
+    interface OnClickPostListener {
+        fun onClick(id: Int)
+    }
+
+    interface OnClickDeletePostListener {
+        fun onClick(id: Int)
+    }
+
+    interface OnClickUpdatePostListener {
+        fun onClick(id: Int)
+    }
+
+    fun setOnClickPostListener(listener: (Int) -> Unit) {
+        onClickPostListener = object : OnClickPostListener {
+            override fun onClick(id: Int) {
+                listener(id)
+            }
+
+        }
+    }
+
+    fun setOnClickDeletePostListener(listener: (Int) -> Unit) {
+        onClickDeletePostListener = object : OnClickDeletePostListener {
+            override fun onClick(id: Int) {
+                listener(id)
+            }
+
+        }
+    }
+
+    fun setOnClickUpdatePostListener(listener: (Int) -> Unit) {
+        onClickUpdatePostListener = object : OnClickUpdatePostListener {
+            override fun onClick(id: Int) {
+                listener(id)
+            }
+
+        }
+    }
 
     inner class PostViewHolder(
         private val binding: ItemPostBinding,
@@ -58,7 +95,7 @@ class PostAdapter(
                 vm = viewModel
                 postImageAdapter.submitList(post.imageList)
 
-                btnCommentPost.setOnClickListener { onClick.postValue(post.id) }
+                btnCommentPost.setOnClickListener { onClickPostListener.onClick(post.id) }
 
                 chkLikePost.isChecked = post.isChecked
                 chkLikePost.setOnCheckedChangeListener { _, isChecked ->
@@ -75,10 +112,10 @@ class PostAdapter(
                     popupMenu.setOnMenuItemClickListener {
                         when(it.itemId) {
                             R.id.update_post -> {
-                                onUpdateClick.postValue(post.id)
+                                onClickUpdatePostListener.onClick(post.id)
                             }
                             R.id.delete_post -> {
-                                onDeleteClick.postValue(post.id)
+                                onClickDeletePostListener.onClick(post.id)
                             }
                         }
                         return@setOnMenuItemClickListener true

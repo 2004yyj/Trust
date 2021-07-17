@@ -141,6 +141,7 @@ class PostService(
         token: String,
         postId: Int,
         content: String?,
+        isAnonymous: Boolean,
         pathList: ArrayList<String>?
     ): JSONObject {
 
@@ -163,6 +164,14 @@ class PostService(
                 if (validUsername) {
                     postVO.content = if (!content.isNullOrEmpty()) content else postVO.content
                     postVO.imageList = JSONArray(pathList).toString()
+                    if (isAnonymous && postVO.isAnonymous == false) {
+                        postVO.username = encoder.encode(username)
+                    } else if (!isAnonymous && postVO.isAnonymous == true) {
+                        postVO.username = username
+                    }
+                    postVO.isAnonymous = isAnonymous
+
+
                     postRepository.save(postVO)
                     return getPostToObject(postVO.toDTO(), token)
                 } else {

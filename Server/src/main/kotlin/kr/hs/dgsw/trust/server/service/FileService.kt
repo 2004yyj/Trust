@@ -46,9 +46,11 @@ class FileService(
                 i++
             }
             deleteFileList?.forEach {
-                if (isFileExist(it)) {
-                    deleteFileByName(it)
-                    pathList.remove(it)
+                val replaced = it.replace("\"", "")
+
+                if (isFileExist(replaced)) {
+                    deleteFileByName(replaced)
+                    pathList.remove(replaced)
                 }
             }
             updateFileList?.forEach {
@@ -59,6 +61,7 @@ class FileService(
             }
             return pathList
         } catch (e: Exception) {
+            e.printStackTrace()
             throw NotFoundException("글을 찾을 수 없습니다.")
         }
     }

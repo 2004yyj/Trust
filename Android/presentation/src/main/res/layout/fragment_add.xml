@@ -91,8 +91,8 @@
                     android:layout_marginBottom="10dp" />
 
                 <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_unknown_add"
-                    android:checked="@={vm.isAnonymous}"
+                    android:id="@+id/switch_anonymous_add"
+                    android:checked="@={vm.isAnonymous()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp" />
@@ -110,9 +110,7 @@
             app:isLoading="@{vm.isLoading()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:onClick="@{() -> vm.postPost()}"
-            app:text="@{@string/add}" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

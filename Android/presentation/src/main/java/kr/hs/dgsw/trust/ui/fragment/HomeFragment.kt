@@ -1,7 +1,6 @@
 package kr.hs.dgsw.trust.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import kr.hs.dgsw.domain.usecase.liked.DeleteLikedUseCase
 import kr.hs.dgsw.domain.usecase.liked.PostLikedUseCase
 import kr.hs.dgsw.domain.usecase.post.DeletePostUseCase
 import kr.hs.dgsw.domain.usecase.post.GetAllPostUseCase
-import kr.hs.dgsw.domain.usecase.post.UpdatePostUseCase
+import kr.hs.dgsw.domain.usecase.post.GetPostUseCase
 import kr.hs.dgsw.trust.R
 import kr.hs.dgsw.trust.databinding.FragmentHomeBinding
 import kr.hs.dgsw.trust.di.application.MyDaggerApplication
@@ -47,13 +46,13 @@ class HomeFragment : Fragment() {
     lateinit var deletePostUseCase: DeletePostUseCase
 
     @Inject
-    lateinit var updatePostUseCase: UpdatePostUseCase
+    lateinit var getPostUseCase: GetPostUseCase
 
     private lateinit var viewModel: PostViewModel
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val recyclerAdapter: PostAdapter by lazy { PostAdapter(postLikedUseCase, deleteLikedUseCase) }
+    private lateinit var postAdapter: PostAdapter
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -63,11 +62,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("HomeFragment", "onCreateView: ")
         val application = requireActivity().application
         (application as MyDaggerApplication).daggerComponent.inject(this)
-
-        viewModel = ViewModelProvider(this, PostViewModelFactory(getAllPostUseCase, updatePostUseCase, deletePostUseCase))[PostViewModel::class.java]
+        viewModel = ViewModelProvider(this, PostViewModelFactory(getAllPostUseCase, deletePostUseCase, getPostUseCase))[PostViewModel::class.java]
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.vm = viewModel
         return binding.root
@@ -86,7 +83,8 @@ class HomeFragment : Fragment() {
         swipeRefreshLayout = binding.swipeRefreshLayoutHome
         fabAdd = binding.fabAddHome
 
-        recyclerView.adapter = recyclerAdapter
+        postAdapter = PostAdapter(postLikedUseCase, deleteLikedUseCase)
+        recyclerView.adapter = postAdapter
     }
 
     private fun observe() {
@@ -95,27 +93,41 @@ class HomeFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         }
         fabAdd.setOnClickListener {
-            navigateHomeToAdd()
+            navigateHomeToAdd(null)
         }
 
         viewModel.postList.observe(viewLifecycleOwner) {
-            recyclerAdapter.submitList(it)
+            postAdapter.submitList(it)
         }
         viewModel.isFailure.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
 
-        recyclerAdapter.onClick.observe(viewLifecycleOwner) {
+        postAdapter.setOnClickPostListener {
             commentDialogOpen(it)
         }
-        recyclerAdapter.onDeleteClick.observe(viewLifecycleOwner) {
+        postAdapter.setOnClickDeletePostListener {
             viewModel.deletePost(it)
+        }
+        postAdapter.setOnClickUpdatePostListener {
+            viewModel.getPost(it)
+        }
+
+        viewModel.post.observe(viewLifecycleOwner) {
+            val bundle = Bundle()
+            bundle.putInt("postId", it.id)
+            bundle.putBoolean("isAnonymous", it.isAnonymous)
+            bundle.putString("content", it.content)
+            bundle.putStringArrayList("defaultImageList", it.imageList as ArrayList<String>)
+            navigateHomeToAdd(bundle)
+
+            viewModelStore.clear()
         }
 
     }
 
-    private fun navigateHomeToAdd() {
-        navController.navigate(R.id.action_homeFragment_to_addFragment)
+    private fun navigateHomeToAdd(bundle: Bundle?) {
+        navController.navigate(R.id.action_homeFragment_to_addFragment, bundle)
     }
 
     private fun setPost() {

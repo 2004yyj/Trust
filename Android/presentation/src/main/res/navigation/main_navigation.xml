@@ -16,6 +16,6 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.AddFragment"
-        android:label="fragment_add"
+        android:label="글 추가/수정"
         tools:layout="@layout/fragment_add" />
 </navigation>

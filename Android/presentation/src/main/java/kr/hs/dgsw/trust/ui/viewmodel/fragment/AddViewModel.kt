@@ -1,5 +1,6 @@
 package kr.hs.dgsw.trust.ui.viewmodel.fragment
 
+import android.net.Uri
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
@@ -9,11 +10,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kr.hs.dgsw.domain.usecase.post.PostPostUseCase
+import kr.hs.dgsw.domain.usecase.post.UpdatePostUseCase
 import kr.hs.dgsw.trust.ui.util.SingleLiveEvent
 import okhttp3.MultipartBody
 
 class AddViewModel(
-    private val postPostUseCase: PostPostUseCase
+    private val postPostUseCase: PostPostUseCase,
+    private val updatePostUseCase: UpdatePostUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -21,7 +24,7 @@ class AddViewModel(
     val content = ObservableField<String>()
     val isAnonymous = ObservableField(false)
 
-    private val imageList = ArrayList<MultipartBody.Part>()
+    private val imageList = ArrayList<Uri>()
 
     val isLoading = ObservableField<Boolean>()
 
@@ -31,12 +34,12 @@ class AddViewModel(
     private val _isSuccess = SingleLiveEvent<Unit>()
     val isSuccess: LiveData<Unit> = _isSuccess
 
-    fun addImageList(list: List<MultipartBody.Part>) {
+    fun addImageList(list: List<Uri>) {
         imageList.clear()
         imageList.addAll(list)
     }
 
-    fun postPost() {
+    fun postPost(multipartList: List<MultipartBody.Part>?) {
         Log.d("AddViewModel", "postPost: ")
 
         isLoading.set(true)
@@ -49,7 +52,7 @@ class AddViewModel(
                 PostPostUseCase.Params(
                     contentValue,
                     isAnonymousValue,
-                    imageList
+                    multipartList
                 )
             )
                 .observeOn(AndroidSchedulers.mainThread())
@@ -66,12 +69,45 @@ class AddViewModel(
             return
         }
 
-        _isFailure.postValue("아이디 또는 비밀번호를 입력해 주세요.")
+        _isFailure.postValue("빈 칸이 없는지 확인해 주세요.")
         isLoading.set(false)
     }
 
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun updatePost(postId: Int, deleteImageList: List<String>,multipartList: List<MultipartBody.Part>?) {
+
+        val contentValue = content.get()
+        val isAnonymousValue = isAnonymous.get()!!
+
+        if (contentValue != null && contentValue.isNotBlank()) {
+            updatePostUseCase.buildUseCaseObservable(
+                UpdatePostUseCase.Params(
+                    postId,
+                    contentValue,
+                    isAnonymousValue,
+                    deleteImageList,
+                    multipartList
+                )
+            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    _isSuccess.call()
+                    isLoading.set(false)
+                }, {
+                    _isFailure.postValue(it.message)
+                    isLoading.set(false)
+                }).apply {
+                    compositeDisposable.add(this)
+                }
+            return
+        }
+
+        _isFailure.postValue("빈 칸이 없는지 확인해 주세요.")
+        isLoading.set(false)
     }
 }
