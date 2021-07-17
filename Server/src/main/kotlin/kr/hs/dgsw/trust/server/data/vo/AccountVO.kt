@@ -10,7 +10,9 @@ class AccountVO {
     @Column(name = "name_")
     var name: String? = null
     @Id
+    @Column(name = "username")
     var username: String? = null
+    @Column(name = "password")
     var password: String? = null
     @Column(name = "profile_image")
     var profileImage: String? = null

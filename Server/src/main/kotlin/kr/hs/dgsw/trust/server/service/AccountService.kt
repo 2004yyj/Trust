@@ -22,7 +22,6 @@ class AccountService(
     private val passwordEncoder: PasswordEncoder
 ) {
 
-    @Transactional(readOnly = true)
     fun signUp(
         name: String,
         username: String,
@@ -40,12 +39,12 @@ class AccountService(
             val accountVO = AccountVO().apply {
                 this.name = name
                 this.username = username
-                this.password = password
+                this.password = passwordEncoder.encode(password)
                 this.profileImage = profileImage
                 this.activated = true
                 this.authorities = setOf(authority)
             }
-            accountRepository.save(accountVO)
+            accountRepository.saveAndFlush(accountVO)
 
             val jwt = tokenGenerator(username, password, authenticationManagerBuilder, tokenProvider)
             return TokenDTO(jwt, username)
