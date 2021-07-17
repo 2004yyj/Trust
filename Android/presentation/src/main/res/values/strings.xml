@@ -23,4 +23,10 @@
     <string name="pwError">비밀번호를 입력해주세요.</string>
     <string name="input_comment">댓글을 입력하세요..</string>
     <string name="auto_login">자동 로그인</string>
+    <string name="title">제목</string>
+    <string name="unknown">익명</string>
+    <string name="content">내용</string>
+    <string name="add">추가</string>
+    <string name="rewrite">글 수정하기</string>
+    <string name="delete">글 삭제하기</string>
 </resources>
