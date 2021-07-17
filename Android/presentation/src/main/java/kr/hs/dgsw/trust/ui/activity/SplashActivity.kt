@@ -47,13 +47,6 @@ class SplashActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        isLoading.observe(this@SplashActivity) {
-            if (it) {
-
-            } else {
-
-            }
-        }
     }
 
     private fun init() {

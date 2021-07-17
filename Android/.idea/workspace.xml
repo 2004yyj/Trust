@@ -38,9 +38,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6703fe2-bf8e-4d30-85ee-7cfaa4284fbd" name="Default Changelist" comment="[Update]">
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/drawable-v24/ic_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/drawable/splash_background.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/data/vo/AccountVO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/data/vo/AccountVO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/service/AccountService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/service/AccountService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/activity/SplashActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/activity/SplashActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/drawable/ic_logo.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/values-night/themes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,6 +183,8 @@
       <recent name="kr.hs.dgsw.trust.ui.activity" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/presentation/src/main/res/drawable-v24" />
+      <recent name="$PROJECT_DIR$/presentation/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -267,13 +273,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619958988621</updated>
-    </task>
-    <task id="LOCAL-00129" summary="[Update] 그레이들 추가">
-      <created>1623227736591</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1623227736592</updated>
     </task>
     <task id="LOCAL-00130" summary="[Update] 그레이들 추가">
       <created>1623227745682</created>
@@ -611,7 +610,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626437491198</updated>
     </task>
-    <option name="localTasksCounter" value="178" />
+    <task id="LOCAL-00178" summary="Update 회원가입 오류 수정">
+      <created>1626484808812</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1626484808813</updated>
+    </task>
+    <option name="localTasksCounter" value="179" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -639,7 +645,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[Update] 예외시 에러 메시지 수정" />
     <MESSAGE value="[Update] 토큰을 이용하여 글과 좋아요 추가" />
     <MESSAGE value="[Update] 뷰 바인딩 추가" />
     <MESSAGE value="[Update] 글쓰기 기능 토큰 사용" />
@@ -664,7 +669,8 @@
     <MESSAGE value="[Update] 홈 프래그먼트 완료" />
     <MESSAGE value="[Update] 스플래쉬" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Update 회원가입 오류 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update 회원가입 오류 수정" />
   </component>
   <component name="WindowStateProjectService">
     <state x="421" y="278" key="#PSD" timestamp="1625446985502">
@@ -711,15 +717,15 @@
     <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1625454888426" />
     <state x="123" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1624432461359" />
     <state x="2395" y="-468" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620715407414" />
-    <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1625464501199">
-      <screen x="0" y="25" width="1792" height="1037" />
+    <state x="634" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626486583391">
+      <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state x="634" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620623095726" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1623492521834" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1623499569181" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1623654300098" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1625464501199" />
-    <state x="634" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1620005727351" />
+    <state x="634" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1626486583391" />
     <state x="634" y="295" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1041@0.25.1792.1041" timestamp="1623229247656" />
     <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1622687725801">
       <screen x="0" y="25" width="1792" height="1037" />
@@ -729,20 +735,20 @@
     <state x="660" y="326" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1621769999946" />
     <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1622687725801" />
     <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1620000066347" />
-    <state x="99" y="108" width="1592" height="904" key="AVDManager" timestamp="1625465436473">
+    <state x="98" y="108" width="1592" height="904" key="AVDManager" timestamp="1626484815187">
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="100" y="125" width="1592" height="838" key="AVDManager/-54.-1055.1920.1055/0.25.1792.1038@0.25.1792.1038" timestamp="1620801394323" />
     <state x="100" y="125" width="1592" height="837" key="AVDManager/0.25.1792.1035@0.25.1792.1035" timestamp="1623072021021" />
     <state x="100" y="125" width="1592" height="835" key="AVDManager/0.25.1792.1036@0.25.1792.1036" timestamp="1623657188807" />
-    <state x="99" y="108" width="1592" height="904" key="AVDManager/0.25.1792.1037@0.25.1792.1037" timestamp="1625465436473" />
+    <state x="98" y="108" width="1592" height="904" key="AVDManager/0.25.1792.1037@0.25.1792.1037" timestamp="1626484815187" />
     <state x="100" y="125" width="1592" height="837" key="AVDManager/0.25.1792.1038@0.25.1792.1038" timestamp="1623735041918" />
     <state x="484" y="300" key="AndroidCreateResourceDirectoryDialog" timestamp="1623147243544">
       <screen x="0" y="25" width="1792" height="1039" />
     </state>
     <state x="484" y="300" key="AndroidCreateResourceDirectoryDialog/0.25.1792.1039@0.25.1792.1039" timestamp="1623147243544" />
-    <state x="484" y="302" key="AndroidCreateResourceFileDialog" timestamp="1625464255712">
-      <screen x="0" y="25" width="1792" height="1037" />
+    <state x="484" y="302" key="AndroidCreateResourceFileDialog" timestamp="1626486212221">
+      <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/-54.-1055.1920.1055/0.25.1792.1040@0.25.1792.1040" timestamp="1620800711288" />
     <state x="484" y="299" key="AndroidCreateResourceFileDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620622572207" />
@@ -750,6 +756,7 @@
     <state x="484" y="301" key="AndroidCreateResourceFileDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1622545743700" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1623675679257" />
     <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1625464255712" />
+    <state x="484" y="302" key="AndroidCreateResourceFileDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1626486212221" />
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/0.25.1792.1039@0.25.1792.1039" timestamp="1623147499283" />
     <state x="484" y="303" key="AndroidCreateResourceFileDialog/0.25.1792.1040@0.25.1792.1040" timestamp="1620897483165" />
     <state x="484" y="304" key="AndroidCreateResourceFileDialog/0.25.1792.1041@0.25.1792.1041" timestamp="1623234870797" />
@@ -878,14 +885,14 @@
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="776" y="462" key="VCS.EditChangelistDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1623761935942" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1626437497994">
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1626484813677">
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="496" y="276" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1625721159924" />
     <state x="496" y="279" key="Vcs.Push.Dialog.v2/0.25.1792.1034@0.25.1792.1034" timestamp="1622601725488" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1035@0.25.1792.1035" timestamp="1623507616887" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1622531116088" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1037@0.25.1792.1037" timestamp="1626437497994" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1037@0.25.1792.1037" timestamp="1626484813677" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1038@0.25.1792.1038" timestamp="1624431554784" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1039@0.25.1792.1039" timestamp="1624090081066" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1040@0.25.1792.1040" timestamp="1620901375987" />
