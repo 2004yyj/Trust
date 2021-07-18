@@ -1,6 +1,5 @@
 package kr.hs.dgsw.trust.ui.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,9 +35,6 @@ class AddFragment : Fragment() {
         findNavController()
     }
 
-    private val imageList = ArrayList<Image>()
-    private val deleteImageList = ArrayList<String>()
-
     private lateinit var activityResultLauncher: ActivityResultLauncher<String>
 
     private lateinit var binding: FragmentAddBinding
@@ -73,7 +69,7 @@ class AddFragment : Fragment() {
     }
 
     private fun init() {
-        viewModel = ViewModelProvider(this, AddViewModelFactory(postPostUseCase, updatePostUseCase))[AddViewModel::class.java]
+        viewModel = ViewModelProvider(this, AddViewModelFactory(postPostUseCase))[AddViewModel::class.java]
         binding.vm = viewModel
 
         recyclerView = binding.rvContentImage
@@ -95,106 +91,45 @@ class AddFragment : Fragment() {
                 activityResultLauncher.launch("image/*")
             }
 
-            activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-                if (it != null) {
-                    val uriList = ArrayList<Uri>()
-                    imageList.forEach { image ->
-                        if (image.uri != null) {
-                            uriList.add(image.uri!!)
-                        }
+            btnSubmit.text = "추가"
+
+            btnSubmit.setOnClick {
+                val multipartBuilder = MultipartBody.Builder()
+                var uriCnt = 0
+                imageList.forEach {
+                    val multipart = with(requireActivity()) {
+                        it.asMultipart("imageList", cacheDir, contentResolver)!!
                     }
-                    addImageList(uriList)
-                    imageList.add(Image(it, null))
-                    imageAdapter.submitList(imageList)
+                    multipartBuilder.addPart(multipart)
+                    uriCnt++
                 }
+                val partList = if (uriCnt > 0) {
+                    multipartBuilder.build().parts
+                } else {
+                    null
+                }
+
+                viewModel.postPost(partList)
             }
 
-            if (arguments == null) {
-
-                btnSubmit.text = "추가"
-
-                btnSubmit.setOnClick {
-                    val multipartBuilder = MultipartBody.Builder()
-                    var uriCnt = 0
-                    imageList.forEach {
-                        if (it.uri != null) {
-                            val multipart = with(requireActivity()) {
-                                it.uri!!.asMultipart("imageList", cacheDir, contentResolver)!!
-                            }
-                            multipartBuilder.addPart(multipart)
-                            uriCnt++
-                        }
-                    }
-                    val partList = if (uriCnt > 0) {
-                        multipartBuilder.build().parts
-                    } else {
-                        null
-                    }
-
-                    viewModel.postPost(partList)
+            imageAdapter.deleteUriImage.observe(viewLifecycleOwner) {
+                imageList.remove(it)
+                val adapterList = ArrayList<Image>()
+                imageAdapter.currentList.forEach { image ->
+                    adapterList.add(image)
                 }
+                adapterList.add(Image(it.toString(), "URI"))
+                imageAdapter.submitList(adapterList)
+            }
 
-                imageAdapter.deleteUriImage.observe(viewLifecycleOwner) {
-                    imageList.remove(Image(it, null))
-                    val uriList = ArrayList<Uri>()
-                    imageList.forEach { image ->
-                        if (image.uri != null) {
-                            uriList.add(image.uri as Uri)
-                        }
+            activityResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+                if (it != null) {
+                    val adapterList = ArrayList<Image>()
+                    imageAdapter.currentList.forEach { image ->
+                        adapterList.add(image)
                     }
-                    addImageList(uriList)
-                }
-
-            } else {
-                val postId = requireArguments().getInt("postId")
-                val isAnonymous = requireArguments().getBoolean("isAnonymous")
-                val content = requireArguments().getString("content")
-                val defaultImageList = requireArguments().getStringArrayList("defaultImageList")
-
-                defaultImageList?.forEach {
-                    imageList.add(Image(null, it))
-                }
-
-                imageAdapter.submitList(imageList)
-
-                btnSubmit.text = "수정"
-                viewModel.isAnonymous.set(isAnonymous)
-                viewModel.content.set(content)
-
-                btnSubmit.setOnClick {
-                    val multipartBuilder = MultipartBody.Builder()
-                    var uriCnt = 0
-                    imageList.forEach {
-                        if (it.uri != null) {
-                            val multipart = with(requireActivity()) {
-                                it.uri!!.asMultipart("updateFileList", cacheDir, contentResolver)!!
-                            }
-                            multipartBuilder.addPart(multipart)
-                            uriCnt++
-                        }
-                    }
-
-                    val partList = if (uriCnt > 0) {
-                        multipartBuilder.build().parts
-                    } else {
-                        null
-                    }
-                    viewModel.updatePost(postId, deleteImageList, partList)
-                }
-
-                imageAdapter.deleteStringImage.observe(viewLifecycleOwner) {
-                    deleteImageList.add(it)
-                }
-
-                imageAdapter.deleteUriImage.observe(viewLifecycleOwner) {
-                    imageList.remove(Image(it, null))
-                    val uriList = ArrayList<Uri>()
-                    imageList.forEach { image ->
-                        if (image.uri != null) {
-                            uriList.add(image.uri as Uri)
-                        }
-                    }
-                    addImageList(uriList)
+                    adapterList.add(Image(it.toString(), "URI"))
+                    imageAdapter.submitList(adapterList)
                 }
             }
         }
