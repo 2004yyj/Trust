@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,18 +17,22 @@ class PostImageAdapter : ListAdapter<Image, RecyclerView.ViewHolder>(diffUtil) {
     val deleteUriImage = MutableLiveData<Uri>()
     val deleteStringImage = MutableLiveData<String>()
 
+
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).uri != null) {
+        return if (getItem(position).type == "URI") {
             URI_IMAGE
-        } else {
+        } else if (getItem(position).type == "STRING") {
             STRING_IMAGE
+        } else {
+            throw Exception()
         }
+
     }
 
     inner class UriImageViewHolder(
         private val binding: ItemPostImageBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(imagePath: Uri, position: Int) {
+        fun bind(imagePath: String, position: Int) {
             binding.imagePath = imagePath
 
             binding.ibDeleteItemImage.setOnClickListener {
@@ -40,7 +45,7 @@ class PostImageAdapter : ListAdapter<Image, RecyclerView.ViewHolder>(diffUtil) {
 
                 Log.d("PostImageAdapter", "bind: $imagePath")
 
-                deleteUriImage.value = imagePath
+                deleteUriImage.value = imagePath.toUri()
             }
         }
     }
@@ -58,9 +63,6 @@ class PostImageAdapter : ListAdapter<Image, RecyclerView.ViewHolder>(diffUtil) {
                 }
                 curList.removeAt(position)
                 submitList(curList)
-
-                Log.d("PostImageAdapter", "bind: $imagePath")
-
                 deleteStringImage.value = imagePath
             }
         }
@@ -70,16 +72,19 @@ class PostImageAdapter : ListAdapter<Image, RecyclerView.ViewHolder>(diffUtil) {
         val inflater = LayoutInflater.from(parent.context)
         return if (viewType == URI_IMAGE) {
             UriImageViewHolder(ItemPostImageBinding.inflate(inflater, parent, false))
-        } else {
+        } else if (viewType == STRING_IMAGE) {
             StringImageViewHolder(ItemUpdatePostImageBinding.inflate(inflater, parent, false))
+        } else {
+            throw IllegalStateException()
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder , position: Int) {
+
         if (holder is UriImageViewHolder) {
-            holder.bind(getItem(position).uri!!, position)
+            holder.bind(getItem(position).imagePath, position)
         } else if (holder is StringImageViewHolder) {
-            holder.bind(getItem(position).string!!, position)
+            holder.bind(getItem(position).imagePath, position)
         }
     }
 

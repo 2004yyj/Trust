@@ -12,10 +12,7 @@ import kr.hs.dgsw.trust.di.module.RepositoryModule
 import kr.hs.dgsw.trust.ui.activity.IntroActivity
 import kr.hs.dgsw.trust.ui.activity.SplashActivity
 import kr.hs.dgsw.trust.ui.dialog.CommentFragment
-import kr.hs.dgsw.trust.ui.fragment.AddFragment
-import kr.hs.dgsw.trust.ui.fragment.HomeFragment
-import kr.hs.dgsw.trust.ui.fragment.LoginFragment
-import kr.hs.dgsw.trust.ui.fragment.SignUpUserInfoFragment
+import kr.hs.dgsw.trust.ui.fragment.*
 import javax.inject.Singleton
 
 @Singleton
@@ -34,6 +31,7 @@ interface MyComponent : AndroidInjector<MyDaggerApplication> {
     fun inject(signUpUserInfoFragment: SignUpUserInfoFragment)
     fun inject(splashActivity: SplashActivity)
     fun inject(addFragment: AddFragment)
+    fun inject(updateFragment: UpdateFragment)
 
     @Component.Factory
     interface Factory {

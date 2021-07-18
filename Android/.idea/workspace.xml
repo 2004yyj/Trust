@@ -38,24 +38,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f6703fe2-bf8e-4d30-85ee-7cfaa4284fbd" name="Default Changelist" comment="[Update]">
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/entity/Image.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_update_post_image.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/UpdateFragment.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/UpdateViewModelFactory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/UpdateViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_update.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/navEditor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/navEditor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/entity/Image.kt" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/kr/hs/dgsw/domain/entity/Image.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/component/MyComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/di/component/MyComponent.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostImageAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/adapter/PostImageAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/AddFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/AddFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/fragment/HomeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/BindingUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/util/BindingUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/AddViewModelFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/AddViewModelFactory.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/PostViewModelFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/factory/PostViewModelFactory.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/AddViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/AddViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/PostViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/java/kr/hs/dgsw/trust/ui/viewmodel/fragment/PostViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_add.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/fragment_add.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/item_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_image.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/layout/item_post_image.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/presentation/src/main/res/navigation/main_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/presentation/src/main/res/navigation/main_navigation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/PostController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/controller/PostController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/service/FileService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/service/FileService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/service/PostService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/main/kotlin/kr/hs/dgsw/trust/server/service/PostService.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,16 +171,21 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="kr.hs.dgsw.trust.ui.viewmodel.factory" />
       <recent name="kr.hs.dgsw.trust.ui.dialog" />
       <recent name="kr.hs.dgsw.domain.usecase.post" />
       <recent name="kr.hs.dgsw.domain.entity" />
       <recent name="kr.hs.dgsw.data.entity" />
-      <recent name="kr.hs.dgsw.domain.entity.account" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="kr.hs.dgsw.trust.ui.viewmodel.fragment" />
+      <recent name="kr.hs.dgsw.trust.ui.fragment" />
       <recent name="kr.hs.dgsw.trust.ui.viewmodel.factory" />
       <recent name="kr.hs.dgsw.trust.interceptor" />
       <recent name="kr.hs.dgsw.trust.ui.viewmodel.adapter" />
+    </key>
+    <key name="android.template.741913442">
+      <recent name="kr.hs.dgsw.trust.ui.activity" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="kr.hs.dgsw.trust.ui.fragment" />
@@ -190,9 +193,6 @@
       <recent name="kr.hs.dgsw.domain.usecase.chat" />
       <recent name="kr.hs.dgsw.data.entity" />
       <recent name="kr.hs.dgsw.data.network.remote" />
-    </key>
-    <key name="android.template.741913442">
-      <recent name="kr.hs.dgsw.trust.ui.activity" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/presentation/src/main/res/drawable-v24" />
@@ -285,13 +285,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1619958988621</updated>
-    </task>
-    <task id="LOCAL-00134" summary="[Update] Board 삭제">
-      <created>1623309155962</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1623309155963</updated>
     </task>
     <task id="LOCAL-00135" summary="[Fixed] 토큰 null로 리턴되는 오류 수정">
       <created>1623506748321</created>
@@ -629,7 +622,14 @@
       <option name="project" value="LOCAL" />
       <updated>1626515192315</updated>
     </task>
-    <option name="localTasksCounter" value="183" />
+    <task id="LOCAL-00183" summary="Update 글 업데이트 기능">
+      <created>1626543924954</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1626543924954</updated>
+    </task>
+    <option name="localTasksCounter" value="184" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -657,7 +657,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[Update] 자동 로그인 체크 기능" />
     <MESSAGE value="[Update] 토큰 좋아요 추가/제거" />
     <MESSAGE value="[Update] 댓글 curd Request 토큰 추가" />
     <MESSAGE value="[Update] 메인화면 AdjustResize" />
@@ -682,7 +681,8 @@
     <MESSAGE value="Update 추가 버튼" />
     <MESSAGE value="Update 글 삭제 기능 추가" />
     <MESSAGE value="Update 글 추가 기능" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update 글 추가 기능" />
+    <MESSAGE value="Update 글 업데이트 기능" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update 글 업데이트 기능" />
   </component>
   <component name="WindowStateProjectService">
     <state x="421" y="278" key="#PSD" timestamp="1625446985502">
@@ -694,7 +694,7 @@
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="549" y="348" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1792.1037@0.25.1792.1037" timestamp="1620354982072" />
-    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser" timestamp="1626538669515">
+    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser" timestamp="1626568243216">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/-54.-1055.1920.1055/0.25.1792.1038@0.25.1792.1038" timestamp="1621220394447" />
@@ -702,7 +702,7 @@
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1033@0.25.1792.1033" timestamp="1621988547060" />
     <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1034@0.25.1792.1034" timestamp="1622608438821" />
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1035@0.25.1792.1035" timestamp="1623545054273" />
-    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1036@0.25.1792.1036" timestamp="1626538669515" />
+    <state x="675" y="261" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1036@0.25.1792.1036" timestamp="1626568243216" />
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1037@0.25.1792.1037" timestamp="1626498688304" />
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1038@0.25.1792.1038" timestamp="1624436602014" />
     <state x="675" y="262" key="#com.intellij.ide.util.MemberChooser/0.25.1792.1039@0.25.1792.1039" timestamp="1623158094605" />
@@ -729,22 +729,23 @@
     <state x="563" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1625454888426" />
     <state x="123" y="25" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1624432461359" />
     <state x="2395" y="-468" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620715407414" />
-    <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626528965269">
+    <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1626543819384">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state x="634" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620623095726" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1623492521834" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1623499569181" />
-    <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1626528965269" />
+    <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1626543819384" />
     <state x="634" y="293" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1625464501199" />
     <state x="634" y="294" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1626486583391" />
     <state x="634" y="295" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1792.1041@0.25.1792.1041" timestamp="1623229247656" />
-    <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1622687725801">
-      <screen x="0" y="25" width="1792" height="1037" />
+    <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1626568250837">
+      <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state x="660" y="326" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1620442811605" />
     <state x="660" y="326" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1034@0.25.1792.1034" timestamp="1622424871584" />
     <state x="660" y="326" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1035@0.25.1792.1035" timestamp="1621769999946" />
+    <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1036@0.25.1792.1036" timestamp="1626568250837" />
     <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1622687725801" />
     <state x="660" y="327" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1620000066347" />
     <state x="100" y="125" width="1592" height="835" key="AVDManager" timestamp="1626503733766">
@@ -795,13 +796,13 @@
       <screen x="0" y="25" width="1792" height="1038" />
     </state>
     <state x="100" y="125" width="1592" height="833" key="DiffContextDialog/0.25.1792.1038@0.25.1792.1038" timestamp="1623063376211" />
-    <state width="1750" height="369" key="GridCell.Tab.0.bottom" timestamp="1626540765427">
+    <state width="1750" height="405" key="GridCell.Tab.0.bottom" timestamp="1626567529954">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.bottom/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521328" />
     <state width="1748" height="198" key="GridCell.Tab.0.bottom/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539638" />
     <state width="1750" height="259" key="GridCell.Tab.0.bottom/0.25.1792.1035@0.25.1792.1035" timestamp="1623546165232" />
-    <state width="1750" height="369" key="GridCell.Tab.0.bottom/0.25.1792.1036@0.25.1792.1036" timestamp="1626540765427" />
+    <state width="1750" height="405" key="GridCell.Tab.0.bottom/0.25.1792.1036@0.25.1792.1036" timestamp="1626567529954" />
     <state width="1750" height="382" key="GridCell.Tab.0.bottom/0.25.1792.1037@0.25.1792.1037" timestamp="1626435258210" />
     <state width="1750" height="324" key="GridCell.Tab.0.bottom/0.25.1792.1038@0.25.1792.1038" timestamp="1623762747831" />
     <state width="1750" height="328" key="GridCell.Tab.0.bottom/0.25.1792.1039@0.25.1792.1039" timestamp="1623681711590" />
@@ -811,13 +812,13 @@
     <state width="1876" height="287" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059331" />
     <state width="1748" height="327" key="GridCell.Tab.0.bottom/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
     <state width="1876" height="17" key="GridCell.Tab.0.bottom/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154737" />
-    <state width="1750" height="369" key="GridCell.Tab.0.center" timestamp="1626540765427">
+    <state width="1750" height="405" key="GridCell.Tab.0.center" timestamp="1626567529954">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.center/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521327" />
     <state width="1748" height="198" key="GridCell.Tab.0.center/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539637" />
     <state width="1750" height="259" key="GridCell.Tab.0.center/0.25.1792.1035@0.25.1792.1035" timestamp="1623546165232" />
-    <state width="1750" height="369" key="GridCell.Tab.0.center/0.25.1792.1036@0.25.1792.1036" timestamp="1626540765427" />
+    <state width="1750" height="405" key="GridCell.Tab.0.center/0.25.1792.1036@0.25.1792.1036" timestamp="1626567529954" />
     <state width="1750" height="382" key="GridCell.Tab.0.center/0.25.1792.1037@0.25.1792.1037" timestamp="1626435258209" />
     <state width="1750" height="324" key="GridCell.Tab.0.center/0.25.1792.1038@0.25.1792.1038" timestamp="1623762747830" />
     <state width="1750" height="328" key="GridCell.Tab.0.center/0.25.1792.1039@0.25.1792.1039" timestamp="1623681711589" />
@@ -827,13 +828,13 @@
     <state width="1876" height="287" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.center/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532789" />
     <state width="1876" height="17" key="GridCell.Tab.0.center/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154736" />
-    <state width="1750" height="369" key="GridCell.Tab.0.left" timestamp="1626540765426">
+    <state width="1750" height="405" key="GridCell.Tab.0.left" timestamp="1626567529953">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.left/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521326" />
     <state width="1748" height="198" key="GridCell.Tab.0.left/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539635" />
     <state width="1750" height="259" key="GridCell.Tab.0.left/0.25.1792.1035@0.25.1792.1035" timestamp="1623546165231" />
-    <state width="1750" height="369" key="GridCell.Tab.0.left/0.25.1792.1036@0.25.1792.1036" timestamp="1626540765426" />
+    <state width="1750" height="405" key="GridCell.Tab.0.left/0.25.1792.1036@0.25.1792.1036" timestamp="1626567529953" />
     <state width="1750" height="382" key="GridCell.Tab.0.left/0.25.1792.1037@0.25.1792.1037" timestamp="1626435258209" />
     <state width="1750" height="324" key="GridCell.Tab.0.left/0.25.1792.1038@0.25.1792.1038" timestamp="1623762747829" />
     <state width="1750" height="328" key="GridCell.Tab.0.left/0.25.1792.1039@0.25.1792.1039" timestamp="1623681711588" />
@@ -843,13 +844,13 @@
     <state width="1876" height="287" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1035@1792.-468.1920.1055" timestamp="1620717059330" />
     <state width="1748" height="327" key="GridCell.Tab.0.left/1792.-468.1920.1055/0.25.1792.1036@0.25.1792.1036" timestamp="1620792532788" />
     <state width="1876" height="17" key="GridCell.Tab.0.left/1792.-468.1920.995/0.25.1792.1095@1792.-468.1920.995" timestamp="1621219154735" />
-    <state width="1750" height="369" key="GridCell.Tab.0.right" timestamp="1626540765427">
+    <state width="1750" height="405" key="GridCell.Tab.0.right" timestamp="1626567529954">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state width="1748" height="336" key="GridCell.Tab.0.right/0.0.1792.1120@0.0.1792.1120" timestamp="1620642521327" />
     <state width="1748" height="198" key="GridCell.Tab.0.right/0.25.1792.1034@0.25.1792.1034" timestamp="1622600539637" />
     <state width="1750" height="259" key="GridCell.Tab.0.right/0.25.1792.1035@0.25.1792.1035" timestamp="1623546165232" />
-    <state width="1750" height="369" key="GridCell.Tab.0.right/0.25.1792.1036@0.25.1792.1036" timestamp="1626540765427" />
+    <state width="1750" height="405" key="GridCell.Tab.0.right/0.25.1792.1036@0.25.1792.1036" timestamp="1626567529954" />
     <state width="1750" height="382" key="GridCell.Tab.0.right/0.25.1792.1037@0.25.1792.1037" timestamp="1626435258210" />
     <state width="1750" height="324" key="GridCell.Tab.0.right/0.25.1792.1038@0.25.1792.1038" timestamp="1623762747830" />
     <state width="1750" height="328" key="GridCell.Tab.0.right/0.25.1792.1039@0.25.1792.1039" timestamp="1623681711590" />
@@ -897,13 +898,13 @@
       <screen x="0" y="25" width="1792" height="1037" />
     </state>
     <state x="776" y="462" key="VCS.EditChangelistDialog/0.25.1792.1037@0.25.1792.1037" timestamp="1623761935942" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1626515199718">
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2" timestamp="1626543936735">
       <screen x="0" y="25" width="1792" height="1036" />
     </state>
     <state x="496" y="276" key="Vcs.Push.Dialog.v2/0.0.1792.1120@0.0.1792.1120" timestamp="1625721159924" />
     <state x="496" y="279" key="Vcs.Push.Dialog.v2/0.25.1792.1034@0.25.1792.1034" timestamp="1622601725488" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1035@0.25.1792.1035" timestamp="1623507616887" />
-    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1626515199718" />
+    <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1036@0.25.1792.1036" timestamp="1626543936735" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1037@0.25.1792.1037" timestamp="1626488853379" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1038@0.25.1792.1038" timestamp="1624431554784" />
     <state x="496" y="280" key="Vcs.Push.Dialog.v2/0.25.1792.1039@0.25.1792.1039" timestamp="1624090081066" />

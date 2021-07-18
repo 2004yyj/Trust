@@ -12,10 +12,18 @@
         <action
             android:id="@+id/action_homeFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="kr.hs.dgsw.trust.ui.fragment.AddFragment"
-        android:label="글 추가/수정"
+        android:label="글 추가"
         tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="kr.hs.dgsw.trust.ui.fragment.UpdateFragment"
+        android:label="글 수정"
+        tools:layout="@layout/fragment_update" />
 </navigation>

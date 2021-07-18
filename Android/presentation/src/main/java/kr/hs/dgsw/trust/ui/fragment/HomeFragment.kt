@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         }
         fabAdd.setOnClickListener {
-            navigateHomeToAdd(null)
+            navigateHomeToAdd()
         }
 
         viewModel.postList.observe(viewLifecycleOwner) {
@@ -119,15 +119,18 @@ class HomeFragment : Fragment() {
             bundle.putBoolean("isAnonymous", it.isAnonymous)
             bundle.putString("content", it.content)
             bundle.putStringArrayList("defaultImageList", it.imageList as ArrayList<String>)
-            navigateHomeToAdd(bundle)
-
+            navigateHomeToUpdate(bundle)
             viewModelStore.clear()
         }
 
     }
 
-    private fun navigateHomeToAdd(bundle: Bundle?) {
-        navController.navigate(R.id.action_homeFragment_to_addFragment, bundle)
+    private fun navigateHomeToAdd() {
+        navController.navigate(R.id.action_homeFragment_to_addFragment)
+    }
+
+    private fun navigateHomeToUpdate(bundle: Bundle?) {
+        navController.navigate(R.id.action_homeFragment_to_updateFragment, bundle)
     }
 
     private fun setPost() {
