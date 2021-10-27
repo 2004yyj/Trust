@@ -16,15 +16,13 @@ class LikedService(
     private val tokenProvider: TokenProvider
 ) {
     fun findAllByPostId(token: String, postId: Int): List<Liked> {
-        try {
-            val list = likedRepository.findAllByPostId(postId).orElseThrow()
-            if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-                return list
-            } else {
-                throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
-            }
-        } catch (e: Exception) {
-            throw NotFoundException("글을 찾을 수 없습니다.")
+        val list = likedRepository.findAllByPostId(postId).orElseThrow {
+            NotFoundException("글을 찾을 수 없습니다.")
+        }
+        if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
+            return list
+        } else {
+            throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
         }
     }
 
@@ -32,21 +30,14 @@ class LikedService(
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val liked = Liked()
             val username = (tokenProvider.getAuthentication(token).principal as User).username
-
-            try {
-                likedRepository.findByPostIdAndUsername(postId, username).orElseThrow()
-                throw ExistsException("좋아요가 이미 존재합니다.")
-            } catch (e: NoSuchElementException) {
+            likedRepository.findByPostIdAndUsername(postId, username).orElseGet {
                 liked.postId = postId
                 liked.username = username
                 liked.createdAt = Timestamp(System.currentTimeMillis())
                 likedRepository.save(liked)
             }
-
-            return try {
-                likedRepository.findAllByPostId(postId).orElseThrow()
-            } catch (e: Exception) {
-                throw UnauthenticatedException("오류가 발생했습니다.")
+            return likedRepository.findAllByPostId(postId).orElseThrow {
+                UnauthenticatedException("오류가 발생했습니다.")
             }
         } else {
             throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")
@@ -59,10 +50,8 @@ class LikedService(
             val username = (tokenProvider.getAuthentication(token).principal as User).username
 
             val liked =
-                try {
-                    likedRepository.findByPostIdAndUsername(postId, username).orElseThrow()
-                } catch (e: NoSuchElementException) {
-                    throw NotFoundException("좋아요가 존재하지 않습니다.")
+                likedRepository.findByPostIdAndUsername(postId, username).orElseThrow {
+                    NotFoundException("좋아요가 존재하지 않습니다.")
                 }
 
             if (username == liked.username) {
@@ -71,10 +60,8 @@ class LikedService(
                 throw UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
 
-            return try {
-                likedRepository.findAllByPostId(postId).orElseThrow()
-            } catch (e: Exception) {
-                throw UnauthenticatedException("오류가 발생했습니다.")
+            return likedRepository.findAllByPostId(postId).orElseThrow {
+                UnauthenticatedException("오류가 발생했습니다.")
             }
         } else {
             throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해 주세요.")

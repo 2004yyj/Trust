@@ -53,12 +53,10 @@ class PostService(
 
     fun findPost(token: String, postId: Int): JSONObject {
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
-            try {
-                val post = postRepository.findById(postId).orElseThrow()
-                return getPostToObject(post.toDTO(), token)
-            } catch (e: Exception) {
-                throw NotFoundException("글을 찾을 수 없습니다.")
+            val post = postRepository.findById(postId).orElseThrow {
+                NotFoundException("글을 찾을 수 없습니다.")
             }
+            return getPostToObject(post.toDTO(), token)
         } else {
             throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
         }
@@ -92,23 +90,20 @@ class PostService(
     }
 
     private fun findLikedList(postId: Int): List<Liked> {
-        return try {
-            likedRepository.findAllByPostId(postId).orElseThrow()
-        } catch (e: NoSuchElementException) {
-            throw NotFoundException("글을 찾을 수 없습니다.")
+        return likedRepository.findAllByPostId(postId).orElseThrow {
+            NotFoundException("글을 찾을 수 없습니다.")
         }
     }
 
     private fun findAccount(username: String, isAnonymous: Boolean): AccountDTO {
-        try {
-            val account = accountRepository.findById(username).orElseThrow()
-            return account.toDTO()
-        } catch (e: Exception) {
+        val account = accountRepository.findById(username).map { it.toDTO() }.orElseGet {
             if (isAnonymous) {
-                return AccountDTO("익명", "ANONYMOUS", "defaultUserProfile.png")
+                AccountDTO("익명", "ANONYMOUS", "defaultUserProfile.png")
+            } else {
+                throw UnauthenticatedException("오류가 발생했습니다.")
             }
-            throw UnauthenticatedException("오류가 발생했습니다.")
         }
+        return account
     }
 
     fun save(
@@ -145,11 +140,10 @@ class PostService(
         pathList: ArrayList<String>?
     ): JSONObject {
 
-        val postVO = try {
-            postRepository.findById(postId).orElseThrow()
-        } catch (e: Exception) {
-            throw NotFoundException("글을 찾을 수 없습니다.")
-        }
+        val postVO =
+            postRepository.findById(postId).orElseThrow {
+                NotFoundException("글을 찾을 수 없습니다.")
+            }
 
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val username = (tokenProvider.getAuthentication(token).principal as User).username
@@ -189,9 +183,13 @@ class PostService(
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val username = (tokenProvider.getAuthentication(token).principal as User).username
             if (postRepository.existsById(postId)) {
-                val post = postRepository.findById(postId).orElseThrow()
+                val post = postRepository.findById(postId).orElseThrow {
+                    NotFoundException("글을 찾을 수 없습니다.")
+                }
                 val validUsername = if (post.isAnonymous == false) {
-                    val account = accountRepository.findById(username).orElseThrow()
+                    val account = accountRepository.findById(username).orElseThrow {
+                        NotFoundException("계정을 찾을 수 없습니다.")
+                    }
                     account.username == post.username
                 } else {
                     encoder.matches(username, post.username)

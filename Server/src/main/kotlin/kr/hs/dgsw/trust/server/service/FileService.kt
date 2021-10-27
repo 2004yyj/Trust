@@ -36,62 +36,57 @@ class FileService(
     }
 
     fun updatePostFile(postId: Int, deleteFileList: Array<String>?, updateFileList: ArrayList<MultipartFile>?): ArrayList<String> {
-        try {
-            val post = postRepository.findById(postId).orElseThrow()
-            val pathList = ArrayList<String>()
-            val imageJsonArray = JSONArray(post.imageList)
-            var i = 0
-            while (i < imageJsonArray.length()) {
-                pathList.add(imageJsonArray[i] as String)
-                i++
-            }
-            deleteFileList?.forEach {
-                val replaced = it.replace("\"", "")
-
-                if (isFileExist(replaced)) {
-                    deleteFileByName(replaced)
-                    pathList.remove(replaced)
-                }
-            }
-            updateFileList?.forEach {
-                if (!it.originalFilename.isNullOrEmpty()) {
-                    val fileName = saveFile(it)
-                    pathList.add(fileName)
-                }
-            }
-            return pathList
-        } catch (e: Exception) {
-            e.printStackTrace()
-            throw NotFoundException("글을 찾을 수 없습니다.")
+        val post = postRepository.findById(postId).orElseThrow {
+            NotFoundException("글을 찾을 수 없습니다.")
         }
+        val pathList = ArrayList<String>()
+        val imageJsonArray = JSONArray(post.imageList)
+        var i = 0
+        while (i < imageJsonArray.length()) {
+            pathList.add(imageJsonArray[i] as String)
+            i++
+        }
+        deleteFileList?.forEach {
+            val replaced = it.replace("\"", "")
+
+            if (isFileExist(replaced)) {
+                deleteFileByName(replaced)
+                pathList.remove(replaced)
+            }
+        }
+        updateFileList?.forEach {
+            if (!it.originalFilename.isNullOrEmpty()) {
+                val fileName = saveFile(it)
+                pathList.add(fileName)
+            }
+        }
+        return pathList
     }
 
     fun updateCommentFile(commentId: Int, deleteFileList: Array<String>?, updateFileList: ArrayList<MultipartFile>?): ArrayList<String> {
-        try {
-            val comment = commentRepository.findById(commentId).orElseThrow()
-            val pathList = ArrayList<String>()
-            val imageJsonArray = JSONArray(comment.imageList)
-            var i = 0
-            while (i < imageJsonArray.length()) {
-                pathList.add(imageJsonArray[i] as String)
-                i++
-            }
-            deleteFileList?.forEach {
-                if (isFileExist(it)) {
-                    deleteFileByName(it)
-                    pathList.remove(it)
-                }
-            }
-            updateFileList?.forEach {
-                if (!it.originalFilename.isNullOrEmpty()) {
-                    val fileName = saveFile(it)
-                    pathList.add(fileName)
-                }
-            }
-            return pathList
-        } catch (e: Exception) {
-            throw NotFoundException("글을 찾을 수 없습니다.")
+        val comment = commentRepository.findById(commentId).orElseThrow {
+            NotFoundException("글을 찾을 수 없습니다.")
         }
+        val pathList = ArrayList<String>()
+        val imageJsonArray = JSONArray(comment.imageList)
+        var i = 0
+        while (i < imageJsonArray.length()) {
+            pathList.add(imageJsonArray[i] as String)
+            i++
+        }
+        deleteFileList?.forEach {
+            if (isFileExist(it)) {
+                deleteFileByName(it)
+                pathList.remove(it)
+            }
+        }
+        updateFileList?.forEach {
+            if (!it.originalFilename.isNullOrEmpty()) {
+                val fileName = saveFile(it)
+                pathList.add(fileName)
+            }
+        }
+        return pathList
     }
 
     fun deleteFileByName(fileName: String) : String {

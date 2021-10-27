@@ -78,12 +78,9 @@ class CommentService(
     ): List<CommentVO> {
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val comment =
-                try {
-                    commentRepository.findById(commentId).orElseThrow()
-                } catch (e: NoSuchElementException) {
-                    throw NotFoundException("댓글을 찾을 수 없습니다.")
-                }
-
+                    commentRepository.findById(commentId).orElseThrow {
+                        NotFoundException("댓글을 찾을 수 없습니다.")
+                    }
             if (commentRepository.existsById(commentId)) {
                 comment.content = content
                 comment.imageList = JSONArray(imageList).toString()
@@ -103,10 +100,8 @@ class CommentService(
     ): CommentVO {
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val comment =
-                try {
-                    commentRepository.findById(commentId).orElseThrow()
-                } catch (e: NoSuchElementException) {
-                    throw NotFoundException("댓글을 찾을 수 없습니다.")
+                commentRepository.findById(commentId).orElseThrow {
+                    NotFoundException("댓글을 찾을 수 없습니다.")
                 }
 
             if (commentRepository.existsById(commentId)) {

@@ -84,10 +84,8 @@ class AccountService(
     fun getAccount(token: String): AccountVO {
         if (token.isNotEmpty() && tokenProvider.validateToken(token)) {
             val username = (tokenProvider.getAuthentication(token).principal as User).username
-            try {
-                return accountRepository.findById(username).orElseThrow()
-            } catch (e: Exception) {
-                throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+            return accountRepository.findById(username).orElseThrow {
+                UnauthenticatedException("계정을 찾을 수 없습니다.")
             }
         } else {
             throw UnauthenticatedException("세션이 만료되었습니다. 다시 로그인 해주세요.")
@@ -95,10 +93,8 @@ class AccountService(
     }
 
     fun findAccount(username: String): AccountVO {
-        try {
-            return accountRepository.findById(username).orElseThrow()
-        } catch (e: Exception) {
-            throw UnauthenticatedException("계정을 찾을 수 없습니다.")
+        return accountRepository.findById(username).orElseThrow {
+            UnauthenticatedException("계정을 찾을 수 없습니다.")
         }
     }
 
