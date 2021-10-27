@@ -52,7 +52,7 @@
                     android:contentDescription="@string/profile_image"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:setImage="@{vm.profileImagePath}"
+                    app:setStringImage="@{vm.profileImagePath}"
                     tools:background="@color/grey" />
 
             </androidx.cardview.widget.CardView>
